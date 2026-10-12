@@ -321,10 +321,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlRegex = /\b(https?:\/\/[^\s<>"']+\b)/g;
     return text.replace(urlRegex, (match) => {
       let url = match;
-      const trailingPunctuation = /[.,!?;:]+$/;
-      const hasTrailingPunct = trailingPunctuation.test(url);
-      if (hasTrailingPunct) {
-        url = url.replace(trailingPunctuation, '');
+      let suffix = '';
+      const punctMatch = match.match(/[.,!?;:]+$/);
+      if (punctMatch) {
+        suffix = punctMatch[0];
+        url = match.slice(0, match.length - suffix.length);
+      }
+
+      // Überflüssigen Schrägstrich am Ende entfernen (z. B. example.com/kontakt/)
+      if (url.endsWith('/') && url.length > 'https://a'.length) {
+        url = url.slice(0, -1);
       }
       
       if (url.length < 10) {
@@ -354,12 +360,12 @@ document.addEventListener('DOMContentLoaded', () => {
               }
             }
             const link = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="ai-platform-link">${label}</a>`;
-            return hasTrailingPunct ? link + match.slice(url.length) : link;
+            return link + suffix;
           }
         }
 
         const link = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="ai-chat-link">${url}</a>`;
-        return hasTrailingPunct ? link + match.slice(url.length) : link;
+        return link + suffix;
       } catch (e) {
         return match;
       }
