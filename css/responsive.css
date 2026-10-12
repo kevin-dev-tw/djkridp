@@ -112,7 +112,6 @@
   
   .contact-link {
     width: 100%;
-    justify-content: center;
   }
   
   #home {
@@ -261,8 +260,7 @@
   }
 
   .contact-link {
-    padding: var(--spacing-md) var(--spacing-md);
-    white-space: nowrap;
+    padding: var(--spacing-md) var(--spacing-sm);
   }
 }
 
