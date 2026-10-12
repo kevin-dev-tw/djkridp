@@ -32,10 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (section) {
                 const offsetTop = section.offsetTop - 80;
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+                if (window.lenis) {
+                    window.lenis.scrollTo(Math.max(0, offsetTop));
+                } else {
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     });

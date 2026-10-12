@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       /* Scrollbar-Griff beibehalten - erzwingen Sichtbarkeit */
       ::-webkit-scrollbar-thumb {
         background: var(--color-purple-primary) !important;
-        border-radius: 4px !important;
+        border-radius: 2px !important;
         border: none !important;
         outline: none !important;
         transition: all 0.3s ease !important;

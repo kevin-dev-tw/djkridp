@@ -314,14 +314,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const row = document.createElement('div');
     row.className = `ai-chat-row ${role === 'user' ? 'mine' : 'other'}`;
     
-    const avatar = document.createElement('div');
-    avatar.className = `ai-chat-avatar ai-chat-avatar-${role === 'user' ? 'user' : 'ai'}`;
-    if (role === 'user') {
-      avatar.innerHTML = '<span class="material-symbols-outlined">person</span>';
-    } else {
-      avatar.innerHTML = '<span class="material-symbols-outlined">smart_toy</span>';
-    }
-    
     const messageWrapper = document.createElement('div');
     messageWrapper.className = 'ai-chat-message-wrapper';
     
@@ -337,13 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     messageWrapper.appendChild(messageDiv);
     
-    if (role === 'user') {
-      row.appendChild(messageWrapper);
-      row.appendChild(avatar);
-    } else {
-      row.appendChild(avatar);
-      row.appendChild(messageWrapper);
-    }
+    row.appendChild(messageWrapper);
     
     chatMessages.appendChild(row);
     

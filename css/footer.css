@@ -59,8 +59,9 @@
 
 /* Footer Content Layout */
 .footer {
-  background-color: var(--surface);
-  border-top: none;
+  background-color: var(--midnight-base);
+  border-top: 1px solid var(--outline-variant);
+  padding: var(--spacing-lg) 0;
 }
 
 .footer-content {
@@ -68,11 +69,14 @@
   align-items: center;
   justify-content: center;
   gap: var(--spacing-lg);
-  width: fit-content;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: var(--spacing-sm) var(--spacing-xl);
-  background: var(--surface-container);
-  border-radius: var(--border-radius-full);
+  padding: 0 var(--spacing-xl);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 /* Responsive Footer */

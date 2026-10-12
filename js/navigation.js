@@ -6,45 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const header = document.querySelector('.header');
   const headerHeight = header ? header.offsetHeight : 0;
   const navOverlay = document.querySelector('.nav-overlay');
-  const scrollIndicator = document.querySelector('.scroll-indicator');
 
   function smoothScrollTo(targetId) {
     const targetElement = document.querySelector(targetId);
     if (targetElement) {
       const headerHeight = header ? header.offsetHeight : 0;
       const targetPosition = targetElement.offsetTop - headerHeight;
-      window.scrollTo({
-        top: Math.max(0, targetPosition),
-        behavior: 'smooth'
-      });
-    }
-  }
-
-  function getNextSection() {
-    const sections = document.querySelectorAll('section[id]');
-    const currentScroll = window.pageYOffset + headerHeight + 100;
-    
-    for (let i = 0; i < sections.length; i++) {
-      const section = sections[i];
-      const sectionTop = section.offsetTop;
-      
-      if (sectionTop > currentScroll) {
-        return section;
+      if (window.lenis) {
+        window.lenis.scrollTo(Math.max(0, targetPosition));
+      } else {
+        window.scrollTo({
+          top: Math.max(0, targetPosition),
+          behavior: 'smooth'
+        });
       }
     }
-    return null;
-  }
-
-  function throttle(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
   }
 
   function openMenu() {
@@ -159,54 +135,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Hash-basiertes Scrollen nur für manuelle Navigation, nicht für Reload
   // Browser-Standardverhalten für Scroll-Restoration beibehalten
-
-  // Scroll-Indikator-Funktion
-  if (scrollIndicator) {
-    // Klick zum Scrollen zur nächsten Section
-    scrollIndicator.addEventListener('click', () => {
-      const nextSection = getNextSection();
-      if (nextSection) {
-        smoothScrollTo(`#${nextSection.id}`);
-      }
-    });
-
-    // Indikator beim Scrollen ausblenden
-    function handleScrollIndicatorVisibility() {
-      const scrollPosition = window.pageYOffset;
-      const windowHeight = window.innerHeight;
-      
-      // Indikator ausblenden wenn über erste Fensterhöhe gescrollt
-      if (scrollPosition > windowHeight * 0.5) {
-        scrollIndicator.style.opacity = '0';
-        scrollIndicator.style.pointerEvents = 'none';
-      } else {
-        scrollIndicator.style.opacity = '1';
-        scrollIndicator.style.pointerEvents = 'auto';
-      }
-
-      // Prüfen ob letzte Section erreicht
-      const sections = document.querySelectorAll('section[id]');
-      if (sections.length > 0) {
-        const lastSection = sections[sections.length - 1];
-        const lastSectionTop = lastSection.offsetTop;
-        const scrollBottom = scrollPosition + windowHeight;
-        
-        // Indikator ausblenden wenn nahe der letzten Section
-        if (scrollBottom >= lastSectionTop - 200) {
-          scrollIndicator.style.opacity = '0';
-          scrollIndicator.style.pointerEvents = 'none';
-        }
-      }
-    }
-
-    // Scroll-Ereignisse drosseln
-    const throttledHandleScrollIndicator = throttle(handleScrollIndicatorVisibility, 100);
-    window.addEventListener('scroll', throttledHandleScrollIndicator, { passive: true });
-    
-    // Initialisierungsprüfung verzögern um Browser-Scroll-Restoration nicht zu stören
-    setTimeout(() => {
-      handleScrollIndicatorVisibility();
-    }, 500);
-  }
 
 });

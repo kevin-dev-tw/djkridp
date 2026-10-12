@@ -34,13 +34,13 @@ body {
 
 /* Custom Text Selection */
 ::selection {
-  background-color: #0891b2;
-  color: var(--color-text-white);
+  background-color: var(--neon-purple);
+  color: var(--on-primary);
 }
 
 ::-moz-selection {
-  background-color: #0891b2;
-  color: var(--color-text-white);
+  background-color: var(--neon-purple);
+  color: var(--on-primary);
 }
 
 #home {
@@ -51,48 +51,6 @@ body {
   position: relative;
   padding-top: 90px;
   overflow: hidden;
-}
-
-#home::before {
-  content: '';
-  position: absolute;
-  top: 25%;
-  left: -25%;
-  width: 600px;
-  height: 600px;
-  background: var(--neon-purple-glow);
-  filter: blur(120px);
-  border-radius: 50%;
-  z-index: 0;
-}
-
-#home::after {
-  content: '';
-  position: absolute;
-  bottom: 25%;
-  right: -25%;
-  width: 600px;
-  height: 600px;
-  background: var(--electric-cyan-glow);
-  filter: blur(120px);
-  border-radius: 50%;
-  z-index: 0;
-}
-
-@media (max-width: 768px) {
-  #home::before {
-    width: 300px;
-    height: 300px;
-    left: -50%;
-    filter: blur(80px);
-  }
-
-  #home::after {
-    width: 300px;
-    height: 300px;
-    right: -50%;
-    filter: blur(80px);
-  }
 }
 
 @keyframes fadeInUp {
@@ -196,7 +154,7 @@ button {
 
 /* Vollbreiten-Hintergrundbereich */
 #about {
-  background-color: var(--surface);
+  background-color: var(--midnight-base);
 }
 
 #about .container {
@@ -207,7 +165,7 @@ button {
 }
 
 #tours {
-  background-color: var(--surface-container-lowest);
+  background-color: var(--midnight-base);
 }
 
 #tours .container {
@@ -218,7 +176,7 @@ button {
 }
 
 #works {
-  background-color: var(--surface);
+  background-color: var(--midnight-base);
 }
 
 #works .container {
@@ -229,22 +187,11 @@ button {
 }
 
 #contact {
-  background-color: var(--surface);
+  background-color: var(--midnight-base);
   min-height: auto;
   display: block;
   position: relative;
   overflow: hidden;
-}
-
-#contact::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--neon-purple-glow);
-  transform: skewY(-3deg);
-  transform-origin: right;
-  z-index: 0;
-  opacity: 0.05;
 }
 
 #contact.section {
@@ -297,10 +244,7 @@ button {
   margin-top: var(--spacing-xl);
 }
 
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
+/* Smooth scrolling handled by Lenis */
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -320,7 +264,7 @@ html {
 
 ::-webkit-scrollbar-thumb {
   background: var(--neon-purple);
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 @supports not selector(::-webkit-scrollbar) {
