@@ -103,45 +103,67 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function formatText(text) {
-    if (!text) return '';
-    
+    if (!text) return { html: '', codes: [] };
+
     let formatted = text;
-    
+    const codes = [];
+
+    // HTML escapen, bevor eigene Tags erzeugt werden
+    formatted = formatted.replace(/&/g, '&amp;');
+    formatted = formatted.replace(/</g, '&lt;');
+    formatted = formatted.replace(/>/g, '&gt;');
+
+    // Code-Blöcke und Inline-Code als Platzhalter extrahieren,
+    // damit nachfolgende Formatierungen ihren Inhalt nicht verändern
+    formatted = formatted.replace(/```([\s\S]*?)```/g, (match, code) => {
+      codes.push(`<pre><code>${code.replace(/\r\n?/g, '\n').trim()}</code></pre>`);
+      return `@@CODE${codes.length - 1}@@`;
+    });
+    formatted = formatted.replace(/`([^`\n]+)`/g, (match, code) => {
+      codes.push(`<code>${code}</code>`);
+      return `@@CODE${codes.length - 1}@@`;
+    });
+
+    // Markdown-Links [text](url) extrahieren
+    formatted = formatted.replace(/\[([^\]\n]+)\]\((https?:\/\/[^)\s<>'"]+)\)/g, (match, label, url) => {
+      codes.push(`<a href="${url}" target="_blank" rel="noopener noreferrer" class="ai-chat-link">${label}</a>`);
+      return `@@CODE${codes.length - 1}@@`;
+    });
+
     // Zeilenumbrüche verarbeiten
     formatted = formatted.replace(/\r\n/g, '\n');
     formatted = formatted.replace(/\r/g, '\n');
     formatted = formatted.replace(/\n{3,}/g, '\n\n');
-    
-    // Code-Blöcke verarbeiten (muss vor Listen verarbeitet werden)
-    formatted = formatCodeBlocks(formatted);
-    
+
     // Überschriften verarbeiten
     formatted = formatHeadings(formatted);
-    
+
+    // Tabellen verarbeiten
+    formatted = formatTables(formatted);
+
     // Fett- und Kursiv-Text verarbeiten
     formatted = formatBoldItalic(formatted);
-    
-    // Inline-Code verarbeiten
-    formatted = formatInlineCode(formatted);
-    
+
     // Blockquotes verarbeiten
     formatted = formatBlockquotes(formatted);
-    
+
     // Listen verarbeiten
     formatted = formatLists(formatted);
-    
+
+    // Horizontale Linien verarbeiten (---, ***, ___)
+    formatted = formatted.replace(/^\s*([-*_])(?:\s*\1){2,}\s*$/gm, '<hr>');
+
     // Zeilenumbrüche verarbeiten
     formatted = formatted.replace(/\n/g, '<br>');
-    
-    return formatted;
+
+    return { html: formatted, codes };
   }
 
-  function formatCodeBlocks(text) {
-    // Code-Blöcke ``` verarbeiten
-    const codeBlockRegex = /```([\s\S]*?)```/g;
-    return text.replace(codeBlockRegex, (match, code) => {
-      return `<pre><code>${code.trim()}</code></pre>`;
-    });
+  function formatReply(text) {
+    const { html, codes } = formatText(text);
+    // Code-Platzhalter erst nach dem Verlinken zurücksetzen,
+    // damit URLs im Code nicht zu Links werden
+    return linkify(html).replace(/@@CODE(\d+)@@/g, (match, i) => codes[Number(i)]);
   }
 
   function formatHeadings(text) {
@@ -165,23 +187,49 @@ document.addEventListener('DOMContentLoaded', () => {
     return formatted;
   }
 
-  function formatInlineCode(text) {
-    // Inline-Code `code` verarbeiten
-    return text.replace(/`([^`]+)`/g, '<code>$1</code>');
+  function formatTables(text) {
+    const lines = text.split('\n');
+    const result = [];
+    let i = 0;
+
+    const isRow = (line) => /^\s*\|.+\|\s*$/.test(line);
+    const isSeparator = (line) => /^\s*\|?[\s:|-]+\|?\s*$/.test(line) && line.includes('-');
+    const splitRow = (line) => line.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((cell) => cell.trim());
+
+    while (i < lines.length) {
+      if (isRow(lines[i]) && i + 1 < lines.length && isSeparator(lines[i + 1])) {
+        const header = splitRow(lines[i]);
+        i += 2;
+        const rows = [];
+        while (i < lines.length && isRow(lines[i])) {
+          rows.push(splitRow(lines[i]));
+          i += 1;
+        }
+        let table = '<table><thead><tr>' + header.map((cell) => `<th>${cell}</th>`).join('') + '</tr></thead><tbody>';
+        table += rows.map((row) => '<tr>' + row.map((cell) => `<td>${cell}</td>`).join('')).join('');
+        result.push(table + '</tbody></table>');
+      } else {
+        result.push(lines[i]);
+        i += 1;
+      }
+    }
+
+    return result.join('\n');
   }
 
   function formatBlockquotes(text) {
     const lines = text.split('\n');
     let inBlockquote = false;
     let result = [];
-    
+
     for (let line of lines) {
-      if (line.startsWith('> ')) {
+      // '>' wurde beim HTML-Escapen zu '&gt;'
+      if (line.startsWith('&gt; ')) {
         if (!inBlockquote) {
           result.push('<blockquote>');
           inBlockquote = true;
         }
-        result.push(`<p>${line.substring(2)}</p>`);
+        result.push(`<p>${line.substring(5)}</p>`);
       } else {
         if (inBlockquote) {
           result.push('</blockquote>');
@@ -329,8 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
     messageDiv.className = `ai-chat-message ${role === 'user' ? 'mine' : 'other'}`;
     
     if (role === 'assistant') {
-      const formattedContent = formatText(content);
-      messageDiv.innerHTML = linkify(formattedContent);
+      messageDiv.innerHTML = formatReply(content);
     } else {
       messageDiv.textContent = content;
     }
@@ -365,8 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateMessage(messageDiv, content) {
-    const formattedContent = formatText(content);
-    messageDiv.innerHTML = linkify(formattedContent);
+    messageDiv.innerHTML = formatReply(content);
     if (!virtualScrollEnabled) {
       chatMessages.scrollTop = chatMessages.scrollHeight;
     } else {
@@ -454,8 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
               if (!jsonStr) continue;
               const data = JSON.parse(jsonStr);
               if (data.error) {
-                const formattedError = formatText(data.error);
-                assistantMessageDiv.innerHTML = linkify(formattedError);
+                assistantMessageDiv.innerHTML = formatReply(data.error);
                 assistantMessageDiv.classList.remove('typing');
                 break;
               }
@@ -515,8 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       console.error('Fehler beim Senden der Nachricht:', error);
       const errorMessage = error.message || 'Entschuldigung, ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
-      const formattedError = formatText(errorMessage);
-      assistantMessageDiv.innerHTML = linkify(formattedError);
+      assistantMessageDiv.innerHTML = formatReply(errorMessage);
       assistantMessageDiv.classList.remove('typing');
       if (messageHistory[assistantHistoryIndex]) {
         messageHistory.pop();

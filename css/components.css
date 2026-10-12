@@ -2526,6 +2526,35 @@ body > footer.footer {
 .ai-chat-message h5 { font-size: 0.9em; }
 .ai-chat-message h6 { font-size: 0.8em; }
 
+.ai-chat-message table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.9em;
+}
+
+.ai-chat-message th,
+.ai-chat-message td {
+  border: 1px solid var(--outline-variant);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.ai-chat-message th {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--on-surface-variant);
+}
+
+.ai-chat-message hr {
+  border: none;
+  border-top: 1px solid var(--outline-variant);
+  margin: 16px 0;
+}
+
 .ai-chat-message strong {
   font-weight: 700;
   color: inherit;
@@ -2540,13 +2569,13 @@ body > footer.footer {
   background-color: rgba(255, 177, 61, 0.1);
   color: var(--neon-purple);
   padding: 2px 6px;
-  border-radius: var(--border-radius-sm);
+  border-radius: 0;
   font-family: var(--font-family-mono);
   font-size: 0.9em;
 }
 
 .ai-chat-message pre {
-  background-color: var(--midnight-base);
+  background-color: var(--surface-lowest);
   color: var(--on-surface);
   border: 1px solid var(--outline-variant);
   padding: 12px;
