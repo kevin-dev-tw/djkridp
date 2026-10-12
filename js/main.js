@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   try {
     // Lenis smooth scroll
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
     if (typeof Lenis !== 'undefined') {
       const lenis = new Lenis({
         duration: 1.1,
