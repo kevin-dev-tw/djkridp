@@ -156,7 +156,13 @@
     <header class="header">
         <div class="header-content">
             <button class="logo" data-target="home">DJKridP</button>
-            <nav class="nav">
+            <button class="mobile-menu-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="site-nav">
+                <span class="menu-labels" aria-hidden="true">
+                    <span class="menu-label-open">Menu</span>
+                    <span class="menu-label-close">Close</span>
+                </span>
+            </button>
+            <nav class="nav" id="site-nav">
                 <ul class="nav-list">
                     <li><a href="#home" class="nav-link" aria-label="Startseite"><span>Startseite</span></a></li>
                     <li><a href="#about" class="nav-link" aria-label="Über mich"><span>Über mich</span></a></li>
@@ -470,27 +476,6 @@
         </div>
     </footer>
 
-    <!-- Mobile Bottom Dock Navigation -->
-    <nav class="mobile-dock" id="mobile-dock">
-        <div class="dock-container">
-            <a href="#home" class="dock-item active" data-section="home" aria-label="Startseite">
-                <span class="material-symbols-outlined">home</span>
-            </a>
-            <a href="#about" class="dock-item" data-section="about" aria-label="Über mich">
-                <span class="material-symbols-outlined">person</span>
-            </a>
-            <a href="#tours" class="dock-item" data-section="tours" aria-label="Tours">
-                <span class="material-symbols-outlined">flight</span>
-            </a>
-            <a href="#works" class="dock-item" data-section="works" aria-label="Werke">
-                <span class="material-symbols-outlined">library_music</span>
-            </a>
-            <a href="#contact" class="dock-item" data-section="contact" aria-label="Kontakt">
-                <span class="material-symbols-outlined">contact_mail</span>
-            </a>
-        </div>
-    </nav>
-
     <button class="ai-chat-button" aria-label="AI-Assistent" id="ai-chat-button">
         <span class="material-symbols-outlined">smart_toy</span>
     </button>
@@ -513,15 +498,12 @@
                 <p class="ai-chat-empty-subtitle">Stellen Sie mir eine Frage:</p>
                 <div class="ai-chat-quick-questions">
                     <button class="quick-question-btn" data-question="Erzähl mir über deine DJ-Karriere">
-                        <span class="material-symbols-outlined">music_note</span>
                         <span>Über deine DJ-Karriere</span>
                     </button>
                     <button class="quick-question-btn" data-question="Was ist Future Breeze?">
-                        <span class="material-symbols-outlined">group</span>
                         <span>Was ist Future Breeze?</span>
                     </button>
                     <button class="quick-question-btn" data-question="Welche Musikstile spielst du?">
-                        <span class="material-symbols-outlined">library_music</span>
                         <span>Deine Musikstile</span>
                     </button>
                 </div>
@@ -565,7 +547,6 @@
     <script src="js/animations.js?v=1.2.0" defer></script>
     <script src="js/twitch-status.js?v=1.2.0" defer></script>
     <script src="js/ai-chat.js?v=1.2.0" defer></script>
-    <script src="js/mobile-dock.js?v=1.2.0" defer></script>
     <script>
         // Rechtsklick-Funktion für Bilder deaktivieren
         document.addEventListener('DOMContentLoaded', function() {

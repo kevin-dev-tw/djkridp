@@ -29,11 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileMenuToggle) {
       mobileMenuToggle.classList.add('active');
       mobileMenuToggle.setAttribute('aria-expanded', 'true');
+      mobileMenuToggle.setAttribute('aria-label', 'Menü schließen');
     }
     if (navOverlay) {
       navOverlay.classList.add('active');
     }
     document.body.style.overflow = 'hidden';
+    if (window.lenis) window.lenis.stop();
   }
 
   function closeMenu({ restoreFocus } = { restoreFocus: false }) {
@@ -42,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileMenuToggle) {
       mobileMenuToggle.classList.remove('active');
       mobileMenuToggle.setAttribute('aria-expanded', 'false');
+      mobileMenuToggle.setAttribute('aria-label', 'Menü öffnen');
       if (restoreFocus) {
         mobileMenuToggle.focus();
       }
@@ -50,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       navOverlay.classList.remove('active');
     }
     document.body.style.overflow = '';
+    if (window.lenis) window.lenis.start();
   }
 
   function isMobileMenuActive() {
@@ -61,10 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
     logo.addEventListener('click', () => {
       const target = logo.getAttribute('data-target');
       if (target) {
-        smoothScrollTo(`#${target}`);
         if (isMobileMenuActive()) {
           closeMenu();
         }
+        smoothScrollTo(`#${target}`);
       }
     });
   }
@@ -74,10 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const href = link.getAttribute('href');
       if (href && href.startsWith('#')) {
         e.preventDefault();
-        smoothScrollTo(href);
         if (isMobileMenuActive()) {
           closeMenu();
         }
+        smoothScrollTo(href);
       }
     });
   });
@@ -128,8 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (mobileMenuToggle) {
         mobileMenuToggle.classList.remove('active');
         mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenuToggle.setAttribute('aria-label', 'Menü öffnen');
       }
       document.body.style.overflow = '';
+      if (window.lenis) window.lenis.start();
     }
   });
 
