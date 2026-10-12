@@ -2369,9 +2369,7 @@ body > footer.footer {
 }
 
 .ai-chat-message br {
-  display: block;
-  margin: 8px 0;
-  content: "";
+  margin: 0;
 }
 
 .ai-chat-message.mine {

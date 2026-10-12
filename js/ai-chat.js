@@ -131,13 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
     formatted = formatLists(formatted);
     
     // Zeilenumbrüche verarbeiten
-    formatted = formatted.split('\n').map(line => {
-      if (line.trim() === '') {
-        return '<br>';
-      }
-      return line;
-    }).join('\n');
-    
     formatted = formatted.replace(/\n/g, '<br>');
     
     return formatted;
@@ -166,7 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Kursiv-Text *text* oder _text_ verarbeiten (Konflikte mit Fett vermeiden)
     formatted = formatted.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
-    formatted = formatted.replace(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/g, '<em>$1</em>');
+    // Unterstrich-Kursiv nur an Wortgrenzen, damit URLs wie dj_krid_p nicht zerstört werden
+    formatted = formatted.replace(/(?<![\w_])_(?!_)(.+?)(?<!_)_(?![\w])/g, '<em>$1</em>');
     
     return formatted;
   }
@@ -212,7 +206,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     for (let line of lines) {
       const trimmed = line.trim();
-      
+
+      // Leerzeilen innerhalb einer Liste ignorieren, Liste nicht unterbrechen
+      if (trimmed === '') {
+        if (inUl || inOl) {
+          continue;
+        }
+        result.push(line);
+        continue;
+      }
+
       const ulMatch = trimmed.match(/^[-*•]\s+(.+)/);
       const olMatch = trimmed.match(/^(\d+)\.\s+(.+)/);
       
@@ -290,14 +293,19 @@ document.addEventListener('DOMContentLoaded', () => {
           return match;
         }
 
+        // Plattformen mit sichtbarem Account-Namen in der URL
+        const handlePlatforms = new Set(['twitch.tv', 'instagram.com', 'tiktok.com', 'facebook.com', 'streamelements.com']);
+
         for (const [domain, info] of Object.entries(platforms)) {
           if (url.includes(domain)) {
-            // Spezielle Behandlung für Instagram-Links, korrektes Format sicherstellen
-            if (domain === 'instagram.com') {
-              const link = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="ai-platform-link">${info.name}</a>`;
-              return hasTrailingPunct ? link + match.slice(url.length) : link;
+            let label = info.name;
+            if (handlePlatforms.has(domain)) {
+              const handle = urlObj.pathname.split('/').filter(Boolean)[0];
+              if (handle && handle.length <= 30) {
+                label = handle;
+              }
             }
-            const link = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="ai-platform-link">${info.name}</a>`;
+            const link = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="ai-platform-link">${label}</a>`;
             return hasTrailingPunct ? link + match.slice(url.length) : link;
           }
         }
