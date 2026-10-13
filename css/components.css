@@ -123,6 +123,11 @@
   justify-content: center;
 }
 
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
 .hero-title {
   font-size: clamp(3.5rem, 15vw, 12rem);
   margin-bottom: var(--spacing-lg);
@@ -1982,6 +1987,9 @@ main {
   background-color: var(--midnight-base);
   position: relative;
   padding-top: 90px;
+  --mouse-x: -9999px;
+  --mouse-y: -9999px;
+  --spotlight-opacity: 0;
 }
 
 #home::before {
@@ -1991,6 +1999,22 @@ main {
   background-image: radial-gradient(rgba(244, 244, 240, 0.14) 1px, transparent 1px);
   background-size: 18px 18px;
   pointer-events: none;
+  z-index: 0;
+}
+
+/* Hero Spotlight: 游標周圍 280px 範圍內的點陣亮起琥珀色並微放大 */
+#home::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--neon-purple) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--spotlight-opacity, 0);
+  transition: opacity 0.3s ease-out;
+  -webkit-mask-image: radial-gradient(circle 280px at var(--mouse-x, -9999px) var(--mouse-y, -9999px), rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+  mask-image: radial-gradient(circle 280px at var(--mouse-x, -9999px) var(--mouse-y, -9999px), rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
 }
 
 #about {
