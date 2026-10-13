@@ -250,6 +250,11 @@ html.lenis body {
   height: auto;
 }
 
+/* Browser-Scroll-Anchoring kollidiert mit Lenis und verursacht Jitter */
+html.lenis {
+  overflow-anchor: none;
+}
+
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }

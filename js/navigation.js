@@ -11,12 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetElement = document.querySelector(targetId);
     if (targetElement) {
       const headerHeight = header ? header.offsetHeight : 0;
-      const targetPosition = targetElement.offsetTop - headerHeight;
       if (window.lenis) {
-        window.lenis.scrollTo(Math.max(0, targetPosition));
+        window.lenis.scrollTo(targetElement, { offset: -headerHeight });
       } else {
         window.scrollTo({
-          top: Math.max(0, targetPosition),
+          top: Math.max(0, targetElement.getBoundingClientRect().top + window.scrollY - headerHeight),
           behavior: 'smooth'
         });
       }
