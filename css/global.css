@@ -4,13 +4,14 @@
   box-sizing: border-box;
 }
 
-/* Remove browser native focus outline */
+/* Native focus outline reset with accessible keyboard focus-visible */
 *:focus {
-  outline: none !important;
+  outline: none;
 }
 
 *:focus-visible {
-  outline: none !important;
+  outline: 2px solid var(--color-border-purple);
+  outline-offset: 2px;
 }
 
 html {
@@ -107,11 +108,6 @@ a {
   color: var(--color-purple-primary);
   text-decoration: none;
   transition: color var(--transition-base);
-}
-
-a:focus:not(.skip-link):not(.logo):not(.contact-link):not(.spotify-link) {
-  outline: 2px solid var(--color-purple-primary);
-  outline-offset: 2px;
 }
 
 img {

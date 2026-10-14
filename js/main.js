@@ -26,20 +26,85 @@ document.addEventListener('DOMContentLoaded', () => {
     // Register GSAP ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
-    // Scroll Reveal Animation
-    const observerOptions = {
-      threshold: 0.1
-    };
+    // GSAP Preset 3: Setlist Staggered Reveal (齒輪滾輪瀑布揭示)
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      // 標題單獨輕快揭示
+      document.querySelectorAll('.section-title').forEach(title => {
+        gsap.from(title, {
+          scrollTrigger: {
+            trigger: title,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          },
+          y: 12,
+          opacity: 0,
+          duration: 0.35,
+          ease: 'power2.out'
+        });
+      });
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
+      // 列表容器 (Setlists: Bio, Tours, Works, Contact) 高阻尼齒輪咬合進場
+      const setlistConfigs = [
+        { trigger: '.bio-list', items: '.bio-row' },
+        { trigger: '.country-list', items: '.country-item' },
+        { trigger: '.works-list', items: '.work-row' },
+        { trigger: '.contact-links', items: '.contact-group' }
+      ];
+
+      setlistConfigs.forEach(conf => {
+        const triggerEl = document.querySelector(conf.trigger);
+        if (triggerEl) {
+          const items = triggerEl.querySelectorAll(conf.items);
+          if (items.length > 0) {
+            gsap.from(items, {
+              scrollTrigger: {
+                trigger: triggerEl,
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+              },
+              y: 10,
+              opacity: 0,
+              duration: 0.35,
+              stagger: 0.05,
+              ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+            });
+          }
         }
       });
-    }, observerOptions);
 
-    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+      // Werke 嵌入播放器雙欄 (Listen Grid) 與 Twitch 全寬區塊
+      const listenGrid = document.querySelector('.listen-grid');
+      if (listenGrid) {
+        gsap.from(listenGrid.children, {
+          scrollTrigger: {
+            trigger: listenGrid,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          },
+          y: 12,
+          opacity: 0,
+          duration: 0.4,
+          stagger: 0.08,
+          ease: 'power2.out'
+        });
+      }
+
+      const twitchContainer = document.querySelector('.spotify-embed-container.embed-full');
+      if (twitchContainer) {
+        gsap.from(twitchContainer, {
+          scrollTrigger: {
+            trigger: twitchContainer,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          },
+          y: 12,
+          opacity: 0,
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+      }
+    }
 
     // Hero Halftone Spotlight Interaction
     const heroSection = document.getElementById('home');

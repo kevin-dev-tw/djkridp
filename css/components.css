@@ -652,16 +652,16 @@
 
 .soundcloud-credits {
   margin-top: var(--spacing-sm);
-  text-align: center;
-  font-size: 10px;
+  text-align: left;
+  font-size: 11px;
   color: var(--on-surface-variant);
   line-break: anywhere;
   word-break: normal;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-family: Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif;
-  font-weight: 100;
+  font-family: var(--font-family-mono);
+  letter-spacing: 0.05em;
 }
 
 .soundcloud-credits a {
@@ -1439,9 +1439,6 @@
   font-size: var(--font-size-base);
   text-decoration: none;
   transition: color var(--transition-fast);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s ease-out forwards;
 }
 
 .contact-group .contact-link:last-of-type {
@@ -1481,14 +1478,6 @@
   transform: translateX(4px);
 }
 
-/* Animationsverzögerungen */
-.contact-link:nth-of-type(1) { animation-delay: 0.1s; }
-.contact-link:nth-of-type(2) { animation-delay: 0.2s; }
-.contact-link:nth-of-type(3) { animation-delay: 0.3s; }
-.contact-link:nth-of-type(4) { animation-delay: 0.4s; }
-.contact-link:nth-of-type(5) { animation-delay: 0.5s; }
-.contact-link:nth-of-type(6) { animation-delay: 0.6s; }
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1501,64 +1490,20 @@
   border-width: 0;
 }
 
-/* Scroll Reveal Animation */
+/* Scroll Reveal: Handled via GSAP Setlist Staggered Reveal */
 .scroll-reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.scroll-reveal.active {
   opacity: 1;
-  transform: translateY(0);
 }
-
-/* Staggered reveal for list children */
-.bio-list .bio-row,
-.country-list .country-item,
-.works-list .work-row,
-.contact-content .contact-link {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-
-.scroll-reveal.active .bio-row,
-.scroll-reveal.active .country-item,
-.scroll-reveal.active .work-row,
-.scroll-reveal.active .contact-link {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.scroll-reveal.active > :nth-child(2),
-.scroll-reveal.active .contact-links > :nth-child(2) { transition-delay: 0.06s; }
-.scroll-reveal.active > :nth-child(3),
-.scroll-reveal.active .contact-links > :nth-child(3) { transition-delay: 0.12s; }
-.scroll-reveal.active > :nth-child(4),
-.scroll-reveal.active .contact-links > :nth-child(4) { transition-delay: 0.18s; }
-.scroll-reveal.active > :nth-child(5),
-.scroll-reveal.active .contact-links > :nth-child(5) { transition-delay: 0.24s; }
-.scroll-reveal.active > :nth-child(6),
-.scroll-reveal.active .contact-links > :nth-child(6) { transition-delay: 0.3s; }
-.scroll-reveal.active > :nth-child(7),
-.scroll-reveal.active .contact-links > :nth-child(7) { transition-delay: 0.36s; }
-.scroll-reveal.active > :nth-child(8),
-.scroll-reveal.active .contact-links > :nth-child(8) { transition-delay: 0.42s; }
-.scroll-reveal.active > :nth-child(9),
-.scroll-reveal.active .contact-links > :nth-child(9) { transition-delay: 0.48s; }
-.scroll-reveal.active > :nth-child(10),
-.scroll-reveal.active .contact-links > :nth-child(10) { transition-delay: 0.54s; }
 
 @media (prefers-reduced-motion: reduce) {
   .scroll-reveal,
   .bio-list .bio-row,
   .country-list .country-item,
   .works-list .work-row,
-  .contact-content .contact-link {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  .contact-links .contact-link {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 

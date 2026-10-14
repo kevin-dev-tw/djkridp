@@ -21,7 +21,7 @@
   /* Text Colors — Paper Bone / Ash Grey / Acid Ink */
   --on-surface: #F4F4F0;
   --on-surface-strong: #F4F4F0;
-  --on-surface-variant: #71717A;
+  --on-surface-variant: #94949C;
   --on-background: #F4F4F0;
   --on-primary: #0A0A0B;
   --on-secondary: #0A0A0B;
@@ -38,7 +38,7 @@
   --inverse-primary: #B26F0F;
 
   /* Secondary Colors — neutral, secondary accent is banned */
-  --secondary: #71717A;
+  --secondary: #94949C;
   --secondary-container: #222227;
   --on-secondary-container: #F4F4F0;
   --secondary-fixed: #e4e4e7;
@@ -76,8 +76,8 @@
   --color-purple-dark: #E09320;
   --color-purple-darker: #B26F0F;
   --color-text-primary: #F4F4F0;
-  --color-text-secondary: #71717A;
-  --color-text-light: #71717A;
+  --color-text-secondary: #94949C;
+  --color-text-light: #94949C;
   --color-text-white: #F4F4F0;
   --color-bg-primary: #0A0A0B;
   --color-bg-secondary: #131316;
