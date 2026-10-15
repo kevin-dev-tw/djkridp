@@ -276,18 +276,18 @@ html.lenis {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--midnight-base);
+  background: var(--color-bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--neon-purple);
-  border-radius: 2px;
+  background: var(--outline-variant);
+  border-radius: 0;
 }
 
 @supports not selector(::-webkit-scrollbar) {
   html {
     scrollbar-width: thin;
-    scrollbar-color: var(--neon-purple) var(--midnight-base);
+    scrollbar-color: var(--outline-variant) var(--color-bg-primary);
   }
 }
 

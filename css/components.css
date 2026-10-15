@@ -340,9 +340,42 @@
 }
 
 
-.bio-list {
+.about-layout {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: var(--spacing-2xl);
+  align-items: start;
   margin-top: var(--spacing-xl);
+}
+
+.bio-list {
   border-top: 1px solid var(--glass-border);
+}
+
+/* About Visual: Archive Photo Frame */
+.about-visual {
+  position: sticky;
+  top: 100px;
+}
+
+.about-image-card {
+  background: var(--surface-container);
+  border: 1px solid var(--outline-variant);
+  overflow: hidden;
+}
+
+.about-image-wrapper {
+  overflow: hidden;
+  position: relative;
+  background: #000;
+}
+
+.about-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 4.6;
+  object-fit: cover;
+  display: block;
 }
 
 .bio-row {
