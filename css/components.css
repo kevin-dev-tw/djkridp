@@ -352,22 +352,9 @@
   border-top: 1px solid var(--glass-border);
 }
 
-/* About Visual: Archive Photo Frame */
+/* About Visual: Pure Image with Border */
 .about-visual {
-  position: sticky;
-  top: 100px;
-}
-
-.about-image-card {
-  background: var(--surface-container);
-  border: 1px solid var(--outline-variant);
-  overflow: hidden;
-}
-
-.about-image-wrapper {
-  overflow: hidden;
-  position: relative;
-  background: #000;
+  width: 100%;
 }
 
 .about-image {
@@ -376,6 +363,7 @@
   aspect-ratio: 4 / 4.6;
   object-fit: cover;
   display: block;
+  border: 1px solid var(--outline-variant);
 }
 
 .bio-row {
@@ -1963,6 +1951,7 @@ main {
   display: flex;
   align-items: center;
   background-color: var(--midnight-base);
+  background-image: radial-gradient(ellipse 90% 55% at 50% -10%, rgba(255, 177, 61, 0.12), transparent 75%);
   position: relative;
   padding-top: 90px;
   --mouse-x: -9999px;

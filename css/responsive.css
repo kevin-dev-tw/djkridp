@@ -111,10 +111,6 @@
     gap: var(--spacing-xl);
   }
 
-  .about-visual {
-    position: static;
-  }
-
   .listen-grid {
     grid-template-columns: 1fr;
   }
