@@ -3,9 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="DJKridP - Multi-Genre DJ and ex member of Future Breeze from Osnabrück, Germany">
+    <title>DJKridP | Multi-Genre DJ from Osnabrück</title>
+    <meta name="description" content="DJKridP – Multi-Genre DJ und ehemaliges Mitglied von Future Breeze aus Osnabrück, Deutschland. Live Sets, Releases, Playlists und Tourdaten.">
+    <meta name="keywords" content="DJKridP, DJ Krid P, Future Breeze, Multi-Genre DJ, Electronic Music, Techno, Trance, House, Osnabrück DJ, DJ Live Stream">
+    <meta name="author" content="DJKridP">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://djkridp.vercel.app/">
     <meta name="google-site-verification" content="ikA4eMUhLTjnxBSzCa1RpgmEg5SL_scysFac4hD4b-k" />
-    <title>DJKridP</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://djkridp.vercel.app/">
+    <meta property="og:title" content="DJKridP | Multi-Genre DJ from Osnabrück">
+    <meta property="og:description" content="Multi-Genre DJ und ehemaliges Mitglied von Future Breeze aus Osnabrück. Live Sets, Releases, Playlists und Tourdaten.">
+    <meta property="og:image" content="https://djkridp.vercel.app/images/offline.jpg">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:site_name" content="DJKridP">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://djkridp.vercel.app/">
+    <meta name="twitter:title" content="DJKridP | Multi-Genre DJ from Osnabrück">
+    <meta name="twitter:description" content="Multi-Genre DJ und ehemaliges Mitglied von Future Breeze aus Osnabrück. Live Sets, Releases, Playlists und Tourdaten.">
+    <meta name="twitter:image" content="https://djkridp.vercel.app/images/offline.jpg">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
     <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
@@ -149,6 +169,49 @@
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://djkridp.vercel.app/#person",
+          "name": "DJKridP",
+          "alternateName": ["DJ Krid P", "Krid P"],
+          "url": "https://djkridp.vercel.app/",
+          "image": "https://djkridp.vercel.app/images/Foto_539.jpg",
+          "jobTitle": "Multi-Genre DJ",
+          "description": "Multi-Genre DJ und ehemaliges Mitglied von Future Breeze aus Osnabrück, Deutschland.",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Osnabrück, Germany"
+          },
+          "sameAs": [
+            "https://www.twitch.tv/djkridp",
+            "https://www.instagram.com/dj_krid_p",
+            "https://www.tiktok.com/@krid_p",
+            "https://www.facebook.com/djkridp/",
+            "https://open.spotify.com/artist/22Mjn2JlrMAPgUEqozf4Re",
+            "https://music.apple.com/tw/artist/krid-p/66265843",
+            "https://music.youtube.com/channel/UCnEAOng3XE_Mb1ObbbxGAqg"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://djkridp.vercel.app/#website",
+          "url": "https://djkridp.vercel.app/",
+          "name": "DJKridP",
+          "description": "Offizielle Website von DJKridP – Multi-Genre DJ aus Osnabrück",
+          "inLanguage": "de",
+          "publisher": {
+            "@id": "https://djkridp.vercel.app/#person"
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
 
@@ -185,7 +248,7 @@
 
         <section id="about" class="section" aria-label="Über mich">
             <div class="container">
-                <h1 class="section-title scroll-reveal">Über mich</h1>
+                <h2 class="section-title scroll-reveal">Über mich</h2>
                 
                 <div class="about-layout">
                     <div class="bio-list scroll-reveal">
@@ -224,8 +287,10 @@
 
                     <div class="about-visual">
                         <img src="images/Foto_539.jpg" 
-                             alt="DJKridP Live Performance" 
+                             alt="DJKridP Live DJ Performance an den Turntables" 
                              class="about-image"
+                             width="400"
+                             height="460"
                              loading="lazy">
                     </div>
                 </div>
@@ -234,7 +299,7 @@
 
         <section id="tours" class="section" aria-label="Tours">
             <div class="container">
-                <h1 class="section-title scroll-reveal">Tours</h1>
+                <h2 class="section-title scroll-reveal">Tours</h2>
                 
                 <div class="country-list scroll-reveal">
                     <div class="country-item">
@@ -267,7 +332,7 @@
 
         <section id="works" class="section" aria-label="Werke">
             <div class="container">
-                <h1 class="section-title scroll-reveal">Werke</h1>
+                <h2 class="section-title scroll-reveal">Werke</h2>
                 
                 <div class="works-list scroll-reveal">
                     <div class="work-row">
@@ -389,7 +454,9 @@
                     <!-- Offline-Vorschau anzeigen -->
                     <div id="twitch-offline-view" style="display: block;">
                         <img src="images/offline.jpg" 
-                             alt="Twitch Preview" 
+                             alt="DJKridP Twitch Stream Offline Vorschau" 
+                             width="1000"
+                             height="562"
                              style="width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block;"
                              loading="lazy"
                              onerror="this.src='https://via.placeholder.com/1000x450/1a1a1a/9146FF?text=OFFLINE'">
@@ -415,7 +482,7 @@
         <section id="contact" class="section" aria-label="Kontakt">
             <div class="container">
                 <div class="contact-content scroll-reveal">
-                    <h1 class="section-title">Kontakt</h1>
+                    <h2 class="section-title">Kontakt</h2>
                     <div class="contact-links">
                     <div class="contact-group">
                         <p class="contact-group-label">Folgen</p>
