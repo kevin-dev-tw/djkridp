@@ -114,10 +114,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Hero Halftone Spotlight Interaction
+    // Hero Halftone Spotlight Interaction (RAF Throttled without forced reflow)
     const heroSection = document.getElementById('home');
     if (heroSection && window.matchMedia('(pointer: fine)').matches) {
       let isHeroHovered = false;
+      let rafId = null;
+      let mouseX = -9999;
+      let mouseY = -9999;
+
+      const updateSpotlight = () => {
+        heroSection.style.setProperty('--mouse-x', `${mouseX}px`);
+        heroSection.style.setProperty('--mouse-y', `${mouseY}px`);
+        rafId = null;
+      };
 
       heroSection.addEventListener('pointerenter', () => {
         isHeroHovered = true;
@@ -125,19 +134,25 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       heroSection.addEventListener('pointermove', (e) => {
-        const rect = heroSection.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        heroSection.style.setProperty('--mouse-x', `${x}px`);
-        heroSection.style.setProperty('--mouse-y', `${y}px`);
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        if (!rafId) {
+          rafId = requestAnimationFrame(updateSpotlight);
+        }
+
         if (!isHeroHovered) {
           isHeroHovered = true;
           heroSection.style.setProperty('--spotlight-opacity', '1');
         }
-      });
+      }, { passive: true });
 
       heroSection.addEventListener('pointerleave', () => {
         isHeroHovered = false;
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
         heroSection.style.setProperty('--spotlight-opacity', '0');
       });
     }

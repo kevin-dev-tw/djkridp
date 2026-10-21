@@ -4,18 +4,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
   const nav = document.querySelector('.nav');
   const header = document.querySelector('.header');
-  const headerHeight = header ? header.offsetHeight : 0;
+  let cachedHeaderHeight = header ? header.offsetHeight : 0;
+  window.addEventListener('resize', () => {
+    if (header) cachedHeaderHeight = header.offsetHeight;
+  }, { passive: true });
   const navOverlay = document.querySelector('.nav-overlay');
 
   function smoothScrollTo(targetId) {
     const targetElement = document.querySelector(targetId);
     if (targetElement) {
-      const headerHeight = header ? header.offsetHeight : 0;
       if (window.lenis) {
-        window.lenis.scrollTo(targetElement, { offset: -headerHeight });
+        window.lenis.scrollTo(targetElement, { offset: -cachedHeaderHeight });
       } else {
         window.scrollTo({
-          top: Math.max(0, targetElement.getBoundingClientRect().top + window.scrollY - headerHeight),
+          top: Math.max(0, targetElement.getBoundingClientRect().top + window.scrollY - cachedHeaderHeight),
           behavior: 'smooth'
         });
       }
