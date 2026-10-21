@@ -52,15 +52,13 @@ class TwitchStatusChecker {
     }
 
     ensurePlayerLoaded() {
-        // iframe-Player wird automatisch geladen, keine zusätzliche Initialisierung erforderlich
-        console.log('Twitch iframe-Player ist bereit');
-        
-        // Sicherstellen, dass der iframe korrekt geladen ist
-        const iframe = this.liveView.querySelector('iframe[src*="player.twitch.tv"]');
+        const iframe = this.liveView.querySelector('iframe');
         if (iframe) {
-            console.log('Twitch Player iframe gefunden und bereit');
-        } else {
-            console.log('Twitch Player iframe nicht gefunden');
+            const dataSrc = iframe.getAttribute('data-src');
+            if (dataSrc && !iframe.getAttribute('src')) {
+                iframe.setAttribute('src', dataSrc);
+                console.log('Twitch iframe src dynamisch gesetzt (Live-Modus)');
+            }
         }
     }
 
