@@ -2,6 +2,31 @@ const express = require('express');
 const cors = require('cors');
 const { Groq } = require('groq-sdk');
 const path = require('path');
+const fs = require('fs');
+
+// Lokale .env-Datei parsen, falls vorhanden
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  try {
+    const envContent = fs.readFileSync(envPath, 'utf8');
+    envContent.split(/\r?\n/).forEach(line => {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith('#')) {
+        const eqIdx = trimmed.indexOf('=');
+        if (eqIdx !== -1) {
+          const key = trimmed.slice(0, eqIdx).trim();
+          const val = trimmed.slice(eqIdx + 1).trim().replace(/^["'](.*)["']$/, '$1');
+          if (key && !process.env[key]) {
+            process.env[key] = val;
+          }
+        }
+      }
+    });
+    console.log('✅ Lokale .env erfolgreich geladen');
+  } catch (err) {
+    console.warn('⚠️ Warnung beim Lesen der .env:', err.message);
+  }
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,15 +58,14 @@ app.get('/images/web-app-manifest-512x512.png', (req, res) => {
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
+let groq = null;
 if (!GROQ_API_KEY) {
-  console.error('Fehler: GROQ_API_KEY Umgebungsvariable nicht gesetzt');
-  console.error('Bitte setzen Sie die Umgebungsvariable GROQ_API_KEY auf der Deployment-Plattform');
-  process.exit(1);
+  console.warn('⚠️ Warnung: GROQ_API_KEY nicht gefunden. KI-Chat-Funktion ist lokal deaktiviert.');
+} else {
+  groq = new Groq({
+    apiKey: GROQ_API_KEY
+  });
 }
-
-const groq = new Groq({
-  apiKey: GROQ_API_KEY
-});
 
 const WEBSITE_INFO = `DJKridP ist ein Multi-Genre DJ aus Osnabrück, Deutschland. Er ist ehemaliges Mitglied von Future Breeze. Seit Ende der 90er Jahre spielt er DJ-Sets in Deutschland, Kanada, Südafrika, Japan, Russland, Polen, Spanien, Italien und vielen weiteren Ländern. Er hat über 20 Jahre Erfahrung als DJ. Seine Werke umfassen Multi-Genre Sets, Future Breeze Projekte und Live Performances auf internationalen Bühnen. Kontakt: Twitch (https://www.twitch.tv/djkridp), Instagram (https://www.instagram.com/dj_krid_p), TikTok (https://www.tiktok.com/@krid_p), Facebook (https://www.facebook.com/djkridp/), WhatsApp (https://www.whatsapp.com/channel/0029Vb6FeSm9hXF7H6qEIk3k), Discord (https://discord.gg/3xmER2Gc3B), Spotify (https://open.spotify.com/user/eluw6nthyi6sd3wjcydx6rojx), StreamElements (https://streamelements.com/djkridp/tip).`;
 
@@ -51,6 +75,12 @@ app.post('/api/chat', async (req, res) => {
   res.setHeader('Connection', 'keep-alive');
 
   try {
+    if (!groq) {
+      res.write(`data: ${JSON.stringify({ error: 'GROQ_API_KEY nicht konfiguriert' })}\n\n`);
+      res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+      return res.end();
+    }
+
     const { message, history = [] } = req.body;
 
     if (!message) {

@@ -83,28 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
 
-        // Werke 嵌入播放器雙欄 (Listen Grid) 與 Twitch 全寬區塊
-        const listenGrid = document.querySelector('.listen-grid');
-        if (listenGrid) {
-          gsap.from(listenGrid.children, {
+        // Werke 嵌入媒體區塊 (SoundCloud 專輯 & Twitch 實況)
+        const mediaContainers = document.querySelectorAll('.soundcloud-embed-container, .twitch-embed-container');
+        mediaContainers.forEach(container => {
+          gsap.from(container, {
             scrollTrigger: {
-              trigger: listenGrid,
-              start: 'top 85%',
-              toggleActions: 'play none none none'
-            },
-            y: 12,
-            opacity: 0,
-            duration: 0.4,
-            stagger: 0.08,
-            ease: 'power2.out'
-          });
-        }
-
-        const twitchContainer = document.querySelector('.spotify-embed-container.embed-full');
-        if (twitchContainer) {
-          gsap.from(twitchContainer, {
-            scrollTrigger: {
-              trigger: twitchContainer,
+              trigger: container,
               start: 'top 85%',
               toggleActions: 'play none none none'
             },
@@ -113,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             duration: 0.4,
             ease: 'power2.out'
           });
-        }
+        });
       });
     }
 

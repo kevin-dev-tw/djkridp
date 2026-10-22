@@ -369,100 +369,9 @@
                     </div>
                 </div>
 
-                <div class="listen-grid">
-                <div class="spotify-embed-container">
-                    <h2 id="spotify-title">DJKridP Spotify Playlist</h2>
-                    <iframe 
-                        id="spotify-iframe"
-                        title="DJKridP Spotify Playlist Player"
-                        src="" 
-                        width="100%" 
-                        height="450" 
-                        frameBorder="0" 
-                        allowfullscreen="" 
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                        loading="lazy">
-                    </iframe>
-                </div>
-                
-                <!-- Dynamic Spotify Playlist Script -->
-                <script>
-                    // Playlist mapping by day of week
-                    const weeklyPlaylists = {
-                        2: { // Tuesday (Tuesday = 2 in JavaScript)
-                            id: '2gczqzaKrzs4yVsWpEnCzX',
-                            title: 'DJKridP Tuesday Playlist',
-                            url: 'https://open.spotify.com/playlist/2gczqzaKrzs4yVsWpEnCzX'
-                        },
-                        3: { // Wednesday
-                            id: '5ycieSbglZB0MN63agWIEQ',
-                            title: 'DJKridP Wednesday Playlist',
-                            url: 'https://open.spotify.com/playlist/5ycieSbglZB0MN63agWIEQ'
-                        },
-                        4: { // Thursday
-                            id: '2IsQ8BxONRvSPHXJjiUEbj',
-                            title: 'DJKridP Thursday Playlist',
-                            url: 'https://open.spotify.com/playlist/2IsQ8BxONRvSPHXJjiUEbj'
-                        }
-                    };
-                    
-                    // Default playlist for other days
-                    const defaultPlaylist = {
-                        id: '2IsQ8BxONRvSPHXJjiUEbj',
-                        title: 'DJKridP Multi-Genre Playlist',
-                        url: 'https://open.spotify.com/playlist/2IsQ8BxONRvSPHXJjiUEbj'
-                    };
-                    
-                    // Function to load playlist based on current day
-                    function loadDailyPlaylist() {
-                        const currentDay = new Date().getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-                        const playlist = weeklyPlaylists[currentDay] || defaultPlaylist;
-                        
-                        // Update title
-                        const titleElement = document.getElementById('spotify-title');
-                        if (titleElement) {
-                            titleElement.innerHTML = `Für die vollständige Version besuche mein <a href="https://open.spotify.com/user/eluw6nthyi6sd3wjcydx6rojx?nd=1&dlsi=2defb229291d40e7" target="_blank" rel="noopener noreferrer" class="spotify-link">Spotify</a>`;
-                        }
-                        
-                        // Update iframe src when near viewport
-                        const iframe = document.getElementById('spotify-iframe');
-                        if (iframe) {
-                            const embedUrl = `https://open.spotify.com/embed/playlist/${playlist.id}?utm_source=generator&theme=0&go=1&sp_cid=6a44e72ca19d63d9a09055fb8b8df3ac&t=11&nd=1&dlsi=bad78d7e70aa4a2e`;
-                            if ('IntersectionObserver' in window) {
-                                const observer = new IntersectionObserver((entries, obs) => {
-                                    entries.forEach(entry => {
-                                        if (entry.isIntersecting) {
-                                            iframe.src = embedUrl;
-                                            obs.unobserve(iframe);
-                                        }
-                                    });
-                                }, { rootMargin: '300px' });
-                                observer.observe(iframe);
-                            } else {
-                                iframe.src = embedUrl;
-                            }
-                        }
-                        
-                        console.log(`Loaded playlist for day ${currentDay}: ${playlist.title}`);
-                    }
-                    
-                    // Load playlist when DOM is ready
-                    document.addEventListener('DOMContentLoaded', function() {
-                        loadDailyPlaylist();
-                    });
-                    
-                    // Optional: Update playlist at midnight
-                    setInterval(function() {
-                        const now = new Date();
-                        if (now.getHours() === 0 && now.getMinutes() === 0) {
-                            loadDailyPlaylist();
-                        }
-                    }, 60000); // Check every minute
-                </script>
-
                 <!-- SoundCloud Album Embed -->
-                <div class="soundcloud-embed-container">
-                    <h2 class="soundcloud-title"><a href="https://hypeddit.com/u1shci" target="_blank" rel="noopener noreferrer" class="soundcloud-album-link">Mind & Soul - Album (Click to view)</a></h2>
+                <div class="soundcloud-embed-container embed-full">
+                    <h2 class="soundcloud-title"><a href="https://hypeddit.com/u1shci" target="_blank" rel="noopener noreferrer" class="soundcloud-album-link">Mind &amp; Soul - Album (Click to view)</a></h2>
                     <iframe id="soundcloud-iframe" title="SoundCloud Mind &amp; Soul Album Player" width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" loading="lazy" data-src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2079462015&color=%23d3c3c5&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true" src=""></iframe>
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
@@ -486,9 +395,8 @@
                         <a href="https://soundcloud.com/wlt-records" title="We Love Trance Records" target="_blank" style="color: #cccccc; text-decoration: none;">We Love Trance Records</a> · <a href="https://soundcloud.com/wlt-records/sets/mind-soul-417101974" title="Mind &amp; Soul" target="_blank" style="color: #cccccc; text-decoration: none;">Mind &amp; Soul</a>
                     </div>
                 </div>
-                </div>
 
-                <div class="spotify-embed-container embed-full">
+                <div class="twitch-embed-container embed-full">
                     <h2>Live Streaming auf <a href="https://www.twitch.tv/djkridp" target="_blank" rel="noopener noreferrer" class="twitch-link">Twitch</a></h2>
                     
                     <!-- Offline-Vorschau anzeigen -->

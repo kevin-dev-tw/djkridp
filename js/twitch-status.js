@@ -52,14 +52,14 @@ class TwitchStatusChecker {
     }
 
     ensurePlayerLoaded() {
-        const iframe = this.liveView.querySelector('iframe');
-        if (iframe) {
+        const iframes = this.liveView.querySelectorAll('iframe[data-src]');
+        iframes.forEach(iframe => {
             const dataSrc = iframe.getAttribute('data-src');
             if (dataSrc && !iframe.getAttribute('src')) {
                 iframe.setAttribute('src', dataSrc);
-                console.log('Twitch iframe src dynamisch gesetzt (Live-Modus)');
+                console.log(`Twitch element (${iframe.title || 'iframe'}) dynamisch geladen`);
             }
-        }
+        });
     }
 
     startAutoCheck() {

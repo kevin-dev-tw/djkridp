@@ -111,10 +111,6 @@
     gap: var(--spacing-xl);
   }
 
-  .listen-grid {
-    grid-template-columns: 1fr;
-  }
-  
   .contact-link {
     width: 100%;
   }
@@ -184,19 +180,11 @@
   .country-item {
     padding: var(--spacing-md);
   }
-  
-  .spotify-embed-container {
+
+  .soundcloud-embed-container,
+  .twitch-embed-container {
     padding: var(--spacing-sm);
     margin-top: var(--spacing-2xl);
-  }
-  
-  .spotify-embed-container h2 {
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .spotify-embed-container iframe {
-    height: 450px;
   }
 }
 
