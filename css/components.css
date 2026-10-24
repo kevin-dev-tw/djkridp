@@ -89,6 +89,42 @@
   border-bottom-color: var(--color-border-purple);
 }
 
+.lang-switch {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-family-mono);
+}
+
+.lang-btn {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  background: none;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-xs);
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.lang-btn + .lang-btn {
+  border-left: 1px solid var(--outline-variant);
+}
+
+.lang-btn:hover {
+  color: var(--on-surface);
+}
+
+.lang-btn[aria-pressed="true"] {
+  color: var(--color-border-purple);
+}
+
+.lang-switch-menu {
+  display: none;
+}
+
 .hero {
   text-align: left;
   position: relative;

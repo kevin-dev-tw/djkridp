@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const tr = (key, fallback) => (typeof window.t === 'function' ? window.t(key) : fallback);
   const navLinks = document.querySelectorAll('.nav-link');
   const logo = document.querySelector('.logo');
   const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
   const nav = document.querySelector('.nav');
   const header = document.querySelector('.header');
+
+  document.body.style.overflow = '';
+
   let cachedHeaderHeight = header ? header.offsetHeight : 0;
   window.addEventListener('resize', () => {
     if (header) cachedHeaderHeight = header.offsetHeight;
@@ -12,14 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function smoothScrollTo(targetId) {
     const targetElement = document.querySelector(targetId);
     if (targetElement) {
-      if (window.lenis) {
-        window.lenis.scrollTo(targetElement, { offset: -cachedHeaderHeight });
-      } else {
-        window.scrollTo({
-          top: Math.max(0, targetElement.getBoundingClientRect().top + window.scrollY - cachedHeaderHeight),
-          behavior: 'smooth'
-        });
-      }
+      window.scrollTo({
+        top: Math.max(0, targetElement.getBoundingClientRect().top + window.scrollY - cachedHeaderHeight),
+        behavior: 'smooth'
+      });
     }
   }
 
@@ -28,10 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileMenuToggle) {
       mobileMenuToggle.classList.add('active');
       mobileMenuToggle.setAttribute('aria-expanded', 'true');
-      mobileMenuToggle.setAttribute('aria-label', 'Menü schließen');
+      mobileMenuToggle.setAttribute('aria-label', tr('nav.menuClose', 'Menü schließen'));
     }
     document.body.style.overflow = 'hidden';
-    if (window.lenis) window.lenis.stop();
     const firstLink = nav.querySelector('.nav-link');
     if (firstLink) firstLink.focus({ preventScroll: true });
   }
@@ -41,17 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileMenuToggle) {
       mobileMenuToggle.classList.remove('active');
       mobileMenuToggle.setAttribute('aria-expanded', 'false');
-      mobileMenuToggle.setAttribute('aria-label', 'Menü öffnen');
+      mobileMenuToggle.setAttribute('aria-label', tr('nav.menuOpen', 'Menü öffnen'));
       if (restoreFocus) {
         mobileMenuToggle.focus();
       }
     }
     document.body.style.overflow = '';
-    if (window.lenis) window.lenis.start();
   }
 
   function isMobileMenuActive() {
-    return nav && nav.classList.contains('active') && window.innerWidth <= 768;
+    return nav && nav.classList.contains('active');
   }
 
   // Logo-Klick behandeln
@@ -76,6 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
           closeMenu();
         }
         smoothScrollTo(href);
+      }
+    });
+  });
+
+  nav.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (isMobileMenuActive()) {
+        closeMenu();
       }
     });
   });
@@ -110,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     if (e.key === 'Tab') {
-      const focusables = [mobileMenuToggle, ...nav.querySelectorAll('.nav-link')].filter(Boolean);
+      const focusables = [mobileMenuToggle, ...nav.querySelectorAll('.nav-link, .lang-btn')].filter(Boolean);
       if (focusables.length === 0) return;
       const first = focusables[0];
       const last = focusables[focusables.length - 1];
@@ -130,11 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (mobileMenuToggle) {
         mobileMenuToggle.classList.remove('active');
         mobileMenuToggle.setAttribute('aria-expanded', 'false');
-        mobileMenuToggle.setAttribute('aria-label', 'Menü öffnen');
+        mobileMenuToggle.setAttribute('aria-label', tr('nav.menuOpen', 'Menü öffnen'));
       }
       document.body.style.overflow = '';
-      if (window.lenis) window.lenis.start();
     }
+  });
+
+  document.addEventListener('langchange', () => {
+    if (!mobileMenuToggle) return;
+    const expanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+    mobileMenuToggle.setAttribute('aria-label', tr(expanded ? 'nav.menuClose' : 'nav.menuOpen', 'Menü öffnen'));
   });
 
   // Hash-basiertes Scrollen nur für manuelle Navigation, nicht für Reload

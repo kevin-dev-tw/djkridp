@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const emptyState = document.getElementById('ai-chat-empty-state');
 
   const API_URL = '/api/chat';
+  const tr = (key, fallback) => (typeof window.t === 'function' ? window.t(key) : fallback);
+  const currentLang = () => window.I18N_LANG || 'de';
 
   const STORAGE_KEY = 'ai_chat_history';
 
@@ -464,13 +466,13 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message, history: historyForAPI }),
+        body: JSON.stringify({ message, history: historyForAPI, lang: currentLang() }),
       });
       console.log('Response Status:', response.status, response.statusText);
 
       if (!response.ok) {
         const errorText = await response.text();
-        let errorMessage = 'API-Anfrage fehlgeschlagen';
+        let errorMessage = tr('chat.apiError', 'API-Anfrage fehlgeschlagen');
         try {
           const errorData = JSON.parse(errorText);
           errorMessage = errorData.error || errorMessage;
@@ -488,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const { done, value } = await reader.read();
         if (done) {
           if (fullResponse === '' && !assistantMessageDiv.textContent) {
-            assistantMessageDiv.innerHTML = linkify('Keine Antwort erhalten. Bitte versuchen Sie es erneut.');
+            assistantMessageDiv.innerHTML = linkify(tr('chat.noResponse', 'Keine Antwort erhalten. Bitte versuchen Sie es erneut.'));
             assistantMessageDiv.classList.remove('typing');
           }
           break;
@@ -525,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
               if (data.done) {
                 assistantMessageDiv.classList.remove('typing');
                 if (fullResponse === '') {
-                  assistantMessageDiv.innerHTML = linkify('Keine Antwort erhalten.');
+                  assistantMessageDiv.innerHTML = linkify(tr('chat.noResponseShort', 'Keine Antwort erhalten.'));
                 }
                 break;
               }
@@ -552,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (fullResponse === '' && assistantMessageDiv.classList.contains('typing')) {
-        assistantMessageDiv.innerHTML = linkify('Keine Antwort erhalten. Bitte versuchen Sie es erneut.');
+        assistantMessageDiv.innerHTML = linkify(tr('chat.noResponse', 'Keine Antwort erhalten. Bitte versuchen Sie es erneut.'));
         assistantMessageDiv.classList.remove('typing');
         messageHistory.pop();
       } else if (fullResponse) {
@@ -565,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateEmptyState();
     } catch (error) {
       console.error('Fehler beim Senden der Nachricht:', error);
-      const errorMessage = error.message || 'Entschuldigung, ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
+      const errorMessage = error.message || tr('chat.sendError', 'Entschuldigung, ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
       assistantMessageDiv.innerHTML = formatReply(errorMessage);
       assistantMessageDiv.classList.remove('typing');
       if (messageHistory[assistantHistoryIndex]) {

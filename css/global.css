@@ -16,10 +16,23 @@
 
 html {
   font-size: 16px;
-  /* scroll-behavior: smooth; */ /* Kann Browser-Scroll-Restoration stören */
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+html[lang="ja"] {
+  --font-family-primary: 'Hanken Grotesk', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
+  --font-family-display: 'Archivo Black', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', monospace;
+  --font-family-label: 'JetBrains Mono', 'Noto Sans JP', monospace;
 }
 
 body {
@@ -202,29 +215,6 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--spacing-lg);
-}
-
-/* Smooth scrolling handled by Lenis */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-/* Browser-Scroll-Anchoring kollidiert mit Lenis und verursacht Jitter */
-html.lenis {
-  overflow-anchor: none;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
 }
 
 /* Custom Scrollbar */
