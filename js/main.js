@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.smoother = ScrollSmoother.create({
           smooth: prefersReducedMotion ? 0 : 1.1,
           effects: false,
-          normalizeScroll: true
+          normalizeScroll: { allowNestedScroll: true }
         });
       }
     }
