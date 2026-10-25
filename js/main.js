@@ -1,8 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
   try {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
     // Register GSAP ScrollTrigger
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
+      gsap.ticker.lagSmoothing(0);
+
+      if (typeof ScrollSmoother !== 'undefined') {
+        if (typeof ScrollToPlugin !== 'undefined') {
+          gsap.registerPlugin(ScrollToPlugin);
+        }
+        window.smoother = ScrollSmoother.create({
+          smooth: prefersReducedMotion ? 0 : 1.1,
+          effects: false,
+          normalizeScroll: true
+        });
+      }
     }
 
     if (document.fonts && document.fonts.ready) {
@@ -14,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // GSAP Preset 3: Setlist Staggered Reveal (齒輪滾輪瀑布揭示)
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!prefersReducedMotion && typeof gsap !== 'undefined') {
       // 延後一影格待首屏繪製完成後再註冊 ScrollTrigger，避免初始化阻塞首屏算繪
       requestAnimationFrame(() => {

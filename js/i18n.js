@@ -1,9 +1,9 @@
-// DJKridP i18n — 單頁即時語言切換（DE / EN / JA）
+// DJKridP i18n — 單頁即時語言切換（DE / EN）
 // 用法：HTML 元素加 data-i18n="key"（textContent）、data-i18n-html="key"（innerHTML）、
 // data-i18n-attr="aria-label:key;placeholder:key2"（屬性翻譯）
 (function () {
   const LANG_KEY = 'djkridp_lang';
-  const SUPPORTED = ['de', 'en', 'ja'];
+  const SUPPORTED = ['de', 'en'];
 
   const I18N = {
     de: {
@@ -162,85 +162,6 @@
       'chat.noResponseShort': 'No response received.',
       'chat.apiError': 'API request failed',
       'chat.sendError': 'Sorry, an error occurred. Please try again later.'
-    },
-
-    ja: {
-      'meta.title': 'DJKridP | オスナブリュックのマルチジャンルDJ',
-      'meta.description': 'DJKridP – ドイツ・オスナブリュック出身のマルチジャンルDJ、Future Breezeの元メンバー。ライブセット、リリース、プレイリスト、ツアー情報。',
-
-      'nav.home': 'ホーム',
-      'nav.about': '私について',
-      'nav.tours': 'ツアー',
-      'nav.works': '作品',
-      'nav.contact': 'お問い合わせ',
-      'nav.menuOpen': 'メニューを開く',
-      'nav.menuClose': 'メニューを閉じる',
-      'nav.langLabel': '言語を選択',
-
-      'hero.subtitle': 'マルチジャンルDJ、Future Breezeの元メンバー。ドイツ・オスナブリュック出身',
-
-      'about.title': '私について',
-      'about.imgAlt': 'ターンテーブルでのDJKridPライブDJパフォーマンス',
-      'bio1.h': '90年代後半から活動',
-      'bio1.p': 'DJとしてのキャリアは90年代後半に始まり、数多くの国々へと導かれました。Future Breezeの元メンバーとしてエレクトロニック・ミュージックシーンで経験を積み、現在もその活動を続けています。',
-      'bio2.h': 'Future Breezeの元メンバー',
-      'bio2.p': '90年代後半以来、ドイツ、カナダ、南アフリカ、日本、ロシア、ポーランド、スペイン、イタリアなど、多くの国々でDJセットを披露してきました。',
-      'bio3.h': '国際的な経験',
-      'bio3.p': '90年代後半から国際的なステージで演奏し、さまざまな国や文化で音楽を共有してきました。どのツアーも唯一無二の経験であり、私の音楽性と多様なジャンルへの理解を深めてくれました。',
-      'bio4.h': 'ドイツ、オスナブリュック',
-      'bio4.p': 'マルチジャンルDJとして、多彩な音楽セレクションをセットに取り入れています。90年代の活動開始から現在まで、国際的なステージでパフォーマンスを続けてきた経験があります。',
-
-      'tours.title': 'ツアー',
-      'country.de': 'ドイツ',
-      'country.ca': 'カナダ',
-      'country.za': '南アフリカ',
-      'country.jp': '日本',
-      'country.ru': 'ロシア',
-      'country.pl': 'ポーランド',
-      'country.es': 'スペイン',
-      'country.it': 'イタリア',
-
-      'works.title': '作品',
-      'work1.h': 'マルチジャンルセット',
-      'work1.p': 'マルチジャンルDJとして、エレクトロニック・ミュージックから多彩なジャンルまで、私の音楽経験の多様性を反映したさまざまなスタイルをセットで披露しています。',
-      'work2.h': 'Future Breeze',
-      'work2.p': 'Future Breezeの元メンバーとして、エレクトロニック・ミュージックシーンを形作ったプロジェクトの一員でした。この経験は私の音楽的成長に大きな影響を与えました。',
-      'work3.h': 'ライブパフォーマンス',
-      'work3.p': '私のライブパフォーマンスには、数多くの国々の国際的なステージでのDJセットが含まれます。どのパフォーマンスも、観客をさまざまな音楽スタイルで結びつける唯一無二の体験です。',
-      'sc.title': 'Mind & Soul – アルバム（クリックで表示）',
-      'twitch.title': '<a href="https://www.twitch.tv/djkridp" target="_blank" rel="noopener noreferrer" class="twitch-link">Twitch</a> でライブ配信',
-      'twitch.imgAlt': 'DJKridP Twitch オフライン プレビュー',
-
-      'contact.title': 'お問い合わせ',
-      'contact.follow': 'フォロー',
-      'contact.music': 'ミュージック',
-      'contact.support': 'サポート',
-      'contact.channel': 'チャンネル',
-      'contact.server': 'サーバー',
-
-      'chat.buttonAria': 'AIアシスタント',
-      'chat.title': 'AIアシスタント',
-      'chat.clear': '履歴を削除',
-      'chat.close': '閉じる',
-      'chat.welcome': 'ようこそ',
-      'chat.ask': '質問してください：',
-      'chat.q1': 'DJキャリアについて',
-      'chat.q1q': 'DJキャリアについて教えてください',
-      'chat.q2': 'Future Breezeとは？',
-      'chat.q2q': 'Future Breezeとは何ですか？',
-      'chat.q3': '音楽スタイル',
-      'chat.q3q': 'どんな音楽スタイルを演奏しますか？',
-      'chat.placeholder': '質問を入力してください…',
-      'chat.inputAria': 'メッセージを入力',
-      'chat.send': '送信',
-      'chat.dialogTitle': '履歴を削除',
-      'chat.dialogBody': '本当にすべての履歴を削除しますか？この操作は元に戻せません。',
-      'chat.cancel': 'キャンセル',
-      'chat.confirm': '削除',
-      'chat.noResponse': '応答がありません。もう一度お試しください。',
-      'chat.noResponseShort': '応答がありません。',
-      'chat.apiError': 'APIリクエストに失敗しました',
-      'chat.sendError': '申し訳ありません。エラーが発生しました。後でもう一度お試しください。'
     }
   };
 
@@ -290,10 +211,11 @@
       });
     });
 
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      const active = btn.dataset.lang === lang;
-      btn.classList.toggle('active', active);
-      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    document.querySelectorAll('.lang-select .lang-current').forEach(el => {
+      el.textContent = lang.toUpperCase();
+    });
+    document.querySelectorAll('.lang-option').forEach(opt => {
+      opt.setAttribute('aria-selected', opt.dataset.lang === lang ? 'true' : 'false');
     });
 
     try {
@@ -307,9 +229,54 @@
     }
   }
 
+  function openDropdown(dd) {
+    dd.classList.add('open');
+    const btn = dd.querySelector('.lang-select');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeDropdown(dd) {
+    dd.classList.remove('open');
+    const btn = dd.querySelector('.lang-select');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+
+  function closeAllDropdowns() {
+    document.querySelectorAll('.lang-dropdown.open').forEach(closeDropdown);
+  }
+
   document.addEventListener('click', e => {
-    const btn = e.target.closest('.lang-btn');
-    if (btn && btn.dataset.lang) applyLang(btn.dataset.lang);
+    const opt = e.target.closest('.lang-option');
+    if (opt && opt.dataset.lang) {
+      applyLang(opt.dataset.lang);
+      closeAllDropdowns();
+      return;
+    }
+    const toggle = e.target.closest('.lang-select');
+    if (toggle) {
+      const dd = toggle.closest('.lang-dropdown');
+      if (!dd) return;
+      if (dd.classList.contains('open')) {
+        closeDropdown(dd);
+      } else {
+        closeAllDropdowns();
+        openDropdown(dd);
+      }
+      return;
+    }
+    closeAllDropdowns();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    const open = document.querySelectorAll('.lang-dropdown.open');
+    if (!open.length) return;
+    open.forEach(dd => {
+      closeDropdown(dd);
+      const btn = dd.querySelector('.lang-select');
+      if (btn) btn.focus({ preventScroll: true });
+    });
+    e.stopImmediatePropagation();
   });
 
   document.addEventListener('DOMContentLoaded', () => {

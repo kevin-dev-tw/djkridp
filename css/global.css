@@ -16,23 +16,10 @@
 
 html {
   font-size: 16px;
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-html[lang="ja"] {
-  --font-family-primary: 'Hanken Grotesk', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
-  --font-family-display: 'Archivo Black', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
-  --font-family-mono: 'JetBrains Mono', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', monospace;
-  --font-family-label: 'JetBrains Mono', 'Noto Sans JP', monospace;
+  overflow-anchor: none;
 }
 
 body {
@@ -217,31 +204,26 @@ button {
   padding: 0 var(--spacing-lg);
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+#smooth-content {
+  overflow: visible;
+  width: 100%;
 }
 
-::-webkit-scrollbar-button {
+/* Custom Scrollbar */
+::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--outline-variant);
-  border-radius: 0;
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 @supports not selector(::-webkit-scrollbar) {
   html {
-    scrollbar-width: thin;
-    scrollbar-color: var(--outline-variant) var(--color-bg-primary);
+    scrollbar-width: none;
   }
 }
 

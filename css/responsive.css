@@ -95,28 +95,20 @@
 
   .mobile-menu-toggle {
     display: inline-flex;
+    order: 2;
   }
 
   .lang-switch-header {
-    display: none;
-  }
-
-  .lang-switch-menu {
     display: flex;
-    width: 100%;
-    margin-top: var(--spacing-2xl);
-    border-top: 1px solid var(--outline-variant);
+    order: 1;
+    margin-left: auto;
+    margin-right: var(--spacing-sm);
+    position: relative;
+    z-index: 2;
   }
 
-  .lang-switch-menu .lang-btn {
-    flex: 1;
-    padding: var(--spacing-md) var(--spacing-sm);
-    font-size: var(--font-size-sm);
-    text-align: center;
-  }
-
-  .lang-switch-menu .lang-btn[aria-pressed="true"] {
-    background-color: var(--surface-container);
+  .lang-switch-header .lang-select {
+    min-height: 44px;
   }
 
   @media (prefers-reduced-motion: reduce) {

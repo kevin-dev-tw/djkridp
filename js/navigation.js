@@ -16,10 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function smoothScrollTo(targetId) {
     const targetElement = document.querySelector(targetId);
     if (targetElement) {
-      window.scrollTo({
-        top: Math.max(0, targetElement.getBoundingClientRect().top + window.scrollY - cachedHeaderHeight),
-        behavior: 'smooth'
-      });
+      if (window.smoother) {
+        window.smoother.scrollTo(targetElement, true, `top ${cachedHeaderHeight}px`);
+      } else {
+        window.scrollTo({
+          top: Math.max(0, targetElement.getBoundingClientRect().top + window.scrollY - cachedHeaderHeight),
+          behavior: 'smooth'
+        });
+      }
     }
   }
 
@@ -31,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileMenuToggle.setAttribute('aria-label', tr('nav.menuClose', 'Menü schließen'));
     }
     document.body.style.overflow = 'hidden';
+    if (window.smoother) window.smoother.paused(true);
     const firstLink = nav.querySelector('.nav-link');
     if (firstLink) firstLink.focus({ preventScroll: true });
   }
@@ -46,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     document.body.style.overflow = '';
+    if (window.smoother) window.smoother.paused(false);
   }
 
   function isMobileMenuActive() {
@@ -74,14 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
           closeMenu();
         }
         smoothScrollTo(href);
-      }
-    });
-  });
-
-  nav.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (isMobileMenuActive()) {
-        closeMenu();
       }
     });
   });
@@ -116,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     if (e.key === 'Tab') {
-      const focusables = [mobileMenuToggle, ...nav.querySelectorAll('.nav-link, .lang-btn')].filter(Boolean);
+      const focusables = [mobileMenuToggle, ...nav.querySelectorAll('.nav-link')].filter(Boolean);
       if (focusables.length === 0) return;
       const first = focusables[0];
       const last = focusables[focusables.length - 1];
@@ -139,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileMenuToggle.setAttribute('aria-label', tr('nav.menuOpen', 'Menü öffnen'));
       }
       document.body.style.overflow = '';
+      if (window.smoother) window.smoother.paused(false);
     }
   });
 
