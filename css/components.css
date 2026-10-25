@@ -1,7 +1,7 @@
 .header {
   background-color: var(--midnight-base);
   position: fixed;
-  top: 0;
+  top: var(--announcement-height);
   left: 0;
   right: 0;
   z-index: 1000;
@@ -970,7 +970,7 @@ main {
   align-items: center;
   background-color: var(--midnight-base);
   position: relative;
-  padding-top: 90px;
+  padding-top: var(--header-offset);
 }
 
 #home::before {
@@ -1005,12 +1005,19 @@ body > footer.footer {
   margin-top: 0 !important;
 }
 
-/* Twitch Banner */
+/* Twitch Banner — Announcement Bar */
 .twitch-banner {
-  padding: var(--spacing-2xl) 0;
-  background: var(--neon-purple);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  height: var(--announcement-height);
+  background: var(--midnight-base);
+  border-bottom: 1px solid var(--outline-variant);
   overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
 .twitch-banner-content {
@@ -1020,6 +1027,7 @@ body > footer.footer {
   white-space: nowrap;
   width: 100%;
   display: flex;
+  align-items: center;
 }
 
 .twitch-banner-text {
@@ -1027,9 +1035,9 @@ body > footer.footer {
   flex-shrink: 0;
   min-width: 100%;
   font-family: var(--font-family-display);
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-sm);
   font-weight: 400;
-  color: var(--on-primary);
+  color: var(--neon-purple);
   text-transform: uppercase;
   letter-spacing: 2px;
   margin: 0;
@@ -1048,7 +1056,7 @@ body > footer.footer {
 
 @media (max-width: 768px) {
   .twitch-banner-text {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-xs);
     letter-spacing: 1px;
   }
 }
@@ -1279,7 +1287,6 @@ body > footer.footer {
 
 .quick-question-btn:hover::after {
   color: var(--color-border-purple);
-  transform: translateX(4px);
 }
 
 .quick-question-btn:focus-visible {

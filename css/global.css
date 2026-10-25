@@ -50,7 +50,7 @@ body {
   align-items: center;
   background: var(--midnight-base);
   position: relative;
-  padding-top: 90px;
+  padding-top: var(--header-offset);
   overflow: hidden;
 }
 
@@ -136,7 +136,7 @@ button {
 
 .section {
   padding: var(--spacing-3xl) 0;
-  scroll-margin-top: 90px;
+  scroll-margin-top: var(--header-offset);
   width: 100%;
   position: relative;
   min-height: 100vh;

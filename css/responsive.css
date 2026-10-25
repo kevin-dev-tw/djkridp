@@ -23,7 +23,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 96px var(--spacing-lg) calc(var(--spacing-2xl) + env(safe-area-inset-bottom));
+    padding: calc(96px + var(--announcement-height)) var(--spacing-lg) calc(var(--spacing-2xl) + env(safe-area-inset-bottom));
     background-color: var(--midnight-base);
     opacity: 0;
     visibility: hidden;

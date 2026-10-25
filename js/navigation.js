@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.body.style.overflow = '';
 
-  let cachedHeaderHeight = header ? header.offsetHeight : 0;
+  let cachedHeaderHeight = header ? header.getBoundingClientRect().bottom : 0;
   window.addEventListener('resize', () => {
-    if (header) cachedHeaderHeight = header.offsetHeight;
+    if (header) cachedHeaderHeight = header.getBoundingClientRect().bottom;
   }, { passive: true });
 
   function smoothScrollTo(targetId) {

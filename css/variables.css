@@ -104,6 +104,10 @@
   --spacing-gutter: 24px;
   --spacing-unit: 8px;
 
+  /* Layout */
+  --announcement-height: 34px;
+  --header-offset: calc(90px + var(--announcement-height));
+
   /* Typography */
   --font-family-primary: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-display: 'Archivo Black', sans-serif;
