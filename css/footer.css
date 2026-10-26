@@ -17,6 +17,35 @@
   background-color: var(--midnight-base);
   border-top: 1px solid var(--outline-variant);
   padding: var(--spacing-lg) 0;
+  position: relative;
+}
+
+.back-to-top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: var(--midnight-base);
+  border: 1px solid var(--outline-variant);
+  border-radius: 50%;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.back-to-top:hover {
+  color: var(--neon-purple);
+  border-color: var(--neon-purple);
+}
+
+.back-to-top .material-symbols-outlined {
+  font-size: 18px;
 }
 
 .footer-content {

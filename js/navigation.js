@@ -8,6 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.body.style.overflow = '';
 
+  const backToTop = document.getElementById('back-to-top');
+  backToTop?.addEventListener('click', () => {
+    if (window.smoother) {
+      window.smoother.scrollTo(0, true);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+
   let cachedHeaderHeight = header ? header.getBoundingClientRect().bottom : 0;
   window.addEventListener('resize', () => {
     if (header) cachedHeaderHeight = header.getBoundingClientRect().bottom;

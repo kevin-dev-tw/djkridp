@@ -178,7 +178,8 @@
   }
 
   .soundcloud-embed-container,
-  .twitch-embed-container {
+  .twitch-embed-container,
+  .spotify-embed-container {
     padding: var(--spacing-sm);
     margin-top: var(--spacing-2xl);
   }

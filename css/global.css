@@ -46,6 +46,7 @@ body {
 
 #home {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   background: var(--midnight-base);
@@ -140,6 +141,7 @@ button {
   width: 100%;
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
 }

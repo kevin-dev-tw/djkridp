@@ -536,7 +536,8 @@
 
 /* Media Embeds (SoundCloud & Twitch Full-Width Acid Frames) */
 .soundcloud-embed-container,
-.twitch-embed-container {
+.twitch-embed-container,
+.spotify-embed-container {
   width: 100%;
   margin: var(--spacing-3xl) auto 0;
   padding: var(--spacing-xl);
@@ -545,7 +546,8 @@
 }
 
 .soundcloud-title,
-.twitch-embed-container h2 {
+.twitch-embed-container h2,
+.spotify-embed-container h2 {
   margin: 0 0 var(--spacing-lg) 0;
   padding-bottom: var(--spacing-md);
   border-bottom: 1px solid var(--glass-border);
@@ -599,7 +601,8 @@
   }
 
   .soundcloud-embed-container,
-  .twitch-embed-container {
+  .twitch-embed-container,
+  .spotify-embed-container {
     padding: var(--spacing-md);
   }
 }
