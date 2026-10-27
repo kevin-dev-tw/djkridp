@@ -11,16 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.registerPlugin(ScrollTrigger);
       gsap.ticker.lagSmoothing(0);
 
-      if (typeof ScrollSmoother !== 'undefined') {
+      const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+      if (typeof ScrollSmoother !== 'undefined' && !isCoarsePointer) {
         if (typeof ScrollToPlugin !== 'undefined') {
           gsap.registerPlugin(ScrollToPlugin);
         }
-        const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
         window.smoother = ScrollSmoother.create({
           smooth: prefersReducedMotion ? 0 : 1.1,
-          smoothTouch: 0.1,
           effects: false,
-          normalizeScroll: isCoarsePointer ? false : { allowNestedScroll: true }
+          normalizeScroll: { allowNestedScroll: true }
         });
       }
     }
