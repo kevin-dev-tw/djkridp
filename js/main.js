@@ -15,10 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof ScrollToPlugin !== 'undefined') {
           gsap.registerPlugin(ScrollToPlugin);
         }
+        const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
         window.smoother = ScrollSmoother.create({
           smooth: prefersReducedMotion ? 0 : 1.1,
+          smoothTouch: 0.1,
           effects: false,
-          normalizeScroll: { allowNestedScroll: true }
+          normalizeScroll: isCoarsePointer ? false : { allowNestedScroll: true }
         });
       }
     }
