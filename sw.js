@@ -1,4 +1,4 @@
-const CACHE_NAME = 'djkridp-v45'; // Versionsnummer aktualisiert, um alten Cache zu löschen
+const CACHE_NAME = 'djkridp-v46'; // Versionsnummer aktualisiert, um alten Cache zu löschen
 const urlsToCache = [
   '/',
   '/index.html',
@@ -12,6 +12,7 @@ const urlsToCache = [
   '/js/vendor/ScrollTrigger.min.js',
   '/js/vendor/ScrollSmoother.min.js',
   '/js/vendor/ScrollToPlugin.min.js',
+  '/fonts/archivo-black-latin.woff2',
   '/images/favicon.ico',
   '/images/favicon.svg',
   '/images/favicon-96x96.png',
