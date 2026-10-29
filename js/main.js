@@ -16,11 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof ScrollToPlugin !== 'undefined') {
           gsap.registerPlugin(ScrollToPlugin);
         }
-        window.smoother = ScrollSmoother.create({
-          smooth: prefersReducedMotion ? 0 : 1.1,
-          effects: false,
-          normalizeScroll: { allowNestedScroll: true }
-        });
+        // 延後至首繪後建立 smoother——版面已計算完畢，量測不再觸發強制重排
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          window.smoother = ScrollSmoother.create({
+            smooth: prefersReducedMotion ? 0 : 1.1,
+            effects: false,
+            normalizeScroll: { allowNestedScroll: true }
+          });
+        }));
       }
     }
 
