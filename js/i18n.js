@@ -196,12 +196,12 @@
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const val = dict[el.dataset.i18n];
-      if (val !== undefined) el.textContent = val;
+      if (val !== undefined && el.textContent !== val) el.textContent = val;
     });
 
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
       const val = dict[el.dataset.i18nHtml];
-      if (val !== undefined) el.innerHTML = val;
+      if (val !== undefined && el.innerHTML !== val) el.innerHTML = val;
     });
 
     document.querySelectorAll('[data-i18n-attr]').forEach(el => {
@@ -211,15 +211,17 @@
         const attr = pair.slice(0, idx).trim();
         const key = pair.slice(idx + 1).trim();
         const val = dict[key];
-        if (val !== undefined) el.setAttribute(attr, val);
+        if (val !== undefined && el.getAttribute(attr) !== val) el.setAttribute(attr, val);
       });
     });
 
     document.querySelectorAll('.lang-select .lang-current').forEach(el => {
-      el.textContent = lang.toUpperCase();
+      const val = lang.toUpperCase();
+      if (el.textContent !== val) el.textContent = val;
     });
     document.querySelectorAll('.lang-option').forEach(opt => {
-      opt.setAttribute('aria-selected', opt.dataset.lang === lang ? 'true' : 'false');
+      const val = opt.dataset.lang === lang ? 'true' : 'false';
+      if (opt.getAttribute('aria-selected') !== val) opt.setAttribute('aria-selected', val);
     });
 
     try {
@@ -228,7 +230,7 @@
     window.I18N_LANG = lang;
     document.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
 
-    if (typeof ScrollTrigger !== 'undefined' && typeof ScrollTrigger.refresh === 'function') {
+    if (window.smoother && typeof ScrollTrigger !== 'undefined' && typeof ScrollTrigger.refresh === 'function') {
       ScrollTrigger.refresh();
     }
   }
