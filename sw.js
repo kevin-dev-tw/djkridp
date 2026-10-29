@@ -1,18 +1,17 @@
-const CACHE_NAME = 'djkridp-v40'; // Versionsnummer aktualisiert, um alten Cache zu löschen
+const CACHE_NAME = 'djkridp-v42'; // Versionsnummer aktualisiert, um alten Cache zu löschen
 const urlsToCache = [
   '/',
   '/index.html',
-  '/css/variables.css',
-  '/css/global.css',
-  '/css/components.css',
-  '/css/responsive.css',
-  '/css/footer.css',
   '/js/i18n.js',
   '/js/main.js',
   '/js/navigation.js',
   '/js/ai-chat.js',
   '/js/twitch-status.js',
   '/js/glow-cursor.js',
+  '/js/vendor/gsap.min.js',
+  '/js/vendor/ScrollTrigger.min.js',
+  '/js/vendor/ScrollSmoother.min.js',
+  '/js/vendor/ScrollToPlugin.min.js',
   '/images/favicon.ico',
   '/images/favicon.svg',
   '/images/favicon-96x96.png',
