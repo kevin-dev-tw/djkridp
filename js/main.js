@@ -32,69 +32,54 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // GSAP Preset 3: Setlist Staggered Reveal (齒輪滾輪瀑布揭示)
-    if (!prefersReducedMotion && typeof gsap !== 'undefined') {
-      // 延後一影格待首屏繪製完成後再註冊 ScrollTrigger，避免初始化阻塞首屏算繪
+    // Setlist 進場揭示：IntersectionObserver 驅動 gsap.from（不建 ScrollTrigger，避免量測重排）
+    if (!prefersReducedMotion && typeof gsap !== 'undefined' && 'IntersectionObserver' in window) {
       requestAnimationFrame(() => {
-        // 標題單獨輕快揭示
+        const revealConfigs = new Map();
+
         document.querySelectorAll('.section-title').forEach(title => {
-          gsap.from(title, {
-            scrollTrigger: {
-              trigger: title,
-              start: 'top 88%',
-              toggleActions: 'play none none none'
-            },
-            y: 12,
-            opacity: 0,
-            duration: 0.35,
-            ease: 'power2.out'
+          revealConfigs.set(title, {
+            targets: title,
+            vars: { y: 12, opacity: 0, duration: 0.35, ease: 'power2.out' }
           });
         });
 
         // 列表容器 (Setlists: Bio, Tours, Works, Contact) 高阻尼齒輪咬合進場
-        const setlistConfigs = [
+        [
           { trigger: '.bio-list', items: '.bio-row' },
           { trigger: '.country-list', items: '.country-item' },
           { trigger: '.works-list', items: '.work-row' },
           { trigger: '.contact-links', items: '.contact-group' }
-        ];
-
-        setlistConfigs.forEach(conf => {
-          const triggerEl = document.querySelector(conf.trigger);
-          if (triggerEl) {
-            const items = triggerEl.querySelectorAll(conf.items);
-            if (items.length > 0) {
-              gsap.from(items, {
-                scrollTrigger: {
-                  trigger: triggerEl,
-                  start: 'top 85%',
-                  toggleActions: 'play none none none'
-                },
-                y: 10,
-                opacity: 0,
-                duration: 0.35,
-                stagger: 0.05,
-                ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
-              });
-            }
+        ].forEach(conf => {
+          const el = document.querySelector(conf.trigger);
+          const items = el ? el.querySelectorAll(conf.items) : [];
+          if (el && items.length > 0) {
+            revealConfigs.set(el, {
+              targets: items,
+              vars: { y: 10, opacity: 0, duration: 0.35, stagger: 0.05, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+            });
           }
         });
 
-        // Werke 嵌入媒體區塊 (SoundCloud 專輯 & Twitch 實況)
-        const mediaContainers = document.querySelectorAll('.soundcloud-embed-container, .twitch-embed-container');
-        mediaContainers.forEach(container => {
-          gsap.from(container, {
-            scrollTrigger: {
-              trigger: container,
-              start: 'top 85%',
-              toggleActions: 'play none none none'
-            },
-            y: 12,
-            opacity: 0,
-            duration: 0.4,
-            ease: 'power2.out'
+        // Werke 嵌入媒體區塊 (Spotify / SoundCloud / Twitch)
+        document.querySelectorAll('.spotify-embed-container, .soundcloud-embed-container, .twitch-embed-container').forEach(container => {
+          revealConfigs.set(container, {
+            targets: container,
+            vars: { y: 12, opacity: 0, duration: 0.4, ease: 'power2.out' }
           });
         });
+
+        // rootMargin -13% ≈ ScrollTrigger start 'top 87%'
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            io.unobserve(entry.target);
+            const conf = revealConfigs.get(entry.target);
+            if (conf) gsap.from(conf.targets, conf.vars);
+          });
+        }, { rootMargin: '0px 0px -13% 0px', threshold: 0 });
+
+        revealConfigs.forEach((_, el) => io.observe(el));
       });
     }
 
