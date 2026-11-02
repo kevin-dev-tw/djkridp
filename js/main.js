@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
             effects: false,
             normalizeScroll: { allowNestedScroll: true }
           });
+          // ScrollSmoother 成功創建後才加 fixed 樣式，避免初始化失敗時鎖死滾動
+          const wrapper = document.getElementById('smooth-wrapper');
+          if (wrapper) wrapper.classList.add('smooth-active');
         }));
       }
 

@@ -152,7 +152,7 @@ button {
 
 /* Vollbreiten-Hintergrundbereich */
 #about {
-  background-color: var(--midnight-base);
+  background-color: #0F0F12;
 }
 
 #about .container {
@@ -174,7 +174,7 @@ button {
 }
 
 #works {
-  background-color: var(--midnight-base);
+  background-color: #0F0F12;
 }
 
 #works .container {
@@ -204,6 +204,20 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--spacing-lg);
+}
+
+#smooth-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+#smooth-wrapper.smooth-active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 #smooth-content {

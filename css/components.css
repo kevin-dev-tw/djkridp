@@ -336,6 +336,10 @@
   background-color: var(--surface-container);
 }
 
+.bio-row:hover .bio-text h3 {
+  color: var(--on-surface-strong);
+}
+
 .bio-era {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
@@ -348,14 +352,14 @@
 
 .bio-text h3 {
   margin-bottom: var(--spacing-sm);
-  color: var(--on-surface-strong);
+  color: var(--neon-purple);
   font-size: var(--font-size-xl);
   font-weight: 700;
   line-height: 1.3;
 }
 
 .bio-text p {
-  color: var(--on-surface-variant);
+  color: var(--on-surface);
   line-height: 1.7;
   max-width: 65ch;
   margin-bottom: 0;
@@ -470,7 +474,7 @@
 }
 
 .country-item:hover h3 {
-  color: var(--color-border-purple);
+  color: var(--neon-purple);
 }
 
 .country-item h3 {
@@ -503,6 +507,10 @@
   background-color: var(--surface-container);
 }
 
+.work-row:hover .work-text h3 {
+  color: var(--on-surface-strong);
+}
+
 .work-num {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
@@ -514,14 +522,14 @@
 
 .work-text h3 {
   margin-bottom: var(--spacing-sm);
-  color: var(--on-surface-strong);
+  color: var(--neon-purple);
   font-size: var(--font-size-xl);
   font-weight: 700;
   line-height: 1.3;
 }
 
 .work-text p {
-  color: var(--on-surface-variant);
+  color: var(--on-surface);
   line-height: 1.7;
   max-width: 65ch;
   margin-bottom: 0;
@@ -987,19 +995,19 @@ main {
 }
 
 #about {
-  background-color: var(--color-bg-about);
+  background-color: #0F0F12;
 }
 
 #tours {
-  background-color: var(--color-bg-tours);
+  background-color: var(--midnight-base);
 }
 
 #works {
-  background-color: var(--color-bg-works);
+  background-color: #0F0F12;
 }
 
 #contact {
-  background-color: var(--color-bg-contact);
+  background-color: var(--midnight-base);
   padding-bottom: var(--spacing-3xl);
   margin-bottom: 0;
 }

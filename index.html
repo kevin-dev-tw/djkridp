@@ -384,7 +384,7 @@ button {
 
 /* Vollbreiten-Hintergrundbereich */
 #about {
-  background-color: var(--midnight-base);
+  background-color: #0F0F12;
 }
 
 #about .container {
@@ -406,7 +406,7 @@ button {
 }
 
 #works {
-  background-color: var(--midnight-base);
+  background-color: #0F0F12;
 }
 
 #works .container {
@@ -436,6 +436,20 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--spacing-lg);
+}
+
+#smooth-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+#smooth-wrapper.smooth-active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 #smooth-content {
@@ -821,6 +835,10 @@ html {
   background-color: var(--surface-container);
 }
 
+.bio-row:hover .bio-text h3 {
+  color: var(--on-surface-strong);
+}
+
 .bio-era {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
@@ -833,14 +851,14 @@ html {
 
 .bio-text h3 {
   margin-bottom: var(--spacing-sm);
-  color: var(--on-surface-strong);
+  color: var(--neon-purple);
   font-size: var(--font-size-xl);
   font-weight: 700;
   line-height: 1.3;
 }
 
 .bio-text p {
-  color: var(--on-surface-variant);
+  color: var(--on-surface);
   line-height: 1.7;
   max-width: 65ch;
   margin-bottom: 0;
@@ -955,7 +973,7 @@ html {
 }
 
 .country-item:hover h3 {
-  color: var(--color-border-purple);
+  color: var(--neon-purple);
 }
 
 .country-item h3 {
@@ -988,6 +1006,10 @@ html {
   background-color: var(--surface-container);
 }
 
+.work-row:hover .work-text h3 {
+  color: var(--on-surface-strong);
+}
+
 .work-num {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
@@ -999,14 +1021,14 @@ html {
 
 .work-text h3 {
   margin-bottom: var(--spacing-sm);
-  color: var(--on-surface-strong);
+  color: var(--neon-purple);
   font-size: var(--font-size-xl);
   font-weight: 700;
   line-height: 1.3;
 }
 
 .work-text p {
-  color: var(--on-surface-variant);
+  color: var(--on-surface);
   line-height: 1.7;
   max-width: 65ch;
   margin-bottom: 0;
@@ -1472,19 +1494,19 @@ main {
 }
 
 #about {
-  background-color: var(--color-bg-about);
+  background-color: #0F0F12;
 }
 
 #tours {
-  background-color: var(--color-bg-tours);
+  background-color: var(--midnight-base);
 }
 
 #works {
-  background-color: var(--color-bg-works);
+  background-color: #0F0F12;
 }
 
 #contact {
-  background-color: var(--color-bg-contact);
+  background-color: var(--midnight-base);
   padding-bottom: var(--spacing-3xl);
   margin-bottom: 0;
 }
@@ -2943,7 +2965,7 @@ body > footer.footer {
     </script>
     
     <script src="js/i18n.js?v=1.6.1" defer></script>
-    <script src="js/main.js?v=1.6.3" defer></script>
+    <script src="js/main.js?v=1.7.1" defer></script>
     <script src="js/navigation.js?v=1.6.0" defer></script>
     <script src="js/twitch-status.js?v=1.6.0" defer></script>
     <script src="js/glow-cursor.js?v=1.6.0" defer></script>
