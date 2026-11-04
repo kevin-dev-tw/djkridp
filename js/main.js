@@ -19,17 +19,25 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.registerPlugin(ScrollToPlugin);
       }
       if (typeof ScrollSmoother !== 'undefined') {
+        // 預先加上 fixed 樣式——消除首繪後才啟用 smoother 的原生滾動空窗期
+        const wrapper = document.getElementById('smooth-wrapper');
+        if (wrapper) wrapper.classList.add('smooth-active');
         // 延後至首繪後建立 smoother——版面已計算完畢，量測不再觸發強制重排
         requestAnimationFrame(() => requestAnimationFrame(() => {
-          window.smoother = ScrollSmoother.create({
-            smooth: prefersReducedMotion ? 0 : 1.1,
-            effects: false,
-            normalizeScroll: { allowNestedScroll: true }
-          });
-          // ScrollSmoother 成功創建後才加 fixed 樣式，避免初始化失敗時鎖死滾動
-          const wrapper = document.getElementById('smooth-wrapper');
-          if (wrapper) wrapper.classList.add('smooth-active');
+          try {
+            window.smoother = ScrollSmoother.create({
+              smooth: prefersReducedMotion ? 0 : 1.1,
+              effects: false,
+              normalizeScroll: { allowNestedScroll: true }
+            });
+          } catch (err) {
+            // 建立失敗回退原生滾動，避免鎖死頁面
+            if (wrapper) wrapper.classList.remove('smooth-active');
+          }
+          initScenes();
         }));
+      } else {
+        initScenes();
       }
 
       if (document.fonts && document.fonts.ready) {
@@ -39,8 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       }
-
-      initReveals();
     };
 
     // GSAP 由條件載入器注入，可能比 DCL 晚到——短輪詢等待（同源檔案通常即時）
@@ -54,61 +60,81 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     whenGsapReady();
 
-    function initReveals() {
-    // Setlist 進場揭示：IntersectionObserver 驅動 gsap.from（不建 ScrollTrigger，避免量測重排）
-    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
-      requestAnimationFrame(() => {
-        const revealConfigs = new Map();
+    function initScenes() {
+      if (prefersReducedMotion || typeof ScrollTrigger === 'undefined') return;
 
-        document.querySelectorAll('.section-title').forEach(title => {
-          revealConfigs.set(title, {
-            targets: title,
-            vars: { y: 12, opacity: 0, duration: 0.35, ease: 'power2.out' }
-          });
-        });
+      // GSAP 接管的元素停用 CSS 動畫，避免 transform/opacity 屬性衝突
+      document.querySelectorAll('.section-title, .bio-row, .country-item, .work-row, .contact-group')
+        .forEach(el => { el.style.animation = 'none'; });
 
-        // 列表容器 (Setlists: Bio, Tours, Works, Contact) 高阻尼齒輪咬合進場
-        [
-          { trigger: '.bio-list', items: '.bio-row' },
-          { trigger: '.country-list', items: '.country-item' },
-          { trigger: '.works-list', items: '.work-row' },
-          { trigger: '.contact-links', items: '.contact-group' }
-        ].forEach(conf => {
-          const el = document.querySelector(conf.trigger);
-          const items = el ? el.querySelectorAll(conf.items) : [];
-          if (el && items.length > 0) {
-            revealConfigs.set(el, {
-              targets: items,
-              vars: { y: 10, opacity: 0, duration: 0.35, stagger: 0.05, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }
-            });
-          }
-        });
-
-        // Werke 嵌入媒體區塊 (Spotify / SoundCloud / Twitch)
-        document.querySelectorAll('.spotify-embed-container, .soundcloud-embed-container, .twitch-embed-container').forEach(container => {
-          revealConfigs.set(container, {
-            targets: container,
-            vars: { y: 12, opacity: 0, duration: 0.4, ease: 'power2.out' }
-          });
-        });
-
-        // rootMargin -13% ≈ ScrollTrigger start 'top 87%'
-        const io = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            io.unobserve(entry.target);
-            const conf = revealConfigs.get(entry.target);
-            if (conf) gsap.from(conf.targets, conf.vars);
-          });
-        }, { rootMargin: '0px 0px -13% 0px', threshold: 0 });
-
-        revealConfigs.forEach((_, el) => io.observe(el));
+      // 1. Hero 離場 scrub——標題上飄淡出 + 縮放
+      gsap.to('.hero-title', {
+        y: -80, opacity: 0.15, scale: 0.94, ease: 'none',
+        scrollTrigger: { trigger: '#home', start: 'top top', end: 'bottom top', scrub: true }
       });
-    }
+      gsap.to('.hero-subtitle', {
+        y: -30, opacity: 0, ease: 'none',
+        scrollTrigger: { trigger: '#home', start: 'top top', end: '60% top', scrub: true }
+      });
+
+      // 2. Hero 半調網點——滾動漂移（經 CSS 變數驅動 ::before transform）
+      const home = document.getElementById('home');
+      if (home) {
+        ScrollTrigger.create({
+          trigger: '#home', start: 'top top', end: 'bottom top', scrub: true,
+          onUpdate: self => home.style.setProperty('--dots-y', (self.progress * -60) + 'px')
+        });
+      }
+
+      // 3. 區塊標題——橫向 scrub 滑入（與滾動同步的滑移）
+      document.querySelectorAll('.section-title').forEach(title => {
+        gsap.set(title, { opacity: 0, xPercent: -8 });
+        gsap.to(title, {
+          opacity: 1, xPercent: 0, ease: 'none',
+          scrollTrigger: { trigger: title, start: 'top 92%', end: 'top 55%', scrub: 1 }
+        });
+      });
+
+      // 4. Setlist 列表——ScrollTrigger.batch 批次揭示
+      [
+        '.bio-list .bio-row',
+        '.country-list .country-item',
+        '.works-list .work-row',
+        '.contact-links .contact-group'
+      ].forEach(sel => {
+        const items = gsap.utils.toArray(sel);
+        if (!items.length) return;
+        gsap.set(items, { opacity: 0, y: 14 });
+        ScrollTrigger.batch(items, {
+          start: 'top 88%',
+          onEnter: batch => gsap.to(batch, {
+            opacity: 1, y: 0, duration: 0.35, stagger: 0.05,
+            ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+          })
+        });
+      });
+
+      // 5. 媒體嵌入——視差漂移（scrub parallax）
+      document.querySelectorAll('.spotify-embed-container, .soundcloud-embed-container, .twitch-embed-container')
+        .forEach(el => {
+          gsap.fromTo(el, { y: 50 }, {
+            y: -50, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1 }
+          });
+        });
+
+      // 6. Header 進度髮線——滾動進度即時反應
+      const header = document.querySelector('.header');
+      if (header) {
+        ScrollTrigger.create({
+          start: 0, end: 'max',
+          onUpdate: self => header.style.setProperty('--scroll-progress', self.progress)
+        });
+      }
+
     }
 
   } catch (error) {
     console.error('Error in main.js:', error);
   }
 });
-

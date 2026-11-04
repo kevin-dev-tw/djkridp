@@ -509,6 +509,18 @@ html {
   transition: all var(--transition-base);
 }
 
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--neon-purple);
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left;
+}
+
 .header-content {
   display: flex;
   justify-content: space-between;
@@ -1289,6 +1301,11 @@ html {
   color: var(--on-surface);
 }
 
+.contact-link.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
 /* Scroll Reveal: Handled via GSAP Setlist Staggered Reveal */
 .scroll-reveal {
   opacity: 1;
@@ -1491,6 +1508,8 @@ main {
   background-size: 18px 18px;
   pointer-events: none;
   z-index: 0;
+  transform: translateY(var(--dots-y, 0px));
+  will-change: transform;
 }
 
 #about {
@@ -2820,12 +2839,12 @@ body > footer.footer {
                             <span class="contact-handle">dj_krid_p</span>
                             <span class="contact-arrow" aria-hidden="true">&#8594;</span>
                         </a>
-                        <a class="contact-link" href="https://www.tiktok.com/@krid_p" data-platform="tiktok" target="_blank" rel="noopener noreferrer">
+                        <a class="contact-link disabled" href="https://www.tiktok.com/@krid_p" data-platform="tiktok" target="_blank" rel="noopener noreferrer" aria-disabled="true" tabindex="-1">
                             <span class="contact-name">TikTok</span>
                             <span class="contact-handle">@krid_p</span>
                             <span class="contact-arrow" aria-hidden="true">&#8594;</span>
                         </a>
-                        <a class="contact-link" href="https://www.facebook.com/djkridp/" data-platform="facebook" target="_blank" rel="noopener noreferrer">
+                        <a class="contact-link disabled" href="https://www.facebook.com/djkridp/" data-platform="facebook" target="_blank" rel="noopener noreferrer" aria-disabled="true" tabindex="-1">
                             <span class="contact-name">Facebook</span>
                             <span class="contact-handle">djkridp</span>
                             <span class="contact-arrow" aria-hidden="true">&#8594;</span>
@@ -2965,7 +2984,7 @@ body > footer.footer {
     </script>
     
     <script src="js/i18n.js?v=1.6.1" defer></script>
-    <script src="js/main.js?v=1.7.1" defer></script>
+    <script src="js/main.js?v=1.7.5" defer></script>
     <script src="js/navigation.js?v=1.6.0" defer></script>
     <script src="js/twitch-status.js?v=1.6.0" defer></script>
     <script src="js/glow-cursor.js?v=1.6.0" defer></script>
