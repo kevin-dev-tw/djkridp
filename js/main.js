@@ -207,17 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      document.querySelectorAll('.nav-link').forEach(link => {
-        const xTo = gsap.quickTo(link, 'x', { duration: 0.4, ease: 'power3.out' });
-        const yTo = gsap.quickTo(link, 'y', { duration: 0.4, ease: 'power3.out' });
-        link.addEventListener('mousemove', e => {
-          const r = link.getBoundingClientRect();
-          xTo((e.clientX - (r.left + r.width / 2)) * 0.35);
-          yTo((e.clientY - (r.top + r.height / 2)) * 0.35);
-        });
-        link.addEventListener('mouseleave', () => { xTo(0); yTo(0); });
-      });
-
     }
 
   } catch (error) {
