@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         heroTitle.style.animation = 'none';
         gsap.set(heroTitle, { opacity: 1 });
         const split = new SplitText(heroTitle, { type: 'chars', mask: 'chars' });
+        heroTitle._splitChars = split.chars;
         gsap.set(split.chars, { yPercent: 120 });
         gsap.to(split.chars, {
           yPercent: 0,
@@ -184,6 +185,38 @@ document.addEventListener('DOMContentLoaded', () => {
           onUpdate: self => header.style.setProperty('--scroll-progress', self.progress)
         });
       }
+
+      // 7. 滑鼠驅動場景——Hero 字元斥力 + 導覽連結磁吸
+      const heroEl = document.getElementById('home');
+      const heroTitleEl = document.querySelector('.hero-title');
+      if (heroEl && heroTitleEl && heroTitleEl._splitChars && heroTitleEl._splitChars.length) {
+        const chars = heroTitleEl._splitChars;
+        const xTo = [...chars].map(c => gsap.quickTo(c, 'x', { duration: 0.3, ease: 'power3.out' }));
+        const yTo = [...chars].map(c => gsap.quickTo(c, 'y', { duration: 0.3, ease: 'power3.out' }));
+        const RADIUS = 120;
+        heroEl.addEventListener('mousemove', e => {
+          chars.forEach((c, i) => {
+            const r = c.getBoundingClientRect();
+            const dx = e.clientX - (r.left + r.width / 2);
+            const dy = e.clientY - (r.top + r.height / 2);
+            const dist = Math.hypot(dx, dy);
+            const f = dist < RADIUS ? (RADIUS - dist) / RADIUS : 0;
+            xTo[i](-dx * f * 0.4);
+            yTo[i](-dy * f * 0.4);
+          });
+        });
+      }
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const xTo = gsap.quickTo(link, 'x', { duration: 0.4, ease: 'power3.out' });
+        const yTo = gsap.quickTo(link, 'y', { duration: 0.4, ease: 'power3.out' });
+        link.addEventListener('mousemove', e => {
+          const r = link.getBoundingClientRect();
+          xTo((e.clientX - (r.left + r.width / 2)) * 0.35);
+          yTo((e.clientY - (r.top + r.height / 2)) * 0.35);
+        });
+        link.addEventListener('mouseleave', () => { xTo(0); yTo(0); });
+      });
 
     }
 
