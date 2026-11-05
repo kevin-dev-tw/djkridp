@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '.bio-list .bio-row',
         '.country-list .country-item',
         '.works-list .work-row',
-        '.contact-links .contact-group-label, .contact-links .contact-link'
+        '.contact-links .contact-group-label, .contact-links .contact-link:not(.disabled)'
       ].forEach(sel => {
         const items = gsap.utils.toArray(sel);
         if (!items.length) return;
