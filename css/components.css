@@ -1248,6 +1248,7 @@ body > footer.footer {
   justify-content: flex-end;
   text-align: left;
   padding: var(--spacing-lg);
+  overflow-y: auto;
   user-select: text;
   -webkit-user-select: text;
   -moz-user-select: text;
@@ -1321,6 +1322,19 @@ body > footer.footer {
 .quick-question-btn:focus-visible {
   outline: 2px solid var(--color-border-purple);
   outline-offset: 2px;
+}
+
+.quick-question-num {
+  color: var(--on-surface-variant);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  transition: color var(--transition-fast);
+}
+
+.quick-question-btn:hover .quick-question-num {
+  color: var(--color-border-purple);
 }
 
 .quick-question-btn span:last-child {

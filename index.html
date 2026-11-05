@@ -1726,6 +1726,7 @@ body > footer.footer {
   justify-content: flex-end;
   text-align: left;
   padding: var(--spacing-lg);
+  overflow-y: auto;
   user-select: text;
   -webkit-user-select: text;
   -moz-user-select: text;
@@ -1799,6 +1800,19 @@ body > footer.footer {
 .quick-question-btn:focus-visible {
   outline: 2px solid var(--color-border-purple);
   outline-offset: 2px;
+}
+
+.quick-question-num {
+  color: var(--on-surface-variant);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  transition: color var(--transition-fast);
+}
+
+.quick-question-btn:hover .quick-question-num {
+  color: var(--color-border-purple);
 }
 
 .quick-question-btn span:last-child {
@@ -2936,17 +2950,24 @@ body > footer.footer {
         </div>
         <div class="ai-chat-messages" id="ai-chat-messages">
             <div class="ai-chat-empty-state" id="ai-chat-empty-state">
-                <p class="ai-chat-empty-text" data-i18n="chat.welcome">Willkommen</p>
-                <p class="ai-chat-empty-subtitle" data-i18n="chat.ask">Stellen Sie mir eine Frage:</p>
+                <p class="ai-chat-empty-text" data-i18n="chat.welcome">Moin.</p>
+                <p class="ai-chat-empty-subtitle" data-i18n="chat.ask">Wie kann ich helfen?</p>
                 <div class="ai-chat-quick-questions">
-                    <button class="quick-question-btn" data-question="Erzähl mir über deine DJ-Karriere" data-i18n-attr="data-question:chat.q1q">
-                        <span data-i18n="chat.q1">Über deine DJ-Karriere</span>
+                    <button class="quick-question-btn" data-question="Erzähl mir über DJKridP und seine Zeit bei Future Breeze" data-i18n-attr="data-question:chat.q1q">
+                        <span class="quick-question-num" aria-hidden="true">01</span>
+                        <span data-i18n="chat.q1">Über DJKridP &amp; Future Breeze</span>
                     </button>
-                    <button class="quick-question-btn" data-question="Was ist Future Breeze?" data-i18n-attr="data-question:chat.q2q">
-                        <span data-i18n="chat.q2">Was ist Future Breeze?</span>
+                    <button class="quick-question-btn" data-question="In welchen Ländern hat DJKridP gespielt und was sind die nächsten Tour-Dates?" data-i18n-attr="data-question:chat.q2q">
+                        <span class="quick-question-num" aria-hidden="true">02</span>
+                        <span data-i18n="chat.q2">Tour-Dates &amp; Auftritte</span>
                     </button>
-                    <button class="quick-question-btn" data-question="Welche Musikstile spielst du?" data-i18n-attr="data-question:chat.q3q">
-                        <span data-i18n="chat.q3">Deine Musikstile</span>
+                    <button class="quick-question-btn" data-question="Welche Releases und Musikstile hat DJKridP?" data-i18n-attr="data-question:chat.q3q">
+                        <span class="quick-question-num" aria-hidden="true">03</span>
+                        <span data-i18n="chat.q3">Releases &amp; Musikstile</span>
+                    </button>
+                    <button class="quick-question-btn" data-question="Wie kann ich DJKridP für ein Booking kontaktieren?" data-i18n-attr="data-question:chat.q4q">
+                        <span class="quick-question-num" aria-hidden="true">04</span>
+                        <span data-i18n="chat.q4">Booking &amp; Kontakt</span>
                     </button>
                 </div>
             </div>
@@ -2995,7 +3016,7 @@ body > footer.footer {
     </script>
     
     <script src="js/i18n.js?v=1.6.1" defer></script>
-    <script src="js/main.js?v=1.8.8" defer></script>
+    <script src="js/main.js?v=1.8.9" defer></script>
     <script src="js/navigation.js?v=1.6.0" defer></script>
     <script src="js/twitch-status.js?v=1.6.0" defer></script>
     <script src="js/glow-cursor.js?v=1.6.0" defer></script>

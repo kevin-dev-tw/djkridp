@@ -768,6 +768,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  const welcomeEl = emptyState ? emptyState.querySelector('.ai-chat-empty-text') : null;
+  function updateGreeting() {
+    if (!welcomeEl) return;
+    const h = new Date().getHours();
+    const key = h >= 5 && h < 12 ? 'chat.greetMorning'
+      : h < 17 ? 'chat.greetDay'
+      : h < 22 ? 'chat.greetEvening'
+      : 'chat.greetNight';
+    const text = tr(key, welcomeEl.textContent);
+    if (text && text !== welcomeEl.textContent) welcomeEl.textContent = text;
+  }
+  updateGreeting();
+  document.addEventListener('langchange', updateGreeting);
+
   const quickQuestionBtns = document.querySelectorAll('.quick-question-btn');
   quickQuestionBtns.forEach(btn => {
     btn.addEventListener('click', () => {

@@ -53,12 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // GSAP 由條件載入器注入，可能比 DCL 晚到——短輪詢等待（同源檔案通常即時）
+    // 五支檔案依序執行、SplitText 最後——等它出現才代表整套就緒，避免搶跑走回退動畫
     let attempts = 0;
     const whenGsapReady = () => {
-      if (typeof gsap !== 'undefined') {
+      if (typeof gsap !== 'undefined' && typeof SplitText !== 'undefined') {
         initGsap();
       } else if (++attempts < 80) {
         setTimeout(whenGsapReady, 50);
+      } else if (typeof gsap !== 'undefined') {
+        // 部分外掛逾時未載入——降級初始化（SplitText 場景自動走回退路徑）
+        initGsap();
       } else {
         // GSAP 載入失敗——還原標題可見性（CSS opacity:0 是為了防進場閃現）
         const t = document.querySelector('.hero-title');
@@ -118,25 +122,42 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // 3. 區塊標題——SplitText 字元級 scrub 揭示（字母隨滾動逐一升起）
-      document.querySelectorAll('.section-title').forEach(title => {
-        gsap.set(title, { opacity: 1 });
-        if (typeof SplitText !== 'undefined') {
-          const split = new SplitText(title, { type: 'chars', mask: 'chars' });
-          gsap.set(split.chars, { yPercent: 120 });
-          gsap.to(split.chars, {
-            yPercent: 0,
-            stagger: { amount: 0.4 },
-            ease: 'none',
-            scrollTrigger: { trigger: title, start: 'top 90%', end: 'top 50%', scrub: 1 }
-          });
-        } else {
-          // SplitText 不可用時回退整體滑入
-          gsap.set(title, { opacity: 0, xPercent: -8 });
-          gsap.to(title, {
-            opacity: 1, xPercent: 0, ease: 'none',
-            scrollTrigger: { trigger: title, start: 'top 92%', end: 'top 55%', scrub: 1 }
-          });
-        }
+      const sectionTitleTweens = new Map();
+      function initSectionTitleScenes() {
+        document.querySelectorAll('.section-title').forEach(title => {
+          const prev = sectionTitleTweens.get(title);
+          if (prev) {
+            if (prev.scrollTrigger) prev.scrollTrigger.kill();
+            prev.kill();
+            sectionTitleTweens.delete(title);
+          }
+          gsap.set(title, { opacity: 1 });
+          if (typeof SplitText !== 'undefined') {
+            const split = new SplitText(title, { type: 'chars', mask: 'chars' });
+            gsap.set(split.chars, { yPercent: 120 });
+            const tween = gsap.to(split.chars, {
+              yPercent: 0,
+              stagger: { amount: 0.4 },
+              ease: 'none',
+              scrollTrigger: { trigger: title, start: 'top 90%', end: 'top 50%', scrub: 1 }
+            });
+            sectionTitleTweens.set(title, tween);
+          } else {
+            // SplitText 不可用時回退整體滑入
+            gsap.set(title, { opacity: 0, xPercent: -8 });
+            const tween = gsap.to(title, {
+              opacity: 1, xPercent: 0, ease: 'none',
+              scrollTrigger: { trigger: title, start: 'top 92%', end: 'top 55%', scrub: 1 }
+            });
+            sectionTitleTweens.set(title, tween);
+          }
+        });
+      }
+      initSectionTitleScenes();
+      // 語系切換會以 textContent 重寫標題、銷毀 SplitText 節點——重新拆字並刷新進度
+      document.addEventListener('langchange', () => {
+        initSectionTitleScenes();
+        ScrollTrigger.refresh();
       });
 
       // 4. Setlist 列表——ScrollTrigger.batch 批次揭示
