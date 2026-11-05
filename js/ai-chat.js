@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isOpen) {
       chatContainer.classList.add('active');
       chatButton.style.display = 'none';
+      if (window.strandsHeaderInstance && typeof window.strandsHeaderInstance.wake === 'function') {
+        window.strandsHeaderInstance.wake();
+      }
       
       // Hintergrund-Scrolling nur auf mobilen Geräten sperren
       if (window.innerWidth <= 768) {
@@ -44,6 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       chatContainer.classList.remove('active');
       chatButton.style.display = 'flex';
+      if (window.strandsInstance && typeof window.strandsInstance.wake === 'function') {
+        window.strandsInstance.wake();
+      }
       
       // Hintergrund-Scrolling-Sperre nur auf mobilen Geräten aufheben
       if (window.innerWidth <= 768) {
@@ -446,6 +452,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const assistantMessageDiv = addMessage('', 'assistant', false);
     assistantMessageDiv.classList.add('typing');
+    if (window.strandsHeaderInstance) {
+      window.strandsHeaderInstance.setEnergy(1.0, 1.8);
+      window.strandsHeaderInstance.pulse();
+    }
     let fullResponse = '';
     const assistantHistoryIndex = messageHistory.length;
     messageHistory.push({ content: '', role: 'assistant', timestamp: Date.now(), completed: false });
@@ -577,6 +587,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } finally {
       isSending = false;
       chatSend.disabled = false;
+      if (window.strandsHeaderInstance) {
+        window.strandsHeaderInstance.setEnergy(0.55, 0.9);
+      }
     }
   }
 
