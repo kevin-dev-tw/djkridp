@@ -53,6 +53,8 @@
       'sp.title': 'Auf Spotify hören',
       'twitch.title': 'Live Streaming auf <a href="https://www.twitch.tv/djkridp" target="_blank" rel="noopener noreferrer" class="twitch-link">Twitch</a>',
       'twitch.imgAlt': 'DJKridP Twitch Stream Offline Vorschau',
+      'twitch.live': 'LIVE',
+      'twitch.offline': 'Offline',
 
       'contact.title': 'Kontakt',
       'contact.follow': 'Folgen',
@@ -140,6 +142,8 @@
       'sp.title': 'Listen on Spotify',
       'twitch.title': 'Live streaming on <a href="https://www.twitch.tv/djkridp" target="_blank" rel="noopener noreferrer" class="twitch-link">Twitch</a>',
       'twitch.imgAlt': 'DJKridP Twitch stream offline preview',
+      'twitch.live': 'LIVE',
+      'twitch.offline': 'Offline',
 
       'contact.title': 'Contact',
       'contact.follow': 'Follow',

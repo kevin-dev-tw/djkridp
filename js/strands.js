@@ -660,6 +660,27 @@ void main() {
         clickPulse: false
       });
     }
+
+    const liveOrb = document.getElementById('twitch-live-orb');
+    if (liveOrb) {
+      window.strandsLiveInstance = initStrands(liveOrb, {
+        colors: AMBER_PALETTE,
+        energy: 0.3,
+        speed: 0.6,
+        glass: true,
+        glassSize: 1.0,
+        rim: 1.0,
+        refraction: 0.9,
+        dispersion: 0.5,
+        glow: 0.9,
+        interactive: false,
+        clickPulse: false
+      });
+      // Twitch 狀態可能比 strands 先判定完——初始化時同步一次
+      if (window.twitchIsLive === true) {
+        window.strandsLiveInstance.setEnergy(0.95, 1.6);
+      }
+    }
   });
 
   window.initStrands = initStrands;

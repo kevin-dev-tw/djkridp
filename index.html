@@ -727,6 +727,7 @@ html {
   z-index: 1;
 }
 
+
 .hero-title {
   font-size: clamp(3.5rem, 15vw, 12rem);
   margin-bottom: var(--spacing-lg);
@@ -1003,6 +1004,44 @@ html {
   text-transform: uppercase;
   color: var(--on-surface-variant);
   text-align: left;
+}
+
+.twitch-embed-container h2.twitch-embed-head {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.twitch-live-orb {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  margin: -6px 0;
+  opacity: 0.45;
+  transition: opacity var(--transition-base);
+}
+
+.twitch-live-orb.is-live {
+  opacity: 1;
+}
+
+.twitch-embed-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.twitch-live-status {
+  flex-shrink: 0;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  transition: color var(--transition-fast);
+}
+
+.twitch-live-status.is-live {
+  color: var(--color-border-purple);
 }
 
 .soundcloud-album-link {
@@ -2813,7 +2852,11 @@ body > footer.footer {
                 </div>
 
                 <div class="twitch-embed-container">
-                    <h2 data-i18n-html="twitch.title">Live Streaming auf <a href="https://www.twitch.tv/djkridp" target="_blank" rel="noopener noreferrer" class="twitch-link">Twitch</a></h2>
+                    <h2 class="twitch-embed-head">
+                        <span class="twitch-live-orb" id="twitch-live-orb" aria-hidden="true"></span>
+                        <span class="twitch-embed-title" data-i18n-html="twitch.title">Live Streaming auf <a href="https://www.twitch.tv/djkridp" target="_blank" rel="noopener noreferrer" class="twitch-link">Twitch</a></span>
+                        <span class="twitch-live-status" id="twitch-live-status">Offline</span>
+                    </h2>
                     
                     <!-- Offline-Vorschau anzeigen -->
                     <div id="twitch-offline-view" style="display: block;">
@@ -3008,20 +3051,20 @@ body > footer.footer {
         if (window.matchMedia('(pointer: fine)').matches) {
             ['gsap.min.js', 'ScrollTrigger.min.js', 'ScrollSmoother.min.js', 'ScrollToPlugin.min.js', 'SplitText.min.js'].forEach(function (f) {
                 var s = document.createElement('script');
-                s.src = 'js/vendor/' + f + '?v=1.6.0';
+                s.src = 'js/vendor/' + f + '?v=1.7.0';
                 s.async = false;
                 document.head.appendChild(s);
             });
         }
     </script>
     
-    <script src="js/i18n.js?v=1.6.1" defer></script>
-    <script src="js/main.js?v=1.9.0" defer></script>
+    <script src="js/i18n.js?v=1.7.0" defer></script>
+    <script src="js/main.js?v=1.9.4" defer></script>
     <script src="js/navigation.js?v=1.6.0" defer></script>
-    <script src="js/twitch-status.js?v=1.6.0" defer></script>
+    <script src="js/twitch-status.js?v=1.7.0" defer></script>
     <script src="js/glow-cursor.js?v=1.6.0" defer></script>
-    <script src="js/strands.js?v=1.1.0" defer></script>
-    <script src="js/ai-chat.js?v=1.6.0" defer></script>
+    <script src="js/strands.js?v=1.5.1" defer></script>
+    <script src="js/ai-chat.js?v=1.7.0" defer></script>
     <script>
         // Rechtsklick-Funktion für Bilder deaktivieren
         document.addEventListener('DOMContentLoaded', function() {

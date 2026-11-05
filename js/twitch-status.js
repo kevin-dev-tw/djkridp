@@ -12,6 +12,27 @@ class TwitchStatusChecker {
         if (this.offlineView && this.liveView) {
             this.checkStatus();
             this.startAutoCheck();
+            document.addEventListener('langchange', () => this.syncLiveOrb());
+        }
+    }
+
+    syncLiveOrb() {
+        const statusEl = document.getElementById('twitch-live-status');
+        const orbEl = document.getElementById('twitch-live-orb');
+        const tr = (k, fb) => (typeof window.t === 'function' ? window.t(k) : fb);
+        if (statusEl) {
+            statusEl.textContent = this.isLive ? tr('twitch.live', 'LIVE') : tr('twitch.offline', 'OFFLINE');
+            statusEl.classList.toggle('is-live', this.isLive);
+        }
+        if (orbEl) orbEl.classList.toggle('is-live', this.isLive);
+        const orb = window.strandsLiveInstance;
+        if (orb) {
+            if (this.isLive) {
+                orb.setEnergy(0.95, 1.6);
+                orb.pulse();
+            } else {
+                orb.setEnergy(0.3, 0.6);
+            }
         }
     }
 
@@ -34,7 +55,9 @@ class TwitchStatusChecker {
 
     setView(isLive) {
         this.isLive = isLive;
-        
+        window.twitchIsLive = isLive;
+        this.syncLiveOrb();
+
         if (this.offlineView && this.liveView) {
             if (isLive) {
                 // Live-Player anzeigen
