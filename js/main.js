@@ -172,14 +172,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
 
-      // 4.5 About-Bild — clip-path-Scrub-Reveal (von unten nach oben aufgedeckt)
+      // 4.5 About-Bild — Clip-Reveal durch Abschnitts-Stapel ersetzt (Konflikt mit Pinning)
       const aboutImg = document.querySelector('.about-image');
       if (aboutImg) {
-        gsap.set(aboutImg, { clipPath: 'inset(100% 0% 0% 0%)' });
-        gsap.to(aboutImg, {
-          clipPath: 'inset(0% 0% 0% 0%)', ease: 'none',
-          scrollTrigger: { trigger: aboutImg, start: 'top 92%', end: 'top 45%', scrub: 1 }
-        });
+        gsap.set(aboutImg, { clipPath: 'inset(0% 0% 0% 0%)' });
       }
 
       // 5. Media-Embeds — Parallax-Drift (Scrub)
@@ -200,7 +196,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // 7. Maus-Szenen — Hero-Zeichen-Repulsion + Nav-Link-Magnetismus
+      // 7. Abschnitts-Stapel — vorherige Sektion pinnt + dimmt, nächste schiebt darüber
+      // z-index steigend: gepinnte Transform-Layer würden sonst über der nächsten Sektion liegen
+      const stackSections = gsap.utils.toArray('#main-content > section');
+      stackSections.forEach((section, i) => {
+        section.style.zIndex = i + 1;
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'bottom bottom',
+          end: 'bottom top',
+          pin: true,
+          pinSpacing: false
+        });
+        gsap.to(section, {
+          opacity: 0, scale: 0.96, ease: 'none',
+          scrollTrigger: { trigger: section, start: 'bottom bottom', end: 'bottom top', scrub: true }
+        });
+      });
+      // Footer deckt die letzte gepinnte Sektion ebenfalls ab
+      const stackFooter = document.querySelector('.footer');
+      if (stackFooter) {
+        stackFooter.style.position = 'relative';
+        stackFooter.style.zIndex = stackSections.length + 1;
+      }
+
+      // 8. Maus-Szenen — Hero-Zeichen-Repulsion + Nav-Link-Magnetismus
       const heroEl = document.getElementById('home');
       const heroTitleEl = document.querySelector('.hero-title');
       if (heroEl && heroTitleEl && heroTitleEl._splitChars && heroTitleEl._splitChars.length) {
