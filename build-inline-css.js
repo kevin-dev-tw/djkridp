@@ -1,5 +1,5 @@
-// 將 css/*.css 依序內嵌進 index.html 的 INLINE-CSS 標記區塊
-// 用法：修改 css/*.css 後執行 `node build-inline-css.js`
+// Bettet css/*.css der Reihe nach in den INLINE-CSS-Markerblock von index.html ein
+// Verwendung: nach Änderungen an css/*.css `node build-inline-css.js` ausführen
 const fs = require('fs');
 const path = require('path');
 

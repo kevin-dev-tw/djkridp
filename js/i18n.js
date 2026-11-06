@@ -1,6 +1,6 @@
-// DJKridP i18n — 單頁即時語言切換（DE / EN）
-// 用法：HTML 元素加 data-i18n="key"（textContent）、data-i18n-html="key"（innerHTML）、
-// data-i18n-attr="aria-label:key;placeholder:key2"（屬性翻譯）
+// DJKridP i18n — Live-Sprachwechsel auf einer Seite (DE / EN)
+// Verwendung: data-i18n="key" (textContent), data-i18n-html="key" (innerHTML),
+// data-i18n-attr="aria-label:key;placeholder:key2" (Attribut-Übersetzung)
 (function () {
   const LANG_KEY = 'djkridp_lang';
   const SUPPORTED = ['de', 'en'];

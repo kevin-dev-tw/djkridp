@@ -11,7 +11,7 @@
     <link rel="canonical" href="https://djkridp.vercel.app/">
     <meta name="google-site-verification" content="ikA4eMUhLTjnxBSzCa1RpgmEg5SL_scysFac4hD4b-k" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open-Graph-Meta-Tags (Facebook) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://djkridp.vercel.app/">
     <meta property="og:title" content="DJKridP | Multi-Genre DJ from Osnabrück">
@@ -20,7 +20,7 @@
     <meta property="og:locale" content="de_DE">
     <meta property="og:site_name" content="DJKridP">
 
-    <!-- Twitter Card -->
+    <!-- Twitter-Card-Meta-Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://djkridp.vercel.app/">
     <meta name="twitter:title" content="DJKridP | Multi-Genre DJ from Osnabrück">
@@ -74,13 +74,13 @@
 }
 
 :root {
-  /* Acid Poster — Accent (single permitted color) */
+  /* Acid Poster — Akzent (einzige erlaubte Farbe) */
   --neon-purple: #FFB13D;
   --neon-purple-glow: rgba(0, 0, 0, 0);
   --electric-cyan: #FFB13D;
   --electric-cyan-glow: rgba(0, 0, 0, 0);
 
-  /* Surfaces — Void Black / Panel Zinc / Hairline */
+  /* Flächen — Void Black / Panel Zinc / Hairline */
   --midnight-base: #0A0A0B;
   --surface: #131316;
   --surface-dim: #0A0A0B;
@@ -93,7 +93,7 @@
   --surface-variant: #222227;
   --surface-glass: #131316;
 
-  /* Text Colors — Paper Bone / Ash Grey / Acid Ink */
+  /* Textfarben — Paper Bone / Ash Grey / Acid Ink */
   --on-surface: #F4F4F0;
   --on-surface-strong: #F4F4F0;
   --on-surface-variant: #94949C;
@@ -102,7 +102,7 @@
   --on-secondary: #0A0A0B;
   --on-tertiary: #F4F4F0;
 
-  /* Primary Colors — Acid */
+  /* Primärfarben — Acid */
   --primary: #FFB13D;
   --primary-container: #E09320;
   --on-primary-container: #0A0A0B;
@@ -112,7 +112,7 @@
   --on-primary-fixed-variant: #4a3006;
   --inverse-primary: #B26F0F;
 
-  /* Secondary Colors — neutral, secondary accent is banned */
+  /* Sekundärfarben — neutral, zweiter Akzent ist verboten */
   --secondary: #94949C;
   --secondary-container: #222227;
   --on-secondary-container: #F4F4F0;
@@ -121,7 +121,7 @@
   --on-secondary-fixed: #0A0A0B;
   --on-secondary-fixed-variant: #3f3f46;
 
-  /* Tertiary Colors — neutral */
+  /* Tertiärfarben — neutral */
   --tertiary: #a1a1aa;
   --tertiary-container: #27272a;
   --on-tertiary-container: #F4F4F0;
@@ -130,21 +130,21 @@
   --on-tertiary-fixed: #0A0A0B;
   --on-tertiary-fixed-variant: #3f3f46;
 
-  /* Error Colors */
+  /* Fehlerfarben */
   --error: #ffb4ab;
   --error-container: #93000a;
   --on-error: #690005;
   --on-error-container: #ffdad6;
 
-  /* Inverse Colors */
+  /* Inverse Farben */
   --inverse-surface: #F4F4F0;
   --inverse-on-surface: #0A0A0B;
 
-  /* Border & Outline — Hairline */
+  /* Rahmen & Outline — Hairline */
   --outline: #3f3f46;
   --outline-variant: #26262A;
 
-  /* Legacy Colors (mapped to Acid Poster) */
+  /* Legacy-Farben (auf Acid Poster abgebildet) */
   --color-purple-primary: #FFB13D;
   --color-purple-light: #FFC970;
   --color-purple-lighter: #FFD99A;
@@ -164,7 +164,7 @@
   --color-border: #26262A;
   --color-border-purple: #FFB13D;
 
-  /* Spacing */
+  /* Abstände */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
@@ -183,7 +183,7 @@
   --announcement-height: 34px;
   --header-offset: calc(90px + var(--announcement-height));
 
-  /* Typography */
+  /* Typografie */
   --font-family-primary: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-display: 'Archivo Black', sans-serif;
   --font-family-label: 'JetBrains Mono', monospace;
@@ -200,12 +200,12 @@
   --font-size-display-mobile: 3rem;
   --font-size-display: 4.5rem;
 
-  /* Transitions — snap-fast, printed state changes */
+  /* Übergänge — schnell, gedruckte Zustandswechsel */
   --transition-base: 0.15s ease;
   --transition-slow: 0.3s ease;
   --transition-fast: 0.1s ease;
 
-  /* Border Radius — max 2px site-wide */
+  /* Eckenradius — max. 2px seitenweit */
   --border-radius-sm: 2px;
   --border-radius-md: 2px;
   --border-radius-lg: 2px;
@@ -214,7 +214,7 @@
   --border-radius-3xl: 2px;
   --border-radius-full: 2px;
 
-  /* Shadows — flat, no glow */
+  /* Schatten — flach, kein Glow */
   --shadow-sm: none;
   --shadow-md: none;
   --shadow-lg: none;
@@ -222,7 +222,7 @@
   --shadow-neon-cyan: none;
   --shadow-card: none;
 
-  /* Glass Effect — flattened to Panel Zinc + Hairline */
+  /* Glaseffekt — flach zu Panel Zinc + Hairline */
   --glass-bg: #131316;
   --glass-blur: none;
   --glass-border: #26262A;
@@ -236,7 +236,7 @@
   box-sizing: border-box;
 }
 
-/* Native focus outline reset with accessible keyboard focus-visible */
+/* Natives Focus-Outline zurückgesetzt, barrierefreies Tastatur-focus-visible */
 *:focus {
   outline: none;
 }
@@ -265,7 +265,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom Text Selection */
+/* Eigene Textauswahl */
 ::selection {
   background-color: var(--neon-purple);
   color: var(--on-primary);
@@ -436,7 +436,7 @@ button {
   width: 100%;
 }
 
-/* GlowCursor — 桌面琥珀光軌 */
+/* GlowCursor — Amber-Lichtspur für Desktop */
 .glow-cursor {
   position: fixed;
   inset: 0;
@@ -456,7 +456,7 @@ button {
   mix-blend-mode: screen;
 }
 
-/* Custom Scrollbar */
+/* Eigene Scrollbar */
 ::-webkit-scrollbar {
   display: none;
   width: 0;
@@ -803,7 +803,7 @@ html {
   border-top: 1px solid var(--glass-border);
 }
 
-/* About Visual: Pure Image with Border */
+/* About-Visual: Reines Bild mit Rahmen */
 .about-visual {
   width: 100%;
 }
@@ -978,7 +978,7 @@ html {
   }
 }
 
-/* Media Embeds (SoundCloud & Twitch Full-Width Acid Frames) */
+/* Media-Embeds (SoundCloud & Twitch — Acid-Frames in voller Breite) */
 .soundcloud-embed-container,
 .twitch-embed-container,
 .spotify-embed-container {
@@ -1140,7 +1140,7 @@ html {
     border: none !important;
     background-color: var(--color-bg-primary);
     box-shadow: none;
-    transform: translateY(0) scale(1);
+    transform: scale(0.96);
     margin: 0;
     padding: 0;
     overscroll-behavior: contain;
@@ -1267,13 +1267,7 @@ html {
   pointer-events: none;
 }
 
-/* Scroll Reveal: Handled via GSAP Setlist Staggered Reveal */
-.scroll-reveal {
-  opacity: 1;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .scroll-reveal,
   .bio-list .bio-row,
   .country-list .country-item,
   .works-list .work-row,
@@ -1285,7 +1279,7 @@ html {
 }
 
 
-/* Responsive Design */
+/* Responsives Design */
 @media (max-width: 768px) {
   .share-button {
     width: 36px;
@@ -1360,9 +1354,6 @@ html {
   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.mobile-menu-toggle:active {
-  transform: translateY(1px);
-}
 
 .mobile-menu-toggle:focus-visible {
   outline: 2px solid var(--color-border-purple);
@@ -1379,24 +1370,26 @@ html {
   display: grid;
   overflow: hidden;
   line-height: 1.2;
+  perspective: 200px;
 }
 
 .menu-labels > span {
   grid-area: 1 / 1;
   text-align: center;
-  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+  backface-visibility: hidden;
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .menu-label-close {
-  transform: translateY(100%);
+  transform: rotateX(-90deg);
 }
 
 .mobile-menu-toggle.active .menu-label-open {
-  transform: translateY(-100%);
+  transform: rotateX(90deg);
 }
 
 .mobile-menu-toggle.active .menu-label-close {
-  transform: translateY(0);
+  transform: rotateX(0deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1456,7 +1449,7 @@ body > footer.footer {
   margin-top: 0 !important;
 }
 
-/* Twitch Banner — Announcement Bar */
+/* Twitch-Banner — Ankündigungsleiste */
 .twitch-banner {
   position: fixed;
   top: 0;
@@ -1527,10 +1520,17 @@ body > footer.footer {
   justify-content: center;
   z-index: 1002;
   cursor: pointer;
-  transition: transform var(--transition-fast), filter var(--transition-fast);
+  transition: transform 0.18s ease, filter var(--transition-fast), opacity 0.18s ease, visibility 0.18s;
   padding: 0;
   overflow: visible;
   filter: drop-shadow(0 4px 16px rgba(255, 177, 61, 0.28));
+}
+
+.ai-chat-button.orb-hidden {
+  opacity: 0;
+  transform: scale(0.5);
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .ai-chat-button:hover {
@@ -1626,15 +1626,16 @@ body > footer.footer {
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(16px);
-  transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base), box-shadow var(--transition-base);
+  transform: translateY(12px) scale(0.94);
+  transform-origin: bottom right;
+  transition: opacity 0.22s ease, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s, box-shadow var(--transition-base);
   overscroll-behavior: contain;
 }
 
 .ai-chat-container.active {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .ai-chat-header {
@@ -1911,17 +1912,6 @@ body > footer.footer {
   outline-offset: 2px;
 }
 
-@keyframes typing-dots {
-  0%, 20% {
-    content: '.';
-  }
-  40% {
-    content: '..';
-  }
-  60%, 100% {
-    content: '...';
-  }
-}
 
 .ai-chat-input-container {
   display: flex;
@@ -2210,7 +2200,7 @@ body > footer.footer {
     border: none !important;
     background-color: var(--color-bg-primary);
     box-shadow: none;
-    transform: translateY(0) scale(1);
+    transform: scale(0.96);
     margin: 0;
     padding: 0;
     overscroll-behavior: contain;
@@ -2281,17 +2271,21 @@ body > footer.footer {
 
   .nav {
     position: fixed;
-    inset: 0;
+    top: var(--header-offset);
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 1;
-    height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: calc(96px + var(--announcement-height)) var(--spacing-lg) calc(var(--spacing-2xl) + env(safe-area-inset-bottom));
+    padding: var(--spacing-sm) var(--spacing-lg) calc(var(--spacing-lg) + env(safe-area-inset-bottom));
     background-color: var(--midnight-base);
+    border-bottom: 1px solid var(--outline-variant);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease-out, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
   }
 
   .nav.active {
@@ -2520,7 +2514,7 @@ body > footer.footer {
 </style>
 <style>
 /* css/footer.css */
-/* DMCA Badge */
+/* DMCA-Badge */
 .dmca-badge {
   display: inline-block;
   margin-top: var(--spacing-sm);
@@ -2532,7 +2526,7 @@ body > footer.footer {
   height: auto;
 }
 
-/* Footer Content Layout */
+/* Footer-Content-Layout */
 .footer {
   background-color: var(--midnight-base);
   border-top: 1px solid var(--outline-variant);
@@ -2583,7 +2577,7 @@ body > footer.footer {
   letter-spacing: 0.08em;
 }
 
-/* Responsive Footer */
+/* Responsiver Footer */
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
@@ -2601,14 +2595,14 @@ body > footer.footer {
 }
 </style>
 <!-- INLINE-CSS:END -->
-    <!-- 上述區塊由 build-inline-css.js 產生：編輯 css/*.css 後執行 `node build-inline-css.js` -->
+    <!-- Der obige Block wird von build-inline-css.js erzeugt: css/*.css bearbeiten, dann `node build-inline-css.js` ausführen -->
     <link rel="manifest" href="images/site.webmanifest">
     <script>
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
 
-    <!-- Schema.org JSON-LD Structured Data -->
+    <!-- Schema.org JSON-LD-strukturierte Daten -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -2705,10 +2699,10 @@ body > footer.footer {
 
         <section id="about" class="section" aria-label="Über mich" data-i18n-attr="aria-label:about.title">
             <div class="container">
-                <h2 class="section-title scroll-reveal" data-i18n="about.title">Über mich</h2>
+                <h2 class="section-title" data-i18n="about.title">Über mich</h2>
                 
                 <div class="about-layout">
-                    <div class="bio-list scroll-reveal">
+                    <div class="bio-list">
                         <div class="bio-row">
                             <span class="bio-era">01</span>
                             <div class="bio-text">
@@ -2757,9 +2751,9 @@ body > footer.footer {
 
         <section id="tours" class="section" aria-label="Tours" data-i18n-attr="aria-label:tours.title">
             <div class="container">
-                <h2 class="section-title scroll-reveal" data-i18n="tours.title">Tours</h2>
+                <h2 class="section-title" data-i18n="tours.title">Tours</h2>
                 
-                <div class="country-list scroll-reveal">
+                <div class="country-list">
                     <div class="country-item">
                         <h3 data-i18n="country.de">Deutschland</h3>
                     </div>
@@ -2790,9 +2784,9 @@ body > footer.footer {
 
         <section id="works" class="section" aria-label="Werke" data-i18n-attr="aria-label:works.title">
             <div class="container">
-                <h2 class="section-title scroll-reveal" data-i18n="works.title">Werke</h2>
+                <h2 class="section-title" data-i18n="works.title">Werke</h2>
                 
-                <div class="works-list scroll-reveal">
+                <div class="works-list">
                     <div class="work-row">
                         <span class="work-num">01</span>
                         <div class="work-text">
@@ -2818,13 +2812,13 @@ body > footer.footer {
                     </div>
                 </div>
 
-                <!-- Spotify Track Embed -->
+                <!-- Spotify-Track-Einbettung -->
                 <div class="spotify-embed-container">
                     <h2 data-i18n="sp.title">Auf Spotify hören</h2>
                     <iframe class="lazy-embed" title="Spotify Track Player" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" data-src="https://open.spotify.com/embed/track/2xzEE0duyUNaVJeEy7O32l?utm_source=generator&si=0773130152c94ccd" src=""></iframe>
                 </div>
 
-                <!-- SoundCloud Album Embed -->
+                <!-- SoundCloud-Album-Einbettung -->
                 <div class="soundcloud-embed-container">
                     <h2 class="soundcloud-title"><a href="https://hypeddit.com/u1shci" target="_blank" rel="noopener noreferrer" class="soundcloud-album-link" data-i18n="sc.title">Mind &amp; Soul - Album (Click to view)</a></h2>
                     <iframe id="soundcloud-iframe" class="lazy-embed" title="SoundCloud Mind &amp; Soul Album Player" width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" loading="lazy" data-src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2079462015&color=%23d3c3c5&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true" src=""></iframe>
@@ -2889,7 +2883,7 @@ body > footer.footer {
 
         <section id="contact" class="section" aria-label="Kontakt" data-i18n-attr="aria-label:contact.title">
             <div class="container">
-                <div class="contact-content scroll-reveal">
+                <div class="contact-content">
                     <h2 class="section-title" data-i18n="contact.title">Kontakt</h2>
                     <div class="contact-links">
                     <div class="contact-group">
@@ -3046,7 +3040,7 @@ body > footer.footer {
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
     </noscript>
     
-    <!-- GSAP 僅桌面 pointer:fine 載入；行動端省下 ~135KB 下載+解析 -->
+    <!-- GSAP nur auf Desktop pointer:fine laden; Mobil spart ~135KB Download+Parsing -->
     <script>
         if (window.matchMedia('(pointer: fine)').matches) {
             ['gsap.min.js', 'ScrollTrigger.min.js', 'ScrollSmoother.min.js', 'ScrollToPlugin.min.js', 'SplitText.min.js'].forEach(function (f) {
@@ -3059,12 +3053,12 @@ body > footer.footer {
     </script>
     
     <script src="js/i18n.js?v=1.7.0" defer></script>
-    <script src="js/main.js?v=1.9.4" defer></script>
-    <script src="js/navigation.js?v=1.6.0" defer></script>
+    <script src="js/main.js?v=1.9.5" defer></script>
+    <script src="js/navigation.js?v=1.7.0" defer></script>
     <script src="js/twitch-status.js?v=1.7.0" defer></script>
     <script src="js/glow-cursor.js?v=1.6.0" defer></script>
     <script src="js/strands.js?v=1.5.1" defer></script>
-    <script src="js/ai-chat.js?v=1.7.0" defer></script>
+    <script src="js/ai-chat.js?v=1.7.1" defer></script>
     <script>
         // Rechtsklick-Funktion für Bilder deaktivieren
         document.addEventListener('DOMContentLoaded', function() {

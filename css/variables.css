@@ -8,13 +8,13 @@
 }
 
 :root {
-  /* Acid Poster — Accent (single permitted color) */
+  /* Acid Poster — Akzent (einzige erlaubte Farbe) */
   --neon-purple: #FFB13D;
   --neon-purple-glow: rgba(0, 0, 0, 0);
   --electric-cyan: #FFB13D;
   --electric-cyan-glow: rgba(0, 0, 0, 0);
 
-  /* Surfaces — Void Black / Panel Zinc / Hairline */
+  /* Flächen — Void Black / Panel Zinc / Hairline */
   --midnight-base: #0A0A0B;
   --surface: #131316;
   --surface-dim: #0A0A0B;
@@ -27,7 +27,7 @@
   --surface-variant: #222227;
   --surface-glass: #131316;
 
-  /* Text Colors — Paper Bone / Ash Grey / Acid Ink */
+  /* Textfarben — Paper Bone / Ash Grey / Acid Ink */
   --on-surface: #F4F4F0;
   --on-surface-strong: #F4F4F0;
   --on-surface-variant: #94949C;
@@ -36,7 +36,7 @@
   --on-secondary: #0A0A0B;
   --on-tertiary: #F4F4F0;
 
-  /* Primary Colors — Acid */
+  /* Primärfarben — Acid */
   --primary: #FFB13D;
   --primary-container: #E09320;
   --on-primary-container: #0A0A0B;
@@ -46,7 +46,7 @@
   --on-primary-fixed-variant: #4a3006;
   --inverse-primary: #B26F0F;
 
-  /* Secondary Colors — neutral, secondary accent is banned */
+  /* Sekundärfarben — neutral, zweiter Akzent ist verboten */
   --secondary: #94949C;
   --secondary-container: #222227;
   --on-secondary-container: #F4F4F0;
@@ -55,7 +55,7 @@
   --on-secondary-fixed: #0A0A0B;
   --on-secondary-fixed-variant: #3f3f46;
 
-  /* Tertiary Colors — neutral */
+  /* Tertiärfarben — neutral */
   --tertiary: #a1a1aa;
   --tertiary-container: #27272a;
   --on-tertiary-container: #F4F4F0;
@@ -64,21 +64,21 @@
   --on-tertiary-fixed: #0A0A0B;
   --on-tertiary-fixed-variant: #3f3f46;
 
-  /* Error Colors */
+  /* Fehlerfarben */
   --error: #ffb4ab;
   --error-container: #93000a;
   --on-error: #690005;
   --on-error-container: #ffdad6;
 
-  /* Inverse Colors */
+  /* Inverse Farben */
   --inverse-surface: #F4F4F0;
   --inverse-on-surface: #0A0A0B;
 
-  /* Border & Outline — Hairline */
+  /* Rahmen & Outline — Hairline */
   --outline: #3f3f46;
   --outline-variant: #26262A;
 
-  /* Legacy Colors (mapped to Acid Poster) */
+  /* Legacy-Farben (auf Acid Poster abgebildet) */
   --color-purple-primary: #FFB13D;
   --color-purple-light: #FFC970;
   --color-purple-lighter: #FFD99A;
@@ -98,7 +98,7 @@
   --color-border: #26262A;
   --color-border-purple: #FFB13D;
 
-  /* Spacing */
+  /* Abstände */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
@@ -117,7 +117,7 @@
   --announcement-height: 34px;
   --header-offset: calc(90px + var(--announcement-height));
 
-  /* Typography */
+  /* Typografie */
   --font-family-primary: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-display: 'Archivo Black', sans-serif;
   --font-family-label: 'JetBrains Mono', monospace;
@@ -134,12 +134,12 @@
   --font-size-display-mobile: 3rem;
   --font-size-display: 4.5rem;
 
-  /* Transitions — snap-fast, printed state changes */
+  /* Übergänge — schnell, gedruckte Zustandswechsel */
   --transition-base: 0.15s ease;
   --transition-slow: 0.3s ease;
   --transition-fast: 0.1s ease;
 
-  /* Border Radius — max 2px site-wide */
+  /* Eckenradius — max. 2px seitenweit */
   --border-radius-sm: 2px;
   --border-radius-md: 2px;
   --border-radius-lg: 2px;
@@ -148,7 +148,7 @@
   --border-radius-3xl: 2px;
   --border-radius-full: 2px;
 
-  /* Shadows — flat, no glow */
+  /* Schatten — flach, kein Glow */
   --shadow-sm: none;
   --shadow-md: none;
   --shadow-lg: none;
@@ -156,7 +156,7 @@
   --shadow-neon-cyan: none;
   --shadow-card: none;
 
-  /* Glass Effect — flattened to Panel Zinc + Hairline */
+  /* Glaseffekt — flach zu Panel Zinc + Hairline */
   --glass-bg: #131316;
   --glass-blur: none;
   --glass-border: #26262A;

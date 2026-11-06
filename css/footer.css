@@ -1,6 +1,6 @@
 
 
-/* DMCA Badge */
+/* DMCA-Badge */
 .dmca-badge {
   display: inline-block;
   margin-top: var(--spacing-sm);
@@ -12,7 +12,7 @@
   height: auto;
 }
 
-/* Footer Content Layout */
+/* Footer-Content-Layout */
 .footer {
   background-color: var(--midnight-base);
   border-top: 1px solid var(--outline-variant);
@@ -63,7 +63,7 @@
   letter-spacing: 0.08em;
 }
 
-/* Responsive Footer */
+/* Responsiver Footer */
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;

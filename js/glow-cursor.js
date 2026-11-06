@@ -1,6 +1,6 @@
-// GlowCursor — vanilla JS port (React Bits) for DJKridP
-// Brand: Hazard Amber (#FFB13D) cooling to deep amber (#E09320)
-// Desktop pointer:fine only; skipped on touch devices & reduced motion.
+// GlowCursor — Vanilla-JS-Port (React Bits) für DJKridP
+// Marke: Hazard Amber (#FFB13D) abkühlend zu tiefem Amber (#E09320)
+// Nur Desktop pointer:fine; auf Touch-Geräten und bei reduced motion übersprungen.
 
 (function () {
   const fine = window.matchMedia('(pointer: fine)');

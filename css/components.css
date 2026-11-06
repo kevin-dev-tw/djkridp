@@ -325,7 +325,7 @@
   border-top: 1px solid var(--glass-border);
 }
 
-/* About Visual: Pure Image with Border */
+/* About-Visual: Reines Bild mit Rahmen */
 .about-visual {
   width: 100%;
 }
@@ -500,7 +500,7 @@
   }
 }
 
-/* Media Embeds (SoundCloud & Twitch Full-Width Acid Frames) */
+/* Media-Embeds (SoundCloud & Twitch — Acid-Frames in voller Breite) */
 .soundcloud-embed-container,
 .twitch-embed-container,
 .spotify-embed-container {
@@ -662,7 +662,7 @@
     border: none !important;
     background-color: var(--color-bg-primary);
     box-shadow: none;
-    transform: translateY(0) scale(1);
+    transform: scale(0.96);
     margin: 0;
     padding: 0;
     overscroll-behavior: contain;
@@ -789,13 +789,7 @@
   pointer-events: none;
 }
 
-/* Scroll Reveal: Handled via GSAP Setlist Staggered Reveal */
-.scroll-reveal {
-  opacity: 1;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .scroll-reveal,
   .bio-list .bio-row,
   .country-list .country-item,
   .works-list .work-row,
@@ -807,7 +801,7 @@
 }
 
 
-/* Responsive Design */
+/* Responsives Design */
 @media (max-width: 768px) {
   .share-button {
     width: 36px;
@@ -882,9 +876,6 @@
   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.mobile-menu-toggle:active {
-  transform: translateY(1px);
-}
 
 .mobile-menu-toggle:focus-visible {
   outline: 2px solid var(--color-border-purple);
@@ -901,24 +892,26 @@
   display: grid;
   overflow: hidden;
   line-height: 1.2;
+  perspective: 200px;
 }
 
 .menu-labels > span {
   grid-area: 1 / 1;
   text-align: center;
-  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+  backface-visibility: hidden;
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .menu-label-close {
-  transform: translateY(100%);
+  transform: rotateX(-90deg);
 }
 
 .mobile-menu-toggle.active .menu-label-open {
-  transform: translateY(-100%);
+  transform: rotateX(90deg);
 }
 
 .mobile-menu-toggle.active .menu-label-close {
-  transform: translateY(0);
+  transform: rotateX(0deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -978,7 +971,7 @@ body > footer.footer {
   margin-top: 0 !important;
 }
 
-/* Twitch Banner — Announcement Bar */
+/* Twitch-Banner — Ankündigungsleiste */
 .twitch-banner {
   position: fixed;
   top: 0;
@@ -1049,10 +1042,17 @@ body > footer.footer {
   justify-content: center;
   z-index: 1002;
   cursor: pointer;
-  transition: transform var(--transition-fast), filter var(--transition-fast);
+  transition: transform 0.18s ease, filter var(--transition-fast), opacity 0.18s ease, visibility 0.18s;
   padding: 0;
   overflow: visible;
   filter: drop-shadow(0 4px 16px rgba(255, 177, 61, 0.28));
+}
+
+.ai-chat-button.orb-hidden {
+  opacity: 0;
+  transform: scale(0.5);
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .ai-chat-button:hover {
@@ -1148,15 +1148,16 @@ body > footer.footer {
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(16px);
-  transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base), box-shadow var(--transition-base);
+  transform: translateY(12px) scale(0.94);
+  transform-origin: bottom right;
+  transition: opacity 0.22s ease, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s, box-shadow var(--transition-base);
   overscroll-behavior: contain;
 }
 
 .ai-chat-container.active {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .ai-chat-header {
@@ -1433,17 +1434,6 @@ body > footer.footer {
   outline-offset: 2px;
 }
 
-@keyframes typing-dots {
-  0%, 20% {
-    content: '.';
-  }
-  40% {
-    content: '..';
-  }
-  60%, 100% {
-    content: '...';
-  }
-}
 
 .ai-chat-input-container {
   display: flex;
@@ -1732,7 +1722,7 @@ body > footer.footer {
     border: none !important;
     background-color: var(--color-bg-primary);
     box-shadow: none;
-    transform: translateY(0) scale(1);
+    transform: scale(0.96);
     margin: 0;
     padding: 0;
     overscroll-behavior: contain;

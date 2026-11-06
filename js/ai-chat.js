@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isOpen = !isOpen;
     if (isOpen) {
       chatContainer.classList.add('active');
-      chatButton.style.display = 'none';
+      chatButton.classList.add('orb-hidden');
       if (window.strandsHeaderInstance && typeof window.strandsHeaderInstance.wake === 'function') {
         window.strandsHeaderInstance.wake();
       }
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       chatContainer.classList.remove('active');
-      chatButton.style.display = 'flex';
+      chatButton.classList.remove('orb-hidden');
       if (window.strandsInstance && typeof window.strandsInstance.wake === 'function') {
         window.strandsInstance.wake();
       }
@@ -682,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     chatMessages.addEventListener('scroll', handleVirtualScroll, { passive: true });
-    // ScrollSmoother normalizeScroll 會在文件層攔截滾動，阻止事件冒泡讓訊息區自行捲動
+    // ScrollSmoother normalizeScroll fängt Scrollen auf Dokumentebene ab — Propagation stoppen, damit der Nachrichtenbereich selbst scrollt
     chatMessages.addEventListener('wheel', e => e.stopPropagation(), { passive: true });
     chatMessages.addEventListener('touchmove', e => e.stopPropagation(), { passive: true });
     

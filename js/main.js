@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
       history.scrollRestoration = 'manual';
     }
 
-    // 行動端不載入 GSAP——原生滾動 + CSS 動畫，省下下載/解析/執行
+    // Kein GSAP auf Mobilgeräten — natives Scrollen + CSS-Animationen spart Download/Parsing/Ausführung
     const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
     if (isCoarsePointer) return;
 
@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.registerPlugin(SplitText);
       }
       if (typeof ScrollSmoother !== 'undefined') {
-        // 預先加上 fixed 樣式——消除首繪後才啟用 smoother 的原生滾動空窗期
+        // fixed-Stil vorab setzen — verhindert das Native-Scroll-Fenster bis zur Smoother-Aktivierung
         const wrapper = document.getElementById('smooth-wrapper');
         if (wrapper) wrapper.classList.add('smooth-active');
-        // 延後至首繪後建立 smoother——版面已計算完畢，量測不再觸發強制重排
+        // Smoother erst nach dem ersten Paint erstellen — Layout fertig, Messung löst keinen Reflow aus
         requestAnimationFrame(() => requestAnimationFrame(() => {
           try {
             window.smoother = ScrollSmoother.create({
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
               normalizeScroll: { allowNestedScroll: true }
             });
           } catch (err) {
-            // 建立失敗回退原生滾動，避免鎖死頁面
+            // Bei Fehlschlag auf natives Scrollen zurückfallen, damit die Seite nicht blockiert
             if (wrapper) wrapper.classList.remove('smooth-active');
           }
           initScenes();
@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    // GSAP 由條件載入器注入，可能比 DCL 晚到——短輪詢等待（同源檔案通常即時）
-    // 五支檔案依序執行、SplitText 最後——等它出現才代表整套就緒，避免搶跑走回退動畫
+    // GSAP wird vom bedingten Loader injiziert und kann nach DCL eintreffen — kurzes Polling (same-origin meist sofort)
+    // Fünf Dateien laufen der Reihe nach, SplitText zuletzt — erst dann ist alles bereit, kein Fallback-Race
     let attempts = 0;
     const whenGsapReady = () => {
       if (typeof gsap !== 'undefined' && typeof SplitText !== 'undefined') {
@@ -61,10 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (++attempts < 80) {
         setTimeout(whenGsapReady, 50);
       } else if (typeof gsap !== 'undefined') {
-        // 部分外掛逾時未載入——降級初始化（SplitText 場景自動走回退路徑）
+        // Teil-Plugins per Timeout nicht geladen — degradiert initialisieren (SplitText-Szenen nutzen Fallback)
         initGsap();
       } else {
-        // GSAP 載入失敗——還原標題可見性（CSS opacity:0 是為了防進場閃現）
+        // GSAP-Ladefehler — Titel-Sichtbarkeit wiederherstellen (CSS opacity:0 ist Anti-Flash)
         const t = document.querySelector('.hero-title');
         if (t) t.style.opacity = '1';
       }
@@ -74,11 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function initScenes() {
       if (prefersReducedMotion || typeof ScrollTrigger === 'undefined') return;
 
-      // GSAP 接管的元素停用 CSS 動畫，避免 transform/opacity 屬性衝突
+      // Von GSAP übernommene Elemente: CSS-Animationen aus, um transform/opacity-Konflikte zu vermeiden
       document.querySelectorAll('.section-title, .bio-row, .country-item, .work-row, .contact-group, .contact-link')
         .forEach(el => { el.style.animation = 'none'; });
 
-      // 0. Hero 標題字母級進場——SplitText 拆字 + mask 揭示（取代 CSS fadeInUp）
+      // 0. Hero-Titel-Zeichen-Entrance — SplitText + Mask-Reveal (ersetzt CSS fadeInUp)
       const heroTitle = document.querySelector('.hero-title');
       if (heroTitle && typeof SplitText !== 'undefined') {
         heroTitle.style.animation = 'none';
@@ -95,14 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // 0.5 Hero 副標進場——接在標題字母播完後淡入
-      document.querySelectorAll('.hero-subtitle').forEach(heroSub => {
-        gsap.from(heroSub, {
-          opacity: 0, y: 12, duration: 0.6, ease: 'power3.out', delay: 1.0
-        });
-      });
-
-      // 1. Hero 離場 scrub——標題上飄淡出 + 縮放
+      // 1. Hero-Exit-Scrub — Titel driftet nach oben, blendet aus + skaliert
       gsap.to('.hero-title', {
         y: -80, opacity: 0.15, scale: 0.94, ease: 'none',
         scrollTrigger: { trigger: '#home', start: 'top top', end: 'bottom top', scrub: true }
@@ -112,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollTrigger: { trigger: '#home', start: 'top top', end: '60% top', scrub: true }
       });
 
-      // 2. Hero 半調網點——滾動漂移（經 CSS 變數驅動 ::before transform）
+      // 2. Hero-Halbtonpunkte — Scroll-Drift (per CSS-Variable gesteuerte ::before-Transform)
       const home = document.getElementById('home');
       if (home) {
         ScrollTrigger.create({
@@ -121,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // 3. 區塊標題——SplitText 字元級 scrub 揭示（字母隨滾動逐一升起）
+      // 3. Abschnittstitel — SplitText-Scrub-Reveal zeichenweise (Buchstaben steigen beim Scrollen)
       const sectionTitleTweens = new Map();
       function initSectionTitleScenes() {
         document.querySelectorAll('.section-title').forEach(title => {
@@ -143,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             sectionTitleTweens.set(title, tween);
           } else {
-            // SplitText 不可用時回退整體滑入
+            // Fallback bei fehlendem SplitText: Ganztitel-Einschieben
             gsap.set(title, { opacity: 0, xPercent: -8 });
             const tween = gsap.to(title, {
               opacity: 1, xPercent: 0, ease: 'none',
@@ -154,13 +147,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
       initSectionTitleScenes();
-      // 語系切換會以 textContent 重寫標題、銷毀 SplitText 節點——重新拆字並刷新進度
+      // Sprachwechsel überschreibt Titel per textContent und zerstört SplitText-Knoten — neu splitten + Fortschritt refreshen
       document.addEventListener('langchange', () => {
         initSectionTitleScenes();
         ScrollTrigger.refresh();
       });
 
-      // 4. Setlist 列表——ScrollTrigger.batch 批次揭示
+      // 4. Setlist-Listen — ScrollTrigger.batch-Stapel-Reveal
       [
         '.bio-list .bio-row',
         '.country-list .country-item',
@@ -179,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
 
-      // 4.5 About 圖片——clip-path scrub 揭示（從下往上揭開）
+      // 4.5 About-Bild — clip-path-Scrub-Reveal (von unten nach oben aufgedeckt)
       const aboutImg = document.querySelector('.about-image');
       if (aboutImg) {
         gsap.set(aboutImg, { clipPath: 'inset(100% 0% 0% 0%)' });
@@ -189,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // 5. 媒體嵌入——視差漂移（scrub parallax）
+      // 5. Media-Embeds — Parallax-Drift (Scrub)
       document.querySelectorAll('.spotify-embed-container, .soundcloud-embed-container, .twitch-embed-container')
         .forEach(el => {
           gsap.fromTo(el, { y: 50 }, {
@@ -198,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
 
-      // 6. Header 進度髮線——滾動進度即時反應
+      // 6. Header-Fortschrittslinie — reagiert live auf den Scroll-Fortschritt
       const header = document.querySelector('.header');
       if (header) {
         ScrollTrigger.create({
@@ -207,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // 7. 滑鼠驅動場景——Hero 字元斥力 + 導覽連結磁吸
+      // 7. Maus-Szenen — Hero-Zeichen-Repulsion + Nav-Link-Magnetismus
       const heroEl = document.getElementById('home');
       const heroTitleEl = document.querySelector('.hero-title');
       if (heroEl && heroTitleEl && heroTitleEl._splitChars && heroTitleEl._splitChars.length) {

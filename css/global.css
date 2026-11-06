@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-/* Native focus outline reset with accessible keyboard focus-visible */
+/* Natives Focus-Outline zurückgesetzt, barrierefreies Tastatur-focus-visible */
 *:focus {
   outline: none;
 }
@@ -33,7 +33,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom Text Selection */
+/* Eigene Textauswahl */
 ::selection {
   background-color: var(--neon-purple);
   color: var(--on-primary);
@@ -204,7 +204,7 @@ button {
   width: 100%;
 }
 
-/* GlowCursor — 桌面琥珀光軌 */
+/* GlowCursor — Amber-Lichtspur für Desktop */
 .glow-cursor {
   position: fixed;
   inset: 0;
@@ -224,7 +224,7 @@ button {
   mix-blend-mode: screen;
 }
 
-/* Custom Scrollbar */
+/* Eigene Scrollbar */
 ::-webkit-scrollbar {
   display: none;
   width: 0;

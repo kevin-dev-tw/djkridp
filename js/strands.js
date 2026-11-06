@@ -9,15 +9,15 @@
   const MAX_COLORS = 8;
   const ROLES = 7;
 
-  // DJKridP Hazard Amber brand color palette across 7 roles
+  // DJKridP Hazard-Amber-Markenpalette über 7 Rollen
   const AMBER_PALETTE = [
-    '#FFA24C', // top edge of bulge
-    '#FFB13D', // bright hazard amber
-    '#E09320', // deep amber
-    '#FFF5E6', // warm white core
-    '#FFC970', // light amber
-    '#E09320', // deep amber
-    '#995500'  // dark amber base
+    '#FFA24C', // Oberkante der Wölbung
+    '#FFB13D', // helles Hazard-Amber
+    '#E09320', // tiefes Amber
+    '#FFF5E6', // warmer Weißkern
+    '#FFC970', // helles Amber
+    '#E09320', // tiefes Amber
+    '#995500'  // dunkle Amber-Basis
   ];
 
   const VERT = `#version 300 es
@@ -627,7 +627,7 @@ void main() {
     };
   }
 
-  // Auto-initialize when DOM is ready
+  // Automatische Initialisierung, sobald das DOM bereit ist
   document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('ai-chat-button');
     if (btn) {
@@ -676,7 +676,7 @@ void main() {
         interactive: false,
         clickPulse: false
       });
-      // Twitch 狀態可能比 strands 先判定完——初始化時同步一次
+      // Twitch-Status kann vor Strands fertig sein — bei Init einmal synchronisieren
       if (window.twitchIsLive === true) {
         window.strandsLiveInstance.setEnergy(0.95, 1.6);
       }
