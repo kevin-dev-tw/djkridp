@@ -132,6 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return `@@CODE${codes.length - 1}@@`;
     });
 
+    // Bilder ![alt](url) vor Links extrahieren
+    formatted = formatted.replace(/!\[([^\]\n]*)\]\((https?:\/\/[^)\s<>'"]+)\)/g, (match, alt) => {
+      codes.push(`Bild: ${alt || 'Bild'}`);
+      return `@@CODE${codes.length - 1}@@`;
+    });
+
     // Markdown-Links [text](url) extrahieren
     formatted = formatted.replace(/\[([^\]\n]+)\]\((https?:\/\/[^)\s<>'"]+)\)/g, (match, label, url) => {
       codes.push(`<a href="${url}" target="_blank" rel="noopener noreferrer" class="ai-chat-link">${label}</a>`);
@@ -160,6 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Horizontale Linien verarbeiten (---, ***, ___)
     formatted = formatted.replace(/^\s*([-*_])(?:\s*\1){2,}\s*$/gm, '<hr>');
+    // Setext-Unterstrich === entfernen (würde sonst literal erscheinen)
+    formatted = formatted.replace(/^\s*=+\s*$/gm, '');
 
     // Zeilenumbrüche verarbeiten
     formatted = formatted.replace(/\n/g, '<br>');
@@ -183,9 +191,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function formatBoldItalic(text) {
-    // Fett-Text **text** oder __text__ verarbeiten
-    let formatted = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Fett-Kursiv ***text*** zuerst, damit keine Reste übrig bleiben
+    let formatted = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    // Fett-Text **text**, __text__ oder --text-- verarbeiten
+    formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     formatted = formatted.replace(/__(.+?)__/g, '<strong>$1</strong>');
+    formatted = formatted.replace(/--(.+?)--/g, '<strong>$1</strong>');
+    // Durchgestrichen ~~text~~ und Hervorhebung ==text==
+    formatted = formatted.replace(/~~(.+?)~~/g, '<del>$1</del>');
+    formatted = formatted.replace(/==(.+?)==/g, '<mark>$1</mark>');
     
     // Kursiv-Text *text* oder _text_ verarbeiten (Konflikte mit Fett vermeiden)
     formatted = formatted.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
@@ -272,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         continue;
       }
 
-      const ulMatch = trimmed.match(/^[-*•]\s+(.+)/);
+      const ulMatch = trimmed.match(/^(?:[-*•–—]|--)\s+(.+)/);
       const olMatch = trimmed.match(/^(\d+)\.\s+(.+)/);
       
       if (ulMatch) {
@@ -284,7 +298,8 @@ document.addEventListener('DOMContentLoaded', () => {
           result.push('<ul>');
           inUl = true;
         }
-        result.push(`<li>${ulMatch[1]}</li>`);
+        const item = ulMatch[1].replace(/^\[ \]\s*/, '□ ').replace(/^\[[xX✓]\]\s*/, '■ ');
+        result.push(`<li>${item}</li>`);
       } else if (olMatch) {
         if (inUl) {
           result.push('</ul>');
@@ -767,20 +782,6 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleChat();
     }
   });
-
-  const welcomeEl = emptyState ? emptyState.querySelector('.ai-chat-empty-text') : null;
-  function updateGreeting() {
-    if (!welcomeEl) return;
-    const h = new Date().getHours();
-    const key = h >= 5 && h < 12 ? 'chat.greetMorning'
-      : h < 17 ? 'chat.greetDay'
-      : h < 22 ? 'chat.greetEvening'
-      : 'chat.greetNight';
-    const text = tr(key, welcomeEl.textContent);
-    if (text && text !== welcomeEl.textContent) welcomeEl.textContent = text;
-  }
-  updateGreeting();
-  document.addEventListener('langchange', updateGreeting);
 
   const quickQuestionBtns = document.querySelectorAll('.quick-question-btn');
   quickQuestionBtns.forEach(btn => {
