@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
 Sitemap: https://djkridp.vercel.app/sitemap.xml
-
