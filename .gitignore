@@ -4,3 +4,4 @@ room/
 .env
 .DS_Store
 *.log
+.impeccable/
