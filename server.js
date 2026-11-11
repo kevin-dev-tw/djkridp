@@ -90,6 +90,8 @@ const LANG_CONFIG = {
   }
 };
 
+app.get('/api/twitch-schedule', require('./api/twitch-schedule'));
+
 app.post('/api/chat', async (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');

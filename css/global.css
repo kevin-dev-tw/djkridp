@@ -10,7 +10,7 @@
 }
 
 *:focus-visible {
-  outline: 2px solid var(--color-border-purple);
+  outline: 2px solid var(--color-acid);
   outline-offset: 2px;
 }
 
@@ -35,12 +35,12 @@ body {
 
 /* Eigene Textauswahl */
 ::selection {
-  background-color: var(--neon-purple);
+  background-color: var(--color-acid);
   color: var(--on-primary);
 }
 
 ::-moz-selection {
-  background-color: var(--neon-purple);
+  background-color: var(--color-acid);
   color: var(--on-primary);
 }
 
@@ -85,7 +85,7 @@ p {
 }
 
 a {
-  color: var(--color-purple-primary);
+  color: var(--color-acid);
   text-decoration: none;
   transition: color var(--transition-base);
 }
@@ -147,6 +147,19 @@ button {
 }
 
 #tours .container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+#streams.section {
+  min-height: auto;
+  display: block;
+  background-color: #0F0F12;
+}
+
+#streams .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;

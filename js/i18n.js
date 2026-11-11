@@ -13,6 +13,7 @@
       'nav.home': 'Startseite',
       'nav.about': 'Über mich',
       'nav.tours': 'Tours',
+      'nav.streams': 'Streams',
       'nav.works': 'Werke',
       'nav.contact': 'Kontakt',
       'nav.menuOpen': 'Menü öffnen',
@@ -55,6 +56,10 @@
       'twitch.imgAlt': 'DJKridP Twitch Stream Offline Vorschau',
       'twitch.live': 'LIVE',
       'twitch.offline': 'Offline',
+      'streams.title': 'Streams',
+      'twitch.scheduleUntitled': 'Live-Stream',
+      'twitch.scheduleCanceled': 'Abgesagt',
+      'twitch.scheduleVacation': 'Streampause bis {date}',
 
       'contact.title': 'Kontakt',
       'contact.follow': 'Folgen',
@@ -88,7 +93,7 @@
       'chat.noResponse': 'Keine Antwort erhalten. Bitte versuchen Sie es erneut.',
       'chat.noResponseShort': 'Keine Antwort erhalten.',
       'chat.apiError': 'API-Anfrage fehlgeschlagen',
-      'chat.sendError': 'Entschuldigung, ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.'
+      'chat.sendError': 'Entschuldigung, ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.',
     },
 
     en: {
@@ -98,6 +103,7 @@
       'nav.home': 'Home',
       'nav.about': 'About',
       'nav.tours': 'Tours',
+      'nav.streams': 'Streams',
       'nav.works': 'Works',
       'nav.contact': 'Contact',
       'nav.menuOpen': 'Open menu',
@@ -140,6 +146,10 @@
       'twitch.imgAlt': 'DJKridP Twitch stream offline preview',
       'twitch.live': 'LIVE',
       'twitch.offline': 'Offline',
+      'streams.title': 'Streams',
+      'twitch.scheduleUntitled': 'Live stream',
+      'twitch.scheduleCanceled': 'Canceled',
+      'twitch.scheduleVacation': 'Streaming break until {date}',
 
       'contact.title': 'Contact',
       'contact.follow': 'Follow',
@@ -173,7 +183,7 @@
       'chat.noResponse': 'No response received. Please try again.',
       'chat.noResponseShort': 'No response received.',
       'chat.apiError': 'API request failed',
-      'chat.sendError': 'Sorry, an error occurred. Please try again later.'
+      'chat.sendError': 'Sorry, an error occurred. Please try again later.',
     }
   };
 
@@ -198,7 +208,8 @@
     const dict = I18N[lang];
 
     document.documentElement.lang = lang;
-    document.title = dict['meta.title'];
+    const titleKey = document.documentElement.dataset.titleKey || 'meta.title';
+    document.title = dict[titleKey] || dict['meta.title'];
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute('content', dict['meta.description']);
 
@@ -300,4 +311,5 @@
   window.I18N = I18N;
   window.I18N_LANG = getLang();
   window.t = t;
+  window.applyLang = applyLang;
 })();

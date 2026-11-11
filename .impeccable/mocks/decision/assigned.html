@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  * { margin:0; padding:0; box-sizing:border-box }
+  body { width:1440px; height:900px; overflow:hidden; background:#0A0B0C; font-family:Arial,Helvetica,sans-serif; position:relative }
+  .vignette { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 60%, transparent 30%, rgba(0,0,0,.55) 100%) }
+  /* window: night city through blinds, right */
+  .window { position:absolute; right:90px; top:120px; width:330px; height:420px; background:#050608 }
+  .blind { height:34px; margin-bottom:22px; background:linear-gradient(180deg,#2A2C30 0%,#101214 60%) }
+  .city { position:absolute; right:110px; top:130px; width:290px; height:400px }
+  .city i { position:absolute; display:block; background:#E8B25C; opacity:.8 }
+  /* console: bottom silhouette */
+  .console { position:absolute; left:0; right:0; bottom:0; height:300px; background:linear-gradient(180deg,#17191B,#0A0B0C) }
+  .fader { position:absolute; bottom:60px; width:6px; height:150px; background:#1E2124; border-radius:3px }
+  .fader b { position:absolute; left:-7px; width:20px; height:12px; background:#3A3E42; border-radius:2px }
+  .fader .cap { background:#E8B25C }
+  /* monitor with phosphor trace */
+  .monitor { position:absolute; left:170px; top:170px; width:420px; height:300px; background:#0B0D0B; border:10px solid #141618; border-radius:8px }
+  .grat { position:absolute; inset:0; background-image:linear-gradient(rgba(67,217,76,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(67,217,76,.12) 1px,transparent 1px); background-size:40px 30px }
+  .trace { position:absolute; left:0; right:0; top:50%; height:2px; background:#43D94C; box-shadow:0 0 18px #43D94C; transform:translateY(-50%) }
+  .trace2 { position:absolute; left:0; right:0; top:50%; height:60px; transform:translateY(-50%); background:linear-gradient(90deg,transparent,#43D94C33 20%,transparent 40%,#43D94C55 60%,transparent 80%) }
+  /* ON AIR lamp */
+  .onair { position:absolute; left:640px; top:120px; padding:14px 34px; background:#D93A2B; color:#0A0B0C; font-weight:800; font-size:28px; letter-spacing:.14em; box-shadow:0 0 60px rgba(217,58,43,.45) }
+  .lamp-arm { position:absolute; left:720px; top:60px; width:4px; height:60px; background:#26292C }
+  /* VU meters */
+  .vu { position:absolute; left:640px; top:250px; width:220px; height:120px; background:#17191B; border-radius:6px; border:1px solid #232628 }
+  .vu .n { position:absolute; bottom:14px; width:3px; height:80px; background:#8FE388; transform-origin:bottom center }
+  .vu .n1 { left:70px; transform:rotate(-38deg) } .vu .n2 { left:150px; transform:rotate(24deg) }
+  .vu .arc { position:absolute; left:30px; right:30px; top:14px; height:60px; border-top:2px solid #8FE38866; border-radius:50% }
+  /* labels */
+  .legend { position:absolute; color:#C9CDD1; font-size:11px; letter-spacing:.22em; opacity:.55 }
+  .tape { position:absolute; bottom:230px; left:220px; padding:4px 14px; background:#C9B87A; color:#0A0B0C; font-size:11px; font-weight:700; letter-spacing:.18em; transform:rotate(-2deg) }
+  h1 { position:absolute; left:170px; top:500px; color:#F4F1EA; font-size:56px; font-weight:800; letter-spacing:.06em }
+  .sub { position:absolute; left:172px; top:575px; color:#C9CDD1; font-size:15px; letter-spacing:.2em; opacity:.7 }
+</style></head><body>
+  <div class="window"><div class="blind"></div><div class="blind"></div><div class="blind"></div><div class="blind"></div><div class="blind"></div><div class="blind"></div></div>
+  <div class="city">
+    <i style="left:20px;top:300px;width:10px;height:10px"></i><i style="left:60px;top:260px;width:14px;height:8px"></i>
+    <i style="left:110px;top:330px;width:8px;height:8px"></i><i style="left:170px;top:280px;width:12px;height:10px"></i>
+    <i style="left:230px;top:310px;width:9px;height:9px"></i><i style="left:40px;top:360px;width:7px;height:7px;opacity:.4"></i>
+    <i style="left:140px;top:370px;width:8px;height:8px;opacity:.4"></i><i style="left:210px;top:350px;width:6px;height:6px;opacity:.4"></i>
+  </div>
+  <div class="lamp-arm"></div><div class="onair">ON AIR</div>
+  <div class="monitor"><div class="grat"></div><div class="trace2"></div><div class="trace"></div></div>
+  <div class="legend" style="left:170px;top:480px">PROGRAM — DJKRIDP LIVE</div>
+  <div class="vu"><div class="arc"></div><div class="n n1"></div><div class="n n2"></div></div>
+  <div class="legend" style="left:640px;top:382px">MONITOR L&nbsp;&nbsp;&nbsp;&nbsp;R</div>
+  <div class="tape">KRID P — BOOTH 2</div>
+  <div class="console">
+    <div class="fader" style="left:140px"><b style="top:40px" class="cap"></b></div>
+    <div class="fader" style="left:200px"><b style="top:80px"></b></div>
+    <div class="fader" style="left:260px"><b style="top:20px"></b></div>
+    <div class="fader" style="left:320px"><b style="top:95px"></b></div>
+    <div class="fader" style="left:380px"><b style="top:55px" class="cap"></b></div>
+    <div class="fader" style="left:440px"><b style="top:110px"></b></div>
+    <div class="fader" style="left:500px"><b style="top:70px"></b></div>
+  </div>
+  <h1>THE BOOTH IS OPEN</h1>
+  <div class="sub">DRAG TO LOOK AROUND — SCROLL TO LEAN IN</div>
+  <div class="vignette"></div>
+</body></html>

@@ -75,10 +75,12 @@
 
 :root {
   /* Acid Poster — Akzent (einzige erlaubte Farbe) */
-  --neon-purple: #FFB13D;
-  --neon-purple-glow: rgba(0, 0, 0, 0);
-  --electric-cyan: #FFB13D;
-  --electric-cyan-glow: rgba(0, 0, 0, 0);
+  --color-acid: #FFB13D;
+  --color-acid-glow: rgba(0, 0, 0, 0);
+  --color-acid-light: #FFC970;
+  --color-acid-lighter: #FFD99A;
+  --color-acid-dark: #E09320;
+  --color-acid-darker: #B26F0F;
 
   /* Flächen — Void Black / Panel Zinc / Hairline */
   --midnight-base: #0A0A0B;
@@ -145,11 +147,6 @@
   --outline-variant: #26262A;
 
   /* Legacy-Farben (auf Acid Poster abgebildet) */
-  --color-purple-primary: #FFB13D;
-  --color-purple-light: #FFC970;
-  --color-purple-lighter: #FFD99A;
-  --color-purple-dark: #E09320;
-  --color-purple-darker: #B26F0F;
   --color-text-primary: #F4F4F0;
   --color-text-secondary: #94949C;
   --color-text-light: #94949C;
@@ -162,7 +159,6 @@
   --color-bg-works: #0A0A0B;
   --color-bg-contact: #0A0A0B;
   --color-border: #26262A;
-  --color-border-purple: #FFB13D;
 
   /* Abstände */
   --spacing-xs: 0.25rem;
@@ -218,8 +214,7 @@
   --shadow-sm: none;
   --shadow-md: none;
   --shadow-lg: none;
-  --shadow-neon-purple: none;
-  --shadow-neon-cyan: none;
+  --shadow-acid: none;
   --shadow-card: none;
 
   /* Glaseffekt — flach zu Panel Zinc + Hairline */
@@ -242,7 +237,7 @@
 }
 
 *:focus-visible {
-  outline: 2px solid var(--color-border-purple);
+  outline: 2px solid var(--color-acid);
   outline-offset: 2px;
 }
 
@@ -267,12 +262,12 @@ body {
 
 /* Eigene Textauswahl */
 ::selection {
-  background-color: var(--neon-purple);
+  background-color: var(--color-acid);
   color: var(--on-primary);
 }
 
 ::-moz-selection {
-  background-color: var(--neon-purple);
+  background-color: var(--color-acid);
   color: var(--on-primary);
 }
 
@@ -317,7 +312,7 @@ p {
 }
 
 a {
-  color: var(--color-purple-primary);
+  color: var(--color-acid);
   text-decoration: none;
   transition: color var(--transition-base);
 }
@@ -379,6 +374,19 @@ button {
 }
 
 #tours .container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+#streams.section {
+  min-height: auto;
+  display: block;
+  background-color: #0F0F12;
+}
+
+#streams .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -496,7 +504,7 @@ html {
   bottom: -1px;
   width: 100%;
   height: 1px;
-  background: var(--neon-purple);
+  background: var(--color-acid);
   transform: scaleX(var(--scroll-progress, 0));
   transform-origin: left;
 }
@@ -577,7 +585,7 @@ html {
 
 .nav-link:hover {
   color: var(--on-surface);
-  border-bottom-color: var(--color-border-purple);
+  border-bottom-color: var(--color-acid);
 }
 
 .lang-switch {
@@ -708,7 +716,7 @@ html {
 }
 
 .lang-option[aria-selected="true"] {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
 }
 
 .hero {
@@ -841,13 +849,13 @@ html {
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-border-purple);
+  color: var(--color-acid);
   padding-top: 4px;
 }
 
 .bio-text h3 {
   margin-bottom: var(--spacing-sm);
-  color: var(--neon-purple);
+  color: var(--color-acid);
   font-size: var(--font-size-xl);
   font-weight: 700;
   line-height: 1.3;
@@ -911,7 +919,7 @@ html {
 }
 
 .country-item:hover h3 {
-  color: var(--neon-purple);
+  color: var(--color-acid);
 }
 
 .country-item h3 {
@@ -953,13 +961,13 @@ html {
   font-size: var(--font-size-sm);
   font-weight: 500;
   letter-spacing: 0.1em;
-  color: var(--color-border-purple);
+  color: var(--color-acid);
   padding-top: 4px;
 }
 
 .work-text h3 {
   margin-bottom: var(--spacing-sm);
-  color: var(--neon-purple);
+  color: var(--color-acid);
   font-size: var(--font-size-xl);
   font-weight: 700;
   line-height: 1.3;
@@ -1042,11 +1050,120 @@ html {
 }
 
 .twitch-live-status.is-live {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
+}
+
+/* Twitch-Streamplan — eigenständige Sektion */
+#streams[hidden] {
+  display: none;
+}
+
+.twitch-schedule-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.twitch-schedule-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin: 0 calc(-1 * var(--spacing-md));
+  border-bottom: 1px solid var(--glass-border);
+  font-size: var(--font-size-sm);
+  color: var(--on-surface);
+  transition: background-color var(--transition-fast);
+}
+
+.twitch-schedule-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.twitch-schedule-item:last-child {
+  border-bottom: none;
+}
+
+.twitch-schedule-item.is-next .twitch-schedule-date,
+.twitch-schedule-item.is-next .twitch-schedule-title {
+  color: var(--color-acid);
+}
+
+.twitch-schedule-item.is-next .twitch-schedule-title::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-acid);
+  margin-right: var(--spacing-sm);
+  vertical-align: middle;
+}
+
+.twitch-schedule-date {
+  flex-shrink: 0;
+  min-width: 6.5em;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-acid);
+}
+
+.twitch-schedule-time {
+  flex-shrink: 0;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--on-surface-variant);
+}
+
+.twitch-schedule-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.twitch-schedule-cat {
+  color: var(--on-surface-variant);
+  font-size: var(--font-size-xs);
+}
+
+.twitch-schedule-item.is-canceled .twitch-schedule-title {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.twitch-schedule-badge {
+  flex-shrink: 0;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+}
+
+.twitch-schedule-vacation {
+  font-size: var(--font-size-sm);
+  color: var(--on-surface-variant);
+  padding: var(--spacing-xs) 0;
+}
+
+@media (max-width: 640px) {
+  .twitch-schedule-item {
+    flex-wrap: wrap;
+    gap: var(--spacing-xs) var(--spacing-sm);
+  }
+  .twitch-schedule-date {
+    min-width: 0;
+  }
 }
 
 .soundcloud-album-link {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
   text-decoration: underline;
   transition: color var(--transition-base);
 }
@@ -1093,7 +1210,7 @@ html {
 }
 
 .twitch-link {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
   text-decoration: underline;
   transition: color var(--transition-fast);
 }
@@ -1357,13 +1474,13 @@ html {
 
 
 .mobile-menu-toggle:focus-visible {
-  outline: 2px solid var(--color-border-purple);
+  outline: 2px solid var(--color-acid);
   outline-offset: 2px;
 }
 
 .mobile-menu-toggle.active {
-  background-color: var(--color-border-purple);
-  border-color: var(--color-border-purple);
+  background-color: var(--color-acid);
+  border-color: var(--color-acid);
   color: var(--on-primary);
 }
 
@@ -1482,7 +1599,7 @@ body > footer.footer {
   font-family: var(--font-family-display);
   font-size: var(--font-size-sm);
   font-weight: 400;
-  color: var(--neon-purple);
+  color: var(--color-acid);
   text-transform: uppercase;
   letter-spacing: 2px;
   margin: 0;
@@ -1544,7 +1661,7 @@ body > footer.footer {
 }
 
 .ai-chat-button:focus-visible {
-  outline: 2px solid var(--neon-purple);
+  outline: 2px solid var(--color-acid);
   outline-offset: 4px;
 }
 
@@ -1561,8 +1678,8 @@ body > footer.footer {
   position: absolute;
   top: -12px;
   right: -4px;
-  background: var(--midnight-surface);
-  color: var(--neon-purple);
+  background: var(--surface);
+  color: var(--color-acid);
   border: 1px solid var(--outline-variant);
   border-radius: 0;
   padding: 2px 8px;
@@ -1584,7 +1701,7 @@ body > footer.footer {
   left: 14px;
   width: 4px;
   height: 4px;
-  background: var(--midnight-surface);
+  background: var(--surface);
   border-right: 1px solid var(--outline-variant);
   border-bottom: 1px solid var(--outline-variant);
 }
@@ -1712,12 +1829,12 @@ body > footer.footer {
 .ai-chat-clear:hover,
 .ai-chat-close:hover {
   color: var(--on-surface);
-  border-color: var(--color-border-purple);
+  border-color: var(--color-acid);
 }
 
 .ai-chat-clear:focus-visible,
 .ai-chat-close:focus-visible {
-  outline: 2px solid var(--color-border-purple);
+  outline: 2px solid var(--color-acid);
   outline-offset: 2px;
 }
 
@@ -1826,7 +1943,7 @@ body > footer.footer {
 
 .ai-chat-music-link:hover,
 .ai-chat-music-link:focus-visible {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
 }
 
 .quick-question-btn {
@@ -1856,15 +1973,15 @@ body > footer.footer {
 }
 
 .quick-question-btn:hover {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
 }
 
 .quick-question-btn:hover::after {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
 }
 
 .quick-question-btn:focus-visible {
-  outline: 2px solid var(--color-border-purple);
+  outline: 2px solid var(--color-acid);
   outline-offset: 2px;
 }
 
@@ -1878,7 +1995,7 @@ body > footer.footer {
 }
 
 .quick-question-btn:hover .quick-question-num {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
 }
 
 .quick-question-btn span:last-child {
@@ -1903,7 +2020,7 @@ body > footer.footer {
 
 .ai-chat-message.mine {
   background-color: var(--surface-container);
-  border-right: 2px solid var(--color-border-purple);
+  border-right: 2px solid var(--color-acid);
   padding: var(--spacing-sm) var(--spacing-md);
 }
 
@@ -1919,7 +2036,7 @@ body > footer.footer {
 
 .ai-chat-link,
 .ai-platform-link {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
   font-weight: inherit;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -1934,7 +2051,7 @@ body > footer.footer {
 
 .ai-chat-link:focus-visible,
 .ai-platform-link:focus-visible {
-  outline: 2px solid var(--color-border-purple) !important;
+  outline: 2px solid var(--color-acid) !important;
   outline-offset: 2px;
 }
 
@@ -1962,7 +2079,7 @@ body > footer.footer {
 }
 
 .ai-chat-input-wrapper:focus-within {
-  border-color: var(--color-border-purple);
+  border-color: var(--color-acid);
   box-shadow: 0 0 12px rgba(255, 177, 61, 0.22);
 }
 
@@ -1978,7 +2095,7 @@ body > footer.footer {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-border-purple);
+  color: var(--color-acid);
   line-height: 1.3;
 }
 
@@ -2004,7 +2121,7 @@ body > footer.footer {
 }
 
 .ai-chat-message-wrapper strong {
-  color: var(--color-primary);
+  color: var(--color-acid);
   font-weight: 700;
 }
 
@@ -2015,8 +2132,8 @@ body > footer.footer {
 
 .ai-chat-message-wrapper mark {
   padding: 0 0.25em;
-  background: var(--color-border-purple);
-  color: var(--acid-ink, #0A0A0B);
+  background: var(--color-acid);
+  color: var(--on-primary);
 }
 
 .ai-chat-message-wrapper ul,
@@ -2038,24 +2155,24 @@ body > footer.footer {
 }
 
 .ai-chat-message-wrapper li::marker {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
 }
 
 .ai-chat-message-wrapper code {
   font-family: var(--font-family-mono);
   font-size: 0.85em;
   padding: 0.15em 0.35em;
-  background: var(--midnight-surface);
+  background: var(--surface);
   border: 1px solid var(--outline-variant);
-  color: var(--color-border-purple);
+  color: var(--color-acid);
 }
 
 .ai-chat-message-wrapper pre {
   margin: 0.6em 0;
   padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--midnight-surface);
+  background: var(--surface);
   border: 1px solid var(--outline-variant);
-  border-left: 2px solid var(--color-border-purple);
+  border-left: 2px solid var(--color-acid);
   overflow-x: auto;
 }
 
@@ -2069,7 +2186,7 @@ body > footer.footer {
 .ai-chat-message-wrapper blockquote {
   margin: 0.6em 0;
   padding: 0.2em 0 0.2em var(--spacing-sm);
-  border-left: 2px solid var(--color-border-purple);
+  border-left: 2px solid var(--color-acid);
   color: var(--on-surface-variant);
 }
 
@@ -2092,7 +2209,7 @@ body > footer.footer {
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--on-surface-variant);
-  border-bottom-color: var(--color-border-purple);
+  border-bottom-color: var(--color-acid);
 }
 
 .ai-chat-message-wrapper hr {
@@ -2102,13 +2219,13 @@ body > footer.footer {
 }
 
 .ai-chat-message-wrapper a {
-  color: var(--color-border-purple);
+  color: var(--color-acid);
 }
 
 .ai-chat-message.other {
   position: relative;
   background-color: transparent;
-  border-left: 2px solid var(--color-border-purple);
+  border-left: 2px solid var(--color-acid);
   padding: var(--spacing-sm) var(--spacing-md);
   box-shadow: -2px 0 10px rgba(255, 177, 61, 0.15);
 }
@@ -2120,7 +2237,7 @@ body > footer.footer {
   height: 8px;
   margin-left: 6px;
   border-radius: 50%;
-  background: var(--neon-purple);
+  background: var(--color-acid);
   box-shadow: 0 0 10px rgba(255, 177, 61, 0.7);
   animation: typing-orb-pulse 1.1s ease-in-out infinite alternate;
   vertical-align: middle;
@@ -2175,7 +2292,7 @@ body > footer.footer {
 
 .ai-chat-input:focus {
   outline: none;
-  border-color: var(--neon-purple);
+  border-color: var(--color-acid);
   background-color: var(--surface-container-low);
   transform: scale(1);
   -webkit-transform: scale(1);
@@ -2187,7 +2304,7 @@ body > footer.footer {
   border-radius: var(--border-radius-sm);
   border: none;
   cursor: pointer;
-  background-color: var(--neon-purple);
+  background-color: var(--color-acid);
   color: var(--on-primary);
   display: flex;
   align-items: center;
@@ -2199,7 +2316,7 @@ body > footer.footer {
 }
 
 .ai-chat-send:hover {
-  background-color: var(--color-purple-light);
+  background-color: var(--color-acid-light);
 }
 
 .ai-chat-send:disabled {
@@ -2209,7 +2326,7 @@ body > footer.footer {
 }
 
 .ai-chat-send:focus-visible {
-  outline: 2px solid var(--neon-purple);
+  outline: 2px solid var(--color-acid);
   outline-offset: 2px;
 }
 
@@ -2265,7 +2382,7 @@ body > footer.footer {
 
 .confirm-dialog-icon {
   font-size: 22px;
-  color: var(--neon-purple);
+  color: var(--color-acid);
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
@@ -2323,16 +2440,16 @@ body > footer.footer {
 }
 
 .confirm-dialog-confirm {
-  background-color: var(--neon-purple);
+  background-color: var(--color-acid);
   color: var(--on-primary);
 }
 
 .confirm-dialog-confirm:hover {
-  background-color: var(--color-purple-light);
+  background-color: var(--color-acid-light);
 }
 
 .confirm-dialog-btn:focus-visible {
-  outline: 2px solid var(--neon-purple);
+  outline: 2px solid var(--color-acid);
   outline-offset: 2px;
 }
 
@@ -2508,7 +2625,7 @@ body > footer.footer {
 
   .nav-link:hover,
   .nav-link:active {
-    color: var(--color-border-purple);
+    color: var(--color-acid);
     text-decoration: none;
   }
 
@@ -2659,7 +2776,7 @@ body > footer.footer {
     right: 0;
     bottom: calc(-1 * var(--spacing-md));
     height: 2px;
-    background: var(--color-border-purple);
+    background: var(--color-acid);
     transform: scaleX(0);
     transition: transform var(--transition-fast);
   }
@@ -2715,8 +2832,8 @@ body > footer.footer {
 }
 
 .back-to-top:hover {
-  color: var(--neon-purple);
-  border-color: var(--neon-purple);
+  color: var(--color-acid);
+  border-color: var(--color-acid);
 }
 
 .back-to-top .material-symbols-outlined {
@@ -2829,6 +2946,7 @@ body > footer.footer {
                     <li><a href="#home" class="nav-link" aria-label="Startseite" data-i18n-attr="aria-label:nav.home"><span data-i18n="nav.home">Startseite</span></a></li>
                     <li><a href="#about" class="nav-link" aria-label="Über mich" data-i18n-attr="aria-label:nav.about"><span data-i18n="nav.about">Über mich</span></a></li>
                     <li><a href="#tours" class="nav-link" aria-label="Tours" data-i18n-attr="aria-label:nav.tours"><span data-i18n="nav.tours">Tours</span></a></li>
+                    <li><a href="#streams" class="nav-link" aria-label="Streams" data-i18n-attr="aria-label:nav.streams"><span data-i18n="nav.streams">Streams</span></a></li>
                     <li><a href="#works" class="nav-link" aria-label="Werke" data-i18n-attr="aria-label:nav.works"><span data-i18n="nav.works">Werke</span></a></li>
                     <li><a href="#contact" class="nav-link" aria-label="Kontakt" data-i18n-attr="aria-label:nav.contact"><span data-i18n="nav.contact">Kontakt</span></a></li>
                 </ul>
@@ -2943,6 +3061,13 @@ body > footer.footer {
             </div>
         </section>
 
+        <section id="streams" class="section" aria-label="Streamplan" data-i18n-attr="aria-label:streams.title" hidden>
+            <div class="container" id="twitch-schedule">
+                <h2 class="section-title" data-i18n="streams.title">Streams</h2>
+                <ul class="twitch-schedule-list" id="twitch-schedule-list"></ul>
+            </div>
+        </section>
+
         <section id="works" class="section" aria-label="Werke" data-i18n-attr="aria-label:works.title">
             <div class="container">
                 <h2 class="section-title" data-i18n="works.title">Werke</h2>
@@ -2980,7 +3105,7 @@ body > footer.footer {
                 </div>
 
                 <!-- SoundCloud-Album-Einbettung -->
-                <div class="soundcloud-embed-container">
+                <div class="soundcloud-embed-container" id="release">
                     <h2 class="soundcloud-title"><a href="https://hypeddit.com/u1shci" target="_blank" rel="noopener noreferrer" class="soundcloud-album-link" data-i18n="sc.title">Mind &amp; Soul - Album (Click to view)</a></h2>
                     <iframe id="soundcloud-iframe" class="lazy-embed" title="SoundCloud Mind &amp; Soul Album Player" width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" loading="lazy" data-src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2079462015&color=%23d3c3c5&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true" src=""></iframe>
                     <script>
@@ -3006,13 +3131,13 @@ body > footer.footer {
                     </div>
                 </div>
 
-                <div class="twitch-embed-container">
+                <div class="twitch-embed-container" id="live">
                     <h2 class="twitch-embed-head">
                         <span class="twitch-live-orb" id="twitch-live-orb" aria-hidden="true"></span>
                         <span class="twitch-embed-title" data-i18n-html="twitch.title">Live Streaming auf <a href="https://www.twitch.tv/djkridp" target="_blank" rel="noopener noreferrer" class="twitch-link">Twitch</a></span>
                         <span class="twitch-live-status" id="twitch-live-status">Offline</span>
                     </h2>
-                    
+
                     <!-- Offline-Vorschau anzeigen -->
                     <div id="twitch-offline-view" style="display: block;">
                         <img src="images/offline.jpg" 
@@ -3220,10 +3345,11 @@ body > footer.footer {
         }
     </script>
     
-    <script src="js/i18n.js?v=1.7.0" defer></script>
-    <script src="js/main.js?v=1.9.8" defer></script>
-    <script src="js/navigation.js?v=1.7.0" defer></script>
+    <script src="js/i18n.js?v=1.7.6" defer></script>
+    <script src="js/main.js?v=1.9.9" defer></script>
+    <script src="js/navigation.js?v=1.7.1" defer></script>
     <script src="js/twitch-status.js?v=1.7.0" defer></script>
+    <script src="js/twitch-schedule.js?v=1.0.5" defer></script>
     <script src="js/glow-cursor.js?v=1.6.0" defer></script>
     <script src="js/strands.js?v=1.5.1" defer></script>
     <script src="js/ai-chat.js?v=1.7.5" defer></script>

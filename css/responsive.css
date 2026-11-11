@@ -93,7 +93,7 @@
 
   .nav-link:hover,
   .nav-link:active {
-    color: var(--color-border-purple);
+    color: var(--color-acid);
     text-decoration: none;
   }
 
@@ -244,7 +244,7 @@
     right: 0;
     bottom: calc(-1 * var(--spacing-md));
     height: 2px;
-    background: var(--color-border-purple);
+    background: var(--color-acid);
     transform: scaleX(0);
     transition: transform var(--transition-fast);
   }

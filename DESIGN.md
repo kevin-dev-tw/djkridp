@@ -69,3 +69,29 @@ A rave flyer rendered as a website. Cold, high-voltage, underground — the atmo
 - No AI copywriting: "Elevate", "Unleash", "Next-Gen", "Seamless"
 - No custom cursors, no parallax, no WebGL canvases
 - No fake stats ("99.99%", "10K+ listeners")
+
+---
+
+# Surface: Raum (/room/)
+
+A separate world from the Acid Poster — an open-air beach in daylight, not print. Standalone React + react-three-fiber page built from `room-app/`; the poster's rules do not cross over, and the room never restyles the poster.
+
+## Palette
+- **Day Blue** `#3A7BC2` — zenith and page ground.
+- ****Haze** `#CFE3EE` — the pale band at the horizon; **Sun** white-hot over the water.
+- ******Sea** `#1E6E8C` turquoise and **Sand** `#C9B795` — the ground plane split at the waterline; the sea carries swell rows, foam laps and a sun path.
+- **Phosphor** `#8FE388` — the stream trace on the LED wall and the lantern's affordance ring; the only cool signal.
+- **Fire** `#FF9A3C` — every warm point source: campfire, lantern globe, play chip.
+- The crowd is warm-clothed `#453B33` — sunlit masses, never detailed.
+
+## Type & Labels
+- HUD chrome in `Sora` small tracked caps — minimal: brand, return link, one caption, one hint, one play chip.
+- In-scene text is working marks only — the stream's LIVE badge and channel tag drawn into the screen texture, the lantern's painted `PLAY ▸ MIND & SOUL` board. Nothing decorative.
+
+## Scene & Motion
+- One beach — sky, sea and sand all shader-drawn (procedural sand with wet band, ember streak, breathing foam edge, fire and lantern pools) — two zones: the crowd facing a truss-mounted LED wall (canvas-texture stream, breathing phosphor trace + scanlines), and the lantern-lit listening post with blanket and crate that opens the real SoundCloud playlist in a DOM panel.
+- Free look only: pointer drag turns the head (yaw ±166°, pitch clamped), wheel walks the sand toward the screen, hover adds micro-parallax, faint idle sway. Arrow keys step the view; Esc closes the player.
+- Ambient life is the point: 26 instanced figures sway on individual phases, the fire flickers its light, sea glints drift, first stars hold still.
+- `prefers-reduced-motion`: near-instant response, sway and flicker damped.
+- Aspect-aware FOV: portrait screens widen so the screen and horizon stay in frame.
+- Figure discipline: figures read as clothed masses in daylight — never render faces, hands, or clothing detail.

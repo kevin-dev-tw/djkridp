@@ -1,4 +1,6 @@
 node_modules/
+room/
+.tools/
 .env
 .DS_Store
 *.log

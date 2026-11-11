@@ -196,30 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // 7. Abschnitts-Stapel — vorherige Sektion pinnt + dimmt, nächste schiebt darüber
-      // z-index steigend: gepinnte Transform-Layer würden sonst über der nächsten Sektion liegen
-      const stackSections = gsap.utils.toArray('#main-content > section');
-      stackSections.forEach((section, i) => {
-        section.style.zIndex = i + 1;
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'bottom bottom',
-          end: 'bottom top',
-          pin: true,
-          pinSpacing: false
-        });
-        gsap.to(section, {
-          opacity: 0, scale: 0.96, ease: 'none',
-          scrollTrigger: { trigger: section, start: 'bottom bottom', end: 'bottom top', scrub: true }
-        });
-      });
-      // Footer deckt die letzte gepinnte Sektion ebenfalls ab
-      const stackFooter = document.querySelector('.footer');
-      if (stackFooter) {
-        stackFooter.style.position = 'relative';
-        stackFooter.style.zIndex = stackSections.length + 1;
-      }
-
       // 8. Maus-Szenen — Hero-Zeichen-Repulsion + Nav-Link-Magnetismus
       const heroEl = document.getElementById('home');
       const heroTitleEl = document.querySelector('.hero-title');

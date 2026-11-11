@@ -1,0 +1,10 @@
+const fs = require("fs");
+const src = process.argv[2];
+const dest = process.argv[3];
+const j = JSON.parse(fs.readFileSync(src, "utf8"));
+const d = j.data || (j.result && j.result.data);
+fs.writeFileSync(dest, Buffer.from(d, "base64"));
+const buf = fs.readFileSync(dest);
+const w = buf.readUInt32BE(16);
+const h = buf.readUInt32BE(20);
+console.log(dest, buf.length, w, h);

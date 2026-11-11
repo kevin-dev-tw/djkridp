@@ -1,4 +1,4 @@
-const CACHE_NAME = 'djkridp-v76'; // Versionsnummer aktualisiert, um alten Cache zu löschen
+const CACHE_NAME = 'djkridp-v79'; // Versionsnummer aktualisiert, um alten Cache zu löschen
 const urlsToCache = [
   '/',
   '/index.html',
@@ -8,6 +8,7 @@ const urlsToCache = [
   '/js/ai-chat.js',
   '/js/strands.js',
   '/js/twitch-status.js',
+  '/js/twitch-schedule.js',
   '/js/glow-cursor.js',
   '/fonts/archivo-black-latin.woff2',
   '/images/favicon.ico',
@@ -56,6 +57,9 @@ self.addEventListener('activate', event => {
 
 // Netzwerkereignis - Intelligente Cache-Strategie
 self.addEventListener('fetch', event => {
+  // API-Aufrufe und Nicht-GET-Requests nie cachen — direkt ans Netz
+  if (event.request.method !== 'GET' || event.request.url.includes('/api/')) return;
+
   // Für HTML-Dateien Netzwerk-Priorität verwenden, um neueste Version sicherzustellen
   if (event.request.destination === 'document') {
     event.respondWith(

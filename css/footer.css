@@ -40,8 +40,8 @@
 }
 
 .back-to-top:hover {
-  color: var(--neon-purple);
-  border-color: var(--neon-purple);
+  color: var(--color-acid);
+  border-color: var(--color-acid);
 }
 
 .back-to-top .material-symbols-outlined {

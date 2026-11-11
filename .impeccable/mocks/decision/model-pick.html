@@ -1,0 +1,41 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  * { margin:0; padding:0; box-sizing:border-box }
+  body { width:1440px; height:900px; overflow:hidden; background:#0B0B0C; font-family:Arial,Helvetica,sans-serif; position:relative }
+  /* giant platter sweeping across the viewport */
+  .platter { position:absolute; left:-720px; top:-700px; width:2600px; height:2600px; border-radius:50%;
+    background:repeating-radial-gradient(circle at 50% 50%, #151517 0px, #1C1E20 2px, #101112 4px) }
+  .platter-rim { position:absolute; inset:0; border-radius:50%; border:3px solid #2A2C2E }
+  /* strobe dots around the rim */
+  .strobe { position:absolute; inset:26px; border-radius:50%; border:14px dashed #F08A2E; opacity:.55 }
+  .label-ring { position:absolute; left:50%; top:50%; width:520px; height:520px; transform:translate(-50%,-50%); border-radius:50%;
+    background:#B9BDC2; box-shadow:0 0 0 6px #0B0B0C inset }
+  .label-ring .hole { position:absolute; left:50%; top:50%; width:90px; height:90px; transform:translate(-50%,-50%); border-radius:50%; background:#0B0B0C }
+  .label-ring .txt { position:absolute; left:50%; top:34%; transform:translate(-50%,-50%); color:#0B0B0C; font-weight:800; letter-spacing:.2em; font-size:26px }
+  /* tonearm tower on the right */
+  .arm-base { position:absolute; right:180px; top:120px; width:120px; height:640px; background:linear-gradient(90deg,#202224,#34373B 50%,#1A1C1E); border-radius:60px 60px 0 0 }
+  .arm { position:absolute; right:238px; top:180px; width:14px; height:560px; background:linear-gradient(90deg,#8A8E93,#C4C8CC 50%,#7E8287); transform:rotate(14deg); transform-origin:top center }
+  .arm-head { position:absolute; right:305px; top:700px; width:70px; height:40px; background:#B9BDC2; transform:rotate(14deg) }
+  /* pitch rail */
+  .rail { position:absolute; right:60px; top:180px; width:10px; height:520px; background:#1E2022; border-radius:5px }
+  .rail .mark { position:absolute; left:14px; width:26px; height:2px; background:#4A4E52 }
+  .rail .thumb { position:absolute; left:-10px; top:240px; width:30px; height:56px; background:#F08A2E; border-radius:4px }
+  .rail .zero { position:absolute; left:14px; top:258px; width:34px; height:3px; background:#F08A2E }
+  .st { position:absolute; color:#C9CDD1; font-size:11px; letter-spacing:.24em; opacity:.6 }
+  h1 { position:absolute; left:90px; bottom:120px; color:#F4F1EA; font-size:60px; font-weight:800; letter-spacing:.04em }
+  .sub { position:absolute; left:92px; bottom:80px; color:#C9CDD1; font-size:15px; letter-spacing:.2em; opacity:.7 }
+  .vignette { position:absolute; inset:0; background:radial-gradient(ellipse at 45% 50%, transparent 40%, rgba(0,0,0,.5) 100%) }
+</style></head><body>
+  <div class="platter"><div class="platter-rim"></div><div class="strobe"></div></div>
+  <div class="arm-base"></div><div class="arm"></div><div class="arm-head"></div>
+  <div class="rail">
+    <div class="mark" style="top:60px"></div><div class="mark" style="top:140px"></div><div class="mark" style="top:220px"></div>
+    <div class="zero"></div>
+    <div class="mark" style="top:320px"></div><div class="mark" style="top:400px"></div><div class="mark" style="top:480px"></div>
+    <div class="thumb"></div>
+  </div>
+  <div class="st" style="right:44px;top:150px">PITCH ±8</div>
+  <h1>33⅓, WALKED SLOWLY</h1>
+  <div class="sub">FREE-LOOK — THE RECORD IS THE ROOM</div>
+  <div class="vignette"></div>
+</body></html>

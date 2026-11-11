@@ -9,10 +9,12 @@
 
 :root {
   /* Acid Poster — Akzent (einzige erlaubte Farbe) */
-  --neon-purple: #FFB13D;
-  --neon-purple-glow: rgba(0, 0, 0, 0);
-  --electric-cyan: #FFB13D;
-  --electric-cyan-glow: rgba(0, 0, 0, 0);
+  --color-acid: #FFB13D;
+  --color-acid-glow: rgba(0, 0, 0, 0);
+  --color-acid-light: #FFC970;
+  --color-acid-lighter: #FFD99A;
+  --color-acid-dark: #E09320;
+  --color-acid-darker: #B26F0F;
 
   /* Flächen — Void Black / Panel Zinc / Hairline */
   --midnight-base: #0A0A0B;
@@ -79,11 +81,6 @@
   --outline-variant: #26262A;
 
   /* Legacy-Farben (auf Acid Poster abgebildet) */
-  --color-purple-primary: #FFB13D;
-  --color-purple-light: #FFC970;
-  --color-purple-lighter: #FFD99A;
-  --color-purple-dark: #E09320;
-  --color-purple-darker: #B26F0F;
   --color-text-primary: #F4F4F0;
   --color-text-secondary: #94949C;
   --color-text-light: #94949C;
@@ -96,7 +93,6 @@
   --color-bg-works: #0A0A0B;
   --color-bg-contact: #0A0A0B;
   --color-border: #26262A;
-  --color-border-purple: #FFB13D;
 
   /* Abstände */
   --spacing-xs: 0.25rem;
@@ -152,8 +148,7 @@
   --shadow-sm: none;
   --shadow-md: none;
   --shadow-lg: none;
-  --shadow-neon-purple: none;
-  --shadow-neon-cyan: none;
+  --shadow-acid: none;
   --shadow-card: none;
 
   /* Glaseffekt — flach zu Panel Zinc + Hairline */
