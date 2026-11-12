@@ -63,10 +63,8 @@
     transform: translateY(0);
   }
 
-  .nav.active .nav-list > li:nth-child(2) { transition-delay: 0.05s; }
-  .nav.active .nav-list > li:nth-child(3) { transition-delay: 0.1s; }
-  .nav.active .nav-list > li:nth-child(4) { transition-delay: 0.15s; }
-  .nav.active .nav-list > li:nth-child(5) { transition-delay: 0.2s; }
+  .nav.active .nav-list > li { transition-delay: calc((var(--sibling-index, 1) - 1) * 0.05s); }
+  .nav.active .nav-list > li { transition-delay: calc((sibling-index() - 1) * 0.05s); }
 
   .nav-link {
     display: block;

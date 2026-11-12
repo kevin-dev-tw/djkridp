@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let virtualScrollEnabled = false;
   const VIRTUAL_SCROLL_THRESHOLD = 50;
 
+  const supportsFieldSizing = CSS.supports('field-sizing', 'content');
   function autoResizeTextarea(el) {
+    if (supportsFieldSizing) return;
     el.style.height = 'auto';
     el.style.height = el.scrollHeight + 'px';
   }
@@ -757,6 +759,7 @@ document.addEventListener('DOMContentLoaded', () => {
   chatInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
+      if (e.isComposing || e.keyCode === 229) return;
       sendMessage();
     }
   });

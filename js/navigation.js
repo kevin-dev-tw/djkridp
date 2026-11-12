@@ -8,6 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.body.style.overflow = '';
 
+  // Fallback: sibling-index() 不支援時由 JS 提供 stagger 索引
+  if (!CSS.supports('transition-delay: calc(sibling-index() * 0.05s)')) {
+    document.querySelectorAll('.nav-list > li').forEach((el, i) => el.style.setProperty('--sibling-index', i + 1));
+  }
+
   const backToTop = document.getElementById('back-to-top');
   backToTop?.addEventListener('click', () => {
     if (window.smoother) {

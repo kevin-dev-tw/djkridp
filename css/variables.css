@@ -10,61 +10,25 @@
 :root {
   /* Acid Poster — Akzent (einzige erlaubte Farbe) */
   --color-acid: #FFB13D;
-  --color-acid-glow: rgba(0, 0, 0, 0);
   --color-acid-light: #FFC970;
-  --color-acid-lighter: #FFD99A;
-  --color-acid-dark: #E09320;
-  --color-acid-darker: #B26F0F;
 
   /* Flächen — Void Black / Panel Zinc / Hairline */
   --midnight-base: #0A0A0B;
   --surface: #131316;
-  --surface-dim: #0A0A0B;
-  --surface-bright: #1a1a1e;
   --surface-container: #131316;
   --surface-container-low: #0f0f12;
-  --surface-container-lowest: #0A0A0B;
-  --surface-container-high: #1c1c21;
-  --surface-container-highest: #222227;
-  --surface-variant: #222227;
-  --surface-glass: #131316;
 
   /* Textfarben — Paper Bone / Ash Grey / Acid Ink */
   --on-surface: #F4F4F0;
   --on-surface-strong: #F4F4F0;
   --on-surface-variant: #94949C;
-  --on-background: #F4F4F0;
   --on-primary: #0A0A0B;
-  --on-secondary: #0A0A0B;
-  --on-tertiary: #F4F4F0;
 
   /* Primärfarben — Acid */
-  --primary: #FFB13D;
-  --primary-container: #E09320;
-  --on-primary-container: #0A0A0B;
-  --primary-fixed: #FFC970;
-  --primary-fixed-dim: #FFB13D;
-  --on-primary-fixed: #0A0A0B;
-  --on-primary-fixed-variant: #4a3006;
-  --inverse-primary: #B26F0F;
 
   /* Sekundärfarben — neutral, zweiter Akzent ist verboten */
-  --secondary: #94949C;
-  --secondary-container: #222227;
-  --on-secondary-container: #F4F4F0;
-  --secondary-fixed: #e4e4e7;
-  --secondary-fixed-dim: #a1a1aa;
-  --on-secondary-fixed: #0A0A0B;
-  --on-secondary-fixed-variant: #3f3f46;
 
   /* Tertiärfarben — neutral */
-  --tertiary: #a1a1aa;
-  --tertiary-container: #27272a;
-  --on-tertiary-container: #F4F4F0;
-  --tertiary-fixed: #d4d4d8;
-  --tertiary-fixed-dim: #a1a1aa;
-  --on-tertiary-fixed: #0A0A0B;
-  --on-tertiary-fixed-variant: #3f3f46;
 
   /* Fehlerfarben */
   --error: #ffb4ab;
@@ -73,8 +37,6 @@
   --on-error-container: #ffdad6;
 
   /* Inverse Farben */
-  --inverse-surface: #F4F4F0;
-  --inverse-on-surface: #0A0A0B;
 
   /* Rahmen & Outline — Hairline */
   --outline: #3f3f46;
@@ -83,16 +45,8 @@
   /* Legacy-Farben (auf Acid Poster abgebildet) */
   --color-text-primary: #F4F4F0;
   --color-text-secondary: #94949C;
-  --color-text-light: #94949C;
   --color-text-white: #F4F4F0;
   --color-bg-primary: #0A0A0B;
-  --color-bg-secondary: #131316;
-  --color-bg-dark: #0A0A0B;
-  --color-bg-about: #0A0A0B;
-  --color-bg-tours: #0A0A0B;
-  --color-bg-works: #0A0A0B;
-  --color-bg-contact: #0A0A0B;
-  --color-border: #26262A;
 
   /* Abstände */
   --spacing-xs: 0.25rem;
@@ -102,12 +56,7 @@
   --spacing-xl: 2rem;
   --spacing-2xl: 3rem;
   --spacing-3xl: 4rem;
-  --spacing-section-lg: 120px;
   --spacing-section-sm: 64px;
-  --spacing-margin-desktop: 48px;
-  --spacing-margin-mobile: 16px;
-  --spacing-gutter: 24px;
-  --spacing-unit: 8px;
 
   /* Layout */
   --announcement-height: 34px;
@@ -116,9 +65,7 @@
   /* Typografie */
   --font-family-primary: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-display: 'Archivo Black', sans-serif;
-  --font-family-label: 'JetBrains Mono', monospace;
   --font-family-mono: 'JetBrains Mono', monospace;
-  --font-display: swap;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -127,32 +74,16 @@
   --font-size-2xl: 1.5rem;
   --font-size-3xl: 2rem;
   --font-size-4xl: 2.5rem;
-  --font-size-display-mobile: 3rem;
-  --font-size-display: 4.5rem;
 
   /* Übergänge — schnell, gedruckte Zustandswechsel */
   --transition-base: 0.15s ease;
-  --transition-slow: 0.3s ease;
   --transition-fast: 0.1s ease;
 
   /* Eckenradius — max. 2px seitenweit */
   --border-radius-sm: 2px;
-  --border-radius-md: 2px;
-  --border-radius-lg: 2px;
-  --border-radius-xl: 2px;
-  --border-radius-2xl: 2px;
-  --border-radius-3xl: 2px;
-  --border-radius-full: 2px;
 
   /* Schatten — flach, kein Glow */
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
-  --shadow-acid: none;
-  --shadow-card: none;
 
   /* Glaseffekt — flach zu Panel Zinc + Hairline */
-  --glass-bg: #131316;
-  --glass-blur: none;
   --glass-border: #26262A;
 }
