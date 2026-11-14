@@ -66,9 +66,9 @@ module.exports = async (req, res) => {
   }
 
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Cache-Control', 'public, max-age=300, stale-while-revalidate=600');
 
   if (!CLIENT_ID || !CLIENT_SECRET) {
+    res.setHeader('Cache-Control', 'no-store');
     return res.status(503).json({ error: 'not_configured' });
   }
 
@@ -90,6 +90,7 @@ module.exports = async (req, res) => {
       }))
       .filter(s => new Date(s.end).getTime() > now);
 
+    res.setHeader('Cache-Control', 'public, max-age=300, stale-while-revalidate=600');
     res.status(200).json({
       channel: data.data ? data.data.broadcaster_login : CHANNEL,
       vacation: data.data && data.data.vacation ? {
@@ -100,6 +101,7 @@ module.exports = async (req, res) => {
     });
   } catch (err) {
     console.error('Twitch schedule error:', err.message);
+    res.setHeader('Cache-Control', 'no-store');
     res.status(502).json({ error: 'twitch_api_error' });
   }
 };

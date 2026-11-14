@@ -5,3 +5,5 @@ room/
 .DS_Store
 *.log
 .impeccable/
+.code-check.db
+.code-check-reports/
