@@ -3248,7 +3248,7 @@ body > footer.footer {
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
     </noscript>
     
-    <!-- GSAP nur auf Desktop pointer:fine laden; Mobil spart ~135KB Download+Parsing -->
+    <!-- GSAP + GlowCursor nur auf Desktop pointer:fine laden; Mobil spart ~175KB Download+Parsing -->
     <script>
         if (window.matchMedia('(pointer: fine)').matches) {
             ['gsap.min.js', 'ScrollTrigger.min.js', 'ScrollSmoother.min.js', 'ScrollToPlugin.min.js', 'SplitText.min.js'].forEach(function (f) {
@@ -3257,6 +3257,10 @@ body > footer.footer {
                 s.async = false;
                 document.head.appendChild(s);
             });
+            var g = document.createElement('script');
+            g.src = 'js/glow-cursor.js?v=1.6.0';
+            g.defer = true;
+            document.head.appendChild(g);
         }
     </script>
     
@@ -3265,7 +3269,6 @@ body > footer.footer {
     <script src="js/navigation.js?v=1.7.1" defer></script>
     <script src="js/twitch-status.js?v=1.7.0" defer></script>
     <script src="js/twitch-schedule.js?v=1.0.5" defer></script>
-    <script src="js/glow-cursor.js?v=1.6.0" defer></script>
     <script src="js/strands.js?v=1.5.1" defer></script>
     <script src="js/ai-chat.js?v=1.7.5" defer></script>
     <script>
