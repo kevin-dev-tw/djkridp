@@ -175,8 +175,8 @@
     padding-top: 15px;
   }
   
-  .country-item {
-    padding: var(--spacing-md);
+  .country-line h3 {
+    font-size: clamp(1.75rem, 9vw, 3.5rem);
   }
 
   .soundcloud-embed-container,

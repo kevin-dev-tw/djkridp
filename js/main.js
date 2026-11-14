@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (prefersReducedMotion || typeof ScrollTrigger === 'undefined') return;
 
       // Von GSAP übernommene Elemente: CSS-Animationen aus, um transform/opacity-Konflikte zu vermeiden
-      document.querySelectorAll('.section-title, .bio-row, .country-item, .work-row, .contact-group, .contact-link')
+      document.querySelectorAll('.section-title, .bio-row, .country-line, .work-row, .contact-group, .contact-link')
         .forEach(el => { el.style.animation = 'none'; });
 
       // 0. Hero-Titel-Zeichen-Entrance — SplitText + Mask-Reveal (ersetzt CSS fadeInUp)
@@ -156,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // 4. Setlist-Listen — ScrollTrigger.batch-Stapel-Reveal
       [
         '.bio-list .bio-row',
-        '.country-list .country-item',
         '.works-list .work-row',
         '.contact-links .contact-group-label, .contact-links .contact-link:not(.disabled)'
       ].forEach(sel => {
@@ -171,6 +170,58 @@ document.addEventListener('DOMContentLoaded', () => {
           })
         });
       });
+
+      // 4.4 Tours-Walze — Länderliste auf 3D-Zylinder, Fokus-Fade zur Viewport-Mitte
+      // (Portierung des "Partnership Is"-Wheel-Reveals; Variablen --wheel-rot/-pull/-z/--focus in CSS)
+      const wheelList = document.querySelector('#tours .country-list');
+      if (wheelList) {
+        const wheelItems = Array.from(wheelList.querySelectorAll('.country-line'));
+        const maxRot = 62 * Math.PI / 180;
+        let wheelProgress = 0;
+        // Zeilen-Offsets einmalig aus Layout-Position (offsetTop ohne eigenen Transform)
+        // — getBoundingClientRect je Frame enthielte den letzten Transform → Feedback-Oszillation (Flackern)
+        let wheelOffsets = [];
+        const measureWheel = () => {
+          wheelOffsets = wheelItems.map(it => it.offsetTop + it.offsetHeight / 2 - wheelList.offsetTop);
+        };
+        const updateWheel = () => {
+          const vh = window.innerHeight;
+          const mid = vh / 2;
+          wheelList.style.transform = `translate3d(0, ${(0.22 * (0.5 - wheelProgress) * vh).toFixed(1)}px, 0)`;
+          const listTop = wheelList.getBoundingClientRect().top;
+          const radius = 0.62 * vh;
+          const focusNear = 0.16 * vh;
+          const focusFar = 0.46 * vh;
+          wheelList.style.perspectiveOrigin = `50% ${(mid - listTop).toFixed(1)}px`;
+          wheelItems.forEach((item, i) => {
+            const o = listTop + wheelOffsets[i] - mid;
+            const aRaw = o / radius;
+            const a = Math.max(-maxRot, Math.min(maxRot, aRaw));
+            // Jenseits des Winkellimits weiter mit halber Geschwindigkeit über den
+            // Walzenrand gleiten — sonst pinnen alle Zeilen auf denselben Punkt
+            const screenO = aRaw === a
+              ? radius * Math.sin(a)
+              : Math.sign(o) * (radius * Math.sin(maxRot) + 0.5 * (Math.abs(o) - radius * maxRot));
+            item.style.setProperty('--wheel-rot', `${(180 * -a / Math.PI).toFixed(2)}deg`);
+            item.style.setProperty('--wheel-pull', `${(screenO - o).toFixed(1)}px`);
+            item.style.setProperty('--wheel-z', `${(radius * (Math.cos(a) - 1)).toFixed(1)}px`);
+            const t = Math.min(1, Math.max(0, (Math.abs(o) - focusNear) / (focusFar - focusNear)));
+            const focus = 0.16 + 0.84 * (1 - t * t * (3 - 2 * t));
+            item.style.setProperty('--focus', focus.toFixed(3));
+          });
+        };
+        measureWheel();
+        updateWheel();
+        // Offsets nach Layout-Änderungen neu messen (Fonts, Sprachwechsel, Resize)
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureWheel);
+        document.addEventListener('langchange', () => { measureWheel(); updateWheel(); });
+        ScrollTrigger.create({
+          trigger: '#tours', start: 'top bottom', end: 'bottom top',
+          onUpdate: self => { wheelProgress = self.progress; updateWheel(); },
+          onRefresh: self => { wheelProgress = self.progress; updateWheel(); }
+        });
+        window.addEventListener('resize', () => { measureWheel(); updateWheel(); }, { passive: true });
+      }
 
       // 4.5 About-Bild — Clip-Reveal durch Abschnitts-Stapel ersetzt (Konflikt mit Pinning)
       const aboutImg = document.querySelector('.about-image');
