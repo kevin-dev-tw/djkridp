@@ -155,6 +155,59 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenuToggle.setAttribute('aria-label', tr(expanded ? 'nav.menuClose' : 'nav.menuOpen', 'Menü öffnen'));
   });
 
+  // Farbschema-Umschalter (Sky-Toggle: Tag/Sonne <-> Nacht/Mond)
+  const themeCheckbox = document.getElementById('theme-toggle-checkbox');
+  const themeLabel = document.getElementById('theme-toggle-label');
+  const THEME_KEY = 'djkridp_theme';
+
+  function getCurrentTheme() {
+    const attr = document.documentElement.getAttribute('data-theme');
+    if (attr === 'light' || attr === 'dark') return attr;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+
+  function syncThemeToggle(theme) {
+    const isLight = theme === 'light';
+    if (themeCheckbox) {
+      // Unchecked = Tag (Sonne/Wolken), Checked = Nacht (Mond/Sterne)
+      themeCheckbox.checked = !isLight;
+    }
+    if (themeLabel) {
+      const labelKey = isLight ? 'theme.modeLight' : 'theme.modeDark';
+      const fallback = isLight ? 'Riso Print (Hell)' : 'Acid Poster (Dunkel)';
+      themeLabel.setAttribute('title', tr(labelKey, fallback));
+    }
+  }
+
+  if (themeCheckbox) {
+    syncThemeToggle(getCurrentTheme());
+
+    themeCheckbox.addEventListener('change', () => {
+      // checked = Nacht/Dark, unchecked = Tag/Light
+      const next = themeCheckbox.checked ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem(THEME_KEY, next);
+      } catch (err) {}
+      syncThemeToggle(next);
+      document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+    });
+  }
+
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+      let saved = null;
+      try { saved = localStorage.getItem(THEME_KEY); } catch (err) {}
+      if (!saved) {
+        syncThemeToggle(e.matches ? 'light' : 'dark');
+      }
+    });
+  }
+
+  document.addEventListener('langchange', () => {
+    syncThemeToggle(getCurrentTheme());
+  });
+
   // Hash-basiertes Scrollen nur für manuelle Navigation, nicht für Reload
   // Browser-Standardverhalten für Scroll-Restoration beibehalten
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'djkridp-v81'; // Versionsnummer aktualisiert, um alten Cache zu löschen
+const CACHE_NAME = 'djkridp-v82'; // Versionsnummer aktualisiert, um alten Cache zu löschen
 const urlsToCache = [
   '/',
   '/index.html',

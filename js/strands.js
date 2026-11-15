@@ -9,7 +9,7 @@
   const MAX_COLORS = 8;
   const ROLES = 7;
 
-  // DJKridP Hazard-Amber-Markenpalette über 7 Rollen
+  // DJKridP Hazard-Amber-Markenpalette über 7 Rollen (Dark / Acid Poster)
   const AMBER_PALETTE = [
     '#FFA24C', // Oberkante der Wölbung
     '#FFB13D', // helles Hazard-Amber
@@ -19,6 +19,25 @@
     '#E09320', // tiefes Amber
     '#995500'  // dunkle Amber-Basis
   ];
+
+  // Riso-Fluor-Orange-Palette für Riso-Light-Modus (Hell / Risograph)
+  const RISO_PALETTE = [
+    '#FF7A47', // Oberkante
+    '#FF4D00', // leuchtendes Riso-Fluor-Orange
+    '#D93800', // tiefes Zinnoberrot
+    '#FFF5EE', // warmer Weißkern
+    '#FFA07A', // helles Riso-Orange
+    '#C93B00', // tiefes Zinnoberrot
+    '#802000'  // dunkle Riso-Tintenbasis
+  ];
+
+  const getActiveTheme = () => {
+    const attr = document.documentElement.getAttribute('data-theme');
+    if (attr === 'light' || attr === 'dark') return attr;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  };
+
+  const getThemePalette = () => (getActiveTheme() === 'light' ? RISO_PALETTE : AMBER_PALETTE);
 
   const VERT = `#version 300 es
 in vec2 position;
@@ -448,6 +467,9 @@ void main() {
 
     const draw = () => {
       if (st.lost || !program) return;
+      const isLight = getActiveTheme() === 'light';
+      opts.lightMode = isLight;
+      opts.colors = isLight ? RISO_PALETTE : AMBER_PALETTE;
       updatePalette(opts.colors);
       gl.viewport(0, 0, st.width, st.height);
       gl.uniform2f(loc.uResolution, st.width, st.height);
@@ -609,6 +631,13 @@ void main() {
         if (typeof speedVal === 'number') opts.speed = speedVal;
         wake();
       },
+      setColors(newColors) {
+        if (Array.isArray(newColors) && newColors.length) {
+          opts.colors = newColors;
+          updatePalette(newColors);
+          wake();
+        }
+      },
       destroy() {
         if (st.raf) cancelAnimationFrame(st.raf);
         canvas.removeEventListener('webglcontextlost', onLost);
@@ -629,10 +658,12 @@ void main() {
 
   // Automatische Initialisierung, sobald das DOM bereit ist
   document.addEventListener('DOMContentLoaded', () => {
+    const initialPalette = getThemePalette();
+
     const btn = document.getElementById('ai-chat-button');
     if (btn) {
       window.strandsInstance = initStrands(btn, {
-        colors: AMBER_PALETTE,
+        colors: initialPalette,
         energy: 0.7,
         speed: 1.1,
         glass: true,
@@ -647,7 +678,7 @@ void main() {
     const headerOrb = document.getElementById('ai-chat-orb-header');
     if (headerOrb) {
       window.strandsHeaderInstance = initStrands(headerOrb, {
-        colors: AMBER_PALETTE,
+        colors: initialPalette,
         energy: 0.55,
         speed: 0.9,
         glass: true,
@@ -664,7 +695,7 @@ void main() {
     const liveOrb = document.getElementById('twitch-live-orb');
     if (liveOrb) {
       window.strandsLiveInstance = initStrands(liveOrb, {
-        colors: AMBER_PALETTE,
+        colors: initialPalette,
         energy: 0.3,
         speed: 0.6,
         glass: true,
@@ -680,6 +711,21 @@ void main() {
       if (window.twitchIsLive === true) {
         window.strandsLiveInstance.setEnergy(0.95, 1.6);
       }
+    }
+
+    const updateAllStrandsPalettes = () => {
+      const pal = getThemePalette();
+      window.strandsInstance?.setColors(pal);
+      window.strandsHeaderInstance?.setColors(pal);
+      window.strandsLiveInstance?.setColors(pal);
+      window.strandsInstance?.wake();
+      window.strandsHeaderInstance?.wake();
+      window.strandsLiveInstance?.wake();
+    };
+
+    document.addEventListener('themechange', updateAllStrandsPalettes);
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', updateAllStrandsPalettes);
     }
   });
 

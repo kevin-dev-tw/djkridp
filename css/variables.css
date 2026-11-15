@@ -11,6 +11,7 @@
   /* Acid Poster — Akzent (einzige erlaubte Farbe) */
   --color-acid: #FFB13D;
   --color-acid-light: #FFC970;
+  --color-acid-ink: #FFB13D;
 
   /* Flächen — Void Black / Panel Zinc / Hairline */
   --midnight-base: #0A0A0B;
@@ -41,6 +42,18 @@
   /* Rahmen & Outline — Hairline */
   --outline: #3f3f46;
   --outline-variant: #26262A;
+  --glass-border: #26262A;
+
+  /* Effekte, Schatten & Riso-Akzente */
+  --halftone-dot: rgba(244, 244, 240, 0.14);
+  --empty-dot: rgba(255, 255, 255, 0.045);
+  --overlay-bg: rgba(10, 10, 11, 0.85);
+  --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.6);
+  --shadow-bubble: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --surface-hover: rgba(255, 255, 255, 0.04);
+  --riso-offset: transparent;
+  --banner-bg: #0A0A0B;
+  --banner-text: #FFB13D;
 
   /* Legacy-Farben (auf Acid Poster abgebildet) */
   --color-text-primary: #F4F4F0;
@@ -86,4 +99,129 @@
 
   /* Glaseffekt — flach zu Panel Zinc + Hairline */
   --glass-border: #26262A;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    /* Riso Light — Risograph-Druck (warmes Reispapier, Rußschwarz, Fluor-Orange) */
+    --color-acid: #FF4D00;
+    --color-acid-light: #FF7033;
+    --color-acid-ink: #C93B00;
+
+    --midnight-base: #F7F3EA;
+    --surface: #EDE7DA;
+    --surface-container: #EDE7DA;
+    --surface-container-low: #F2ECE1;
+
+    --on-surface: #1A1A18;
+    --on-surface-strong: #1A1A18;
+    --on-surface-variant: #6B675E;
+    --on-primary: #1A1A18;
+
+    --error: #BA1A1A;
+    --error-container: #FFDAD6;
+    --on-error: #FFFFFF;
+    --on-error-container: #410002;
+
+    --outline: #BDB6A4;
+    --outline-variant: #D9D2C2;
+    --glass-border: #D9D2C2;
+
+    --halftone-dot: rgba(26, 26, 24, 0.10);
+    --empty-dot: rgba(26, 26, 24, 0.05);
+    --overlay-bg: rgba(247, 243, 234, 0.88);
+    --shadow-card: 0 12px 40px rgba(26, 26, 24, 0.12);
+    --shadow-bubble: 0 2px 8px rgba(26, 26, 24, 0.12);
+    --surface-hover: rgba(26, 26, 24, 0.04);
+    --riso-offset: rgba(255, 77, 0, 0.35);
+    --banner-bg: #FF4D00;
+    --banner-text: #1A1A18;
+
+    --color-text-primary: #1A1A18;
+    --color-text-secondary: #6B675E;
+    --color-text-white: #1A1A18;
+    --color-bg-primary: #F7F3EA;
+  }
+}
+
+html[data-theme="light"] {
+  /* Riso Light (manuell aktiviert) */
+  --color-acid: #FF4D00;
+  --color-acid-light: #FF7033;
+  --color-acid-ink: #C93B00;
+
+  --midnight-base: #F7F3EA;
+  --surface: #EDE7DA;
+  --surface-container: #EDE7DA;
+  --surface-container-low: #F2ECE1;
+
+  --on-surface: #1A1A18;
+  --on-surface-strong: #1A1A18;
+  --on-surface-variant: #6B675E;
+  --on-primary: #1A1A18;
+
+  --error: #BA1A1A;
+  --error-container: #FFDAD6;
+  --on-error: #FFFFFF;
+  --on-error-container: #410002;
+
+  --outline: #BDB6A4;
+  --outline-variant: #D9D2C2;
+  --glass-border: #D9D2C2;
+
+  --halftone-dot: rgba(26, 26, 24, 0.10);
+  --empty-dot: rgba(26, 26, 24, 0.05);
+  --overlay-bg: rgba(247, 243, 234, 0.88);
+  --shadow-card: 0 12px 40px rgba(26, 26, 24, 0.12);
+  --shadow-bubble: 0 2px 8px rgba(26, 26, 24, 0.12);
+  --surface-hover: rgba(26, 26, 24, 0.04);
+  --riso-offset: rgba(255, 77, 0, 0.35);
+  --banner-bg: #FF4D00;
+  --banner-text: #1A1A18;
+
+  --color-text-primary: #1A1A18;
+  --color-text-secondary: #6B675E;
+  --color-text-white: #1A1A18;
+  --color-bg-primary: #F7F3EA;
+}
+
+html[data-theme="dark"] {
+  /* Acid Poster Dark (manuell aktiviert) */
+  --color-acid: #FFB13D;
+  --color-acid-light: #FFC970;
+  --color-acid-ink: #FFB13D;
+
+  --midnight-base: #0A0A0B;
+  --surface: #131316;
+  --surface-container: #131316;
+  --surface-container-low: #0f0f12;
+
+  --on-surface: #F4F4F0;
+  --on-surface-strong: #F4F4F0;
+  --on-surface-variant: #94949C;
+  --on-primary: #0A0A0B;
+
+  --error: #ffb4ab;
+  --error-container: #93000a;
+  --on-error: #690005;
+  --on-error-container: #ffdad6;
+
+  --outline: #3f3f46;
+  --outline-variant: #26262A;
+  --glass-border: #26262A;
+
+  --halftone-dot: rgba(244, 244, 240, 0.14);
+  --empty-dot: rgba(255, 255, 255, 0.045);
+  --overlay-bg: rgba(10, 10, 11, 0.85);
+  --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.6);
+  --shadow-bubble: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --surface-hover: rgba(255, 255, 255, 0.04);
+  --riso-offset: transparent;
+  --banner-bg: #0A0A0B;
+  --banner-text: #FFB13D;
+
+  --color-text-primary: #F4F4F0;
+  --color-text-secondary: #94949C;
+  --color-text-white: #F4F4F0;
+  --color-bg-primary: #0A0A0B;
 }

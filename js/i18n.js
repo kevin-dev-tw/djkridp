@@ -19,6 +19,9 @@
       'nav.menuOpen': 'Menü öffnen',
       'nav.menuClose': 'Menü schließen',
       'nav.langLabel': 'Sprache wählen',
+      'theme.toggle': 'Farbschema umschalten (Dunkel / Hell)',
+      'theme.modeDark': 'Acid Poster (Dunkel)',
+      'theme.modeLight': 'Riso Print (Hell)',
 
       'hero.subtitle': 'Multi-Genre DJ und ehemaliges Mitglied von Future Breeze aus Osnabrück (Deutschland)',
 
@@ -109,6 +112,9 @@
       'nav.menuOpen': 'Open menu',
       'nav.menuClose': 'Close menu',
       'nav.langLabel': 'Choose language',
+      'theme.toggle': 'Toggle color scheme (Dark / Light)',
+      'theme.modeDark': 'Acid Poster (Dark)',
+      'theme.modeLight': 'Riso Print (Light)',
 
       'hero.subtitle': 'Multi-genre DJ and former member of Future Breeze from Osnabrück, Germany',
 

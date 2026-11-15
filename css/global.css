@@ -133,7 +133,7 @@ button {
 
 /* Vollbreiten-Hintergrundbereich */
 #about {
-  background-color: #0F0F12;
+  background-color: var(--surface-container-low);
 }
 
 #about .container {
@@ -157,7 +157,7 @@ button {
 #streams.section {
   min-height: auto;
   display: block;
-  background-color: #0F0F12;
+  background-color: var(--surface-container-low);
 }
 
 #streams .container {
@@ -168,7 +168,7 @@ button {
 }
 
 #works {
-  background-color: #0F0F12;
+  background-color: var(--surface-container-low);
 }
 
 #works .container {
@@ -236,6 +236,20 @@ button {
   height: 100%;
   pointer-events: none;
   user-select: none;
+  mix-blend-mode: screen;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .glow-cursor__canvas {
+    mix-blend-mode: multiply;
+  }
+}
+
+html[data-theme="light"] .glow-cursor__canvas {
+  mix-blend-mode: multiply;
+}
+
+html[data-theme="dark"] .glow-cursor__canvas {
   mix-blend-mode: screen;
 }
 

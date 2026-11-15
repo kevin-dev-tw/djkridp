@@ -319,7 +319,23 @@ void main() {
     }
   };
 
+  const updateCursorTheme = () => {
+    const attr = document.documentElement.getAttribute('data-theme');
+    const isLight = attr === 'light' || (!attr && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
+    const s = settingsRef.current;
+    if (isLight) {
+      s.theme = 'light';
+      s.color = '#FF4D00';
+      s.secondaryColor = '#C93B00';
+    } else {
+      s.theme = 'dark';
+      s.color = '#FFB13D';
+      s.secondaryColor = '#E09320';
+    }
+  };
+
   const init = () => {
+    updateCursorTheme();
     const container = document.createElement('div');
     container.className = 'glow-cursor';
     const canvas = document.createElement('canvas');
@@ -812,6 +828,7 @@ void main() {
       const wanted = Math.min(window.devicePixelRatio || 1, Math.max(0.5, s.maxDevicePixelRatio || 2));
       if (Math.abs(wanted - state.ratio) > 0.01) resize();
       allocate();
+      updateCursorTheme();
       resolveColors(s);
       gl.bindVertexArray(vao);
       gl.disable(gl.BLEND);
@@ -906,6 +923,16 @@ void main() {
     window.addEventListener('pointerdown', onPointerDown, { passive: true });
     document.documentElement.addEventListener('pointerleave', onPointerLeave);
     document.addEventListener('visibilitychange', onVisibility);
+    document.addEventListener('themechange', () => {
+      updateCursorTheme();
+      wake();
+    });
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+        updateCursorTheme();
+        wake();
+      });
+    }
     resize();
     blank();
   };
