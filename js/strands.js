@@ -529,6 +529,17 @@ void main() {
       const target = Math.min(1.2, clamp(opts.energy, 0, 1) + st.hover * 0.18 + st.burst);
       st.activity += (target - st.activity) * (1 - Math.exp(-dt / (target > st.activity ? 0.12 : 0.4)));
       st.pace += (Math.min(1, st.activity) - st.pace) * (1 - Math.exp(-dt / 0.8));
+      const isHoveredOrActive = st.hover > 0.05 || st.burst > 0.05 || Math.abs(st.pulse) > 0.05 || st.intro < 0.99;
+      if (!isHoveredOrActive && st.intro >= 1 && dt < 0.045) {
+        if (st.visible && !document.hidden && !st.lost && !st.raf) {
+          setTimeout(() => {
+            if (st.visible && !document.hidden && !st.lost && !st.raf) {
+              st.raf = requestAnimationFrame(frame);
+            }
+          }, 45);
+        }
+        return;
+      }
       if (!reduced) {
         st.clock += dt * opts.speed * (0.6 + 1.6 * st.pace);
       }
@@ -638,6 +649,12 @@ void main() {
           wake();
         }
       },
+      pause() {
+        if (st.raf) {
+          cancelAnimationFrame(st.raf);
+          st.raf = 0;
+        }
+      },
       destroy() {
         if (st.raf) cancelAnimationFrame(st.raf);
         canvas.removeEventListener('webglcontextlost', onLost);
@@ -656,29 +673,11 @@ void main() {
     };
   }
 
-  // Automatische Initialisierung, sobald das DOM bereit ist
-  document.addEventListener('DOMContentLoaded', () => {
-    const initialPalette = getThemePalette();
-
-    const btn = document.getElementById('ai-chat-button');
-    if (btn) {
-      window.strandsInstance = initStrands(btn, {
-        colors: initialPalette,
-        energy: 0.7,
-        speed: 1.1,
-        glass: true,
-        glassSize: 1.05,
-        rim: 1.2,
-        refraction: 1.1,
-        dispersion: 0.7,
-        glow: 1.2
-      });
-    }
-
+  window.ensureHeaderOrb = () => {
     const headerOrb = document.getElementById('ai-chat-orb-header');
-    if (headerOrb) {
+    if (headerOrb && !window.strandsHeaderInstance) {
       window.strandsHeaderInstance = initStrands(headerOrb, {
-        colors: initialPalette,
+        colors: getThemePalette(),
         energy: 0.55,
         speed: 0.9,
         glass: true,
@@ -690,27 +689,67 @@ void main() {
         interactive: false,
         clickPulse: false
       });
+    } else if (window.strandsHeaderInstance) {
+      window.strandsHeaderInstance.wake();
     }
+  };
 
-    const liveOrb = document.getElementById('twitch-live-orb');
-    if (liveOrb) {
-      window.strandsLiveInstance = initStrands(liveOrb, {
-        colors: initialPalette,
-        energy: 0.3,
-        speed: 0.6,
-        glass: true,
-        glassSize: 1.0,
-        rim: 1.0,
-        refraction: 0.9,
-        dispersion: 0.5,
-        glow: 0.9,
-        interactive: false,
-        clickPulse: false
-      });
-      // Twitch-Status kann vor Strands fertig sein — bei Init einmal synchronisieren
-      if (window.twitchIsLive === true) {
-        window.strandsLiveInstance.setEnergy(0.95, 1.6);
+  window.pauseHeaderOrb = () => {
+    window.strandsHeaderInstance?.pause();
+  };
+
+  // Verzögerte Initialisierung nach DCL / Idle, um FCP & TBT nicht zu blockieren
+  document.addEventListener('DOMContentLoaded', () => {
+    const startStrands = () => {
+      const initialPalette = getThemePalette();
+
+      const btn = document.getElementById('ai-chat-button');
+      if (btn && !window.strandsInstance) {
+        window.strandsInstance = initStrands(btn, {
+          colors: initialPalette,
+          energy: 0.7,
+          speed: 1.1,
+          glass: true,
+          glassSize: 1.05,
+          rim: 1.2,
+          refraction: 1.1,
+          dispersion: 0.7,
+          glow: 1.2
+        });
       }
+
+      const liveOrb = document.getElementById('twitch-live-orb');
+      if (liveOrb && !window.strandsLiveInstance) {
+        const liveSection = document.getElementById('live') || liveOrb;
+        const liveObserver = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            liveObserver.disconnect();
+            window.strandsLiveInstance = initStrands(liveOrb, {
+              colors: getThemePalette(),
+              energy: 0.3,
+              speed: 0.6,
+              glass: true,
+              glassSize: 1.0,
+              rim: 1.0,
+              refraction: 0.9,
+              dispersion: 0.5,
+              glow: 0.9,
+              interactive: false,
+              clickPulse: false
+            });
+            if (window.twitchIsLive === true) {
+              window.strandsLiveInstance.setEnergy(0.95, 1.6);
+            }
+          }
+        }, { rootMargin: '300px' });
+        liveObserver.observe(liveSection);
+      }
+    };
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(startStrands, { timeout: 1200 });
+    } else {
+      setTimeout(startStrands, 250);
     }
 
     const updateAllStrandsPalettes = () => {

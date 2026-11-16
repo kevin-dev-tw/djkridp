@@ -35,7 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isOpen) {
       chatContainer.classList.add('active');
       chatButton.classList.add('orb-hidden');
-      if (window.strandsHeaderInstance && typeof window.strandsHeaderInstance.wake === 'function') {
+      if (typeof window.ensureHeaderOrb === 'function') {
+        window.ensureHeaderOrb();
+      } else if (window.strandsHeaderInstance && typeof window.strandsHeaderInstance.wake === 'function') {
         window.strandsHeaderInstance.wake();
       }
       
@@ -49,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       chatContainer.classList.remove('active');
       chatButton.classList.remove('orb-hidden');
+      if (typeof window.pauseHeaderOrb === 'function') {
+        window.pauseHeaderOrb();
+      }
       if (window.strandsInstance && typeof window.strandsInstance.wake === 'function') {
         window.strandsInstance.wake();
       }

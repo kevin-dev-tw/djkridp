@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const initGsap = () => {
       if (typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
-        gsap.ticker.lagSmoothing(0);
       }
       if (typeof ScrollToPlugin !== 'undefined') {
         gsap.registerPlugin(ScrollToPlugin);
@@ -30,8 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
           try {
             window.smoother = ScrollSmoother.create({
               smooth: prefersReducedMotion ? 0 : 1.1,
-              effects: false,
-              normalizeScroll: { allowNestedScroll: true }
+              effects: false
             });
           } catch (err) {
             // Bei Fehlschlag auf natives Scrollen zurückfallen, damit die Seite nicht blockiert

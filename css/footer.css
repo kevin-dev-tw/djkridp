@@ -44,8 +44,8 @@
   border-color: var(--color-acid);
 }
 
-.back-to-top .material-symbols-outlined {
-  font-size: 18px;
+.back-to-top svg {
+  display: block;
 }
 
 .footer-content {
