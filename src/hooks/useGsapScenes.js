@@ -115,12 +115,11 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
       });
     });
 
-    // 4.4 Tours-Karten — Clip-Reveal + manuelles Stapeln unter ScrollSmoother
-    // (natives sticky greift im transformierten Smooth-Wrapper nicht; Mobil: CSS-sticky)
+    // 4.4 Tours-Karten — Clip-Reveal + GSAP-Pin-Stapelung
+    // (natives sticky greift im transformierten Smooth-Wrapper nicht;
+    //  ScrollTrigger pinnt unter ScrollSmoother automatisch via pinType 'transform'. Mobil: CSS-sticky)
     const tourStack = document.getElementById('country-stack');
     const tourCards = gsap.utils.toArray('#tours .tour-card');
-    let stackMeasure = null;
-    let stackFontsDone = false;
     if (tourCards.length) {
       gsap.set(tourCards, { clipPath: 'inset(100% 0% 0% 0%)' });
       ScrollTrigger.batch(tourCards, {
@@ -132,43 +131,23 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
       });
 
       if (window.smoother && tourStack) {
-        const smoothContent = document.getElementById('smooth-content');
+        // Pin-Tops aus dem CSS-sticky-Wert auslesen, dann top/position neutralisieren,
+        // damit GSAP den Offset nicht zusätzlich in Layout und Pin-Position einrechnet
         const pinTops = tourCards.map((card, i) => {
           const t = parseFloat(getComputedStyle(card).top);
           return isNaN(t) ? 144 + i * 14 : t;
         });
-        tourCards.forEach(card => { card.style.position = 'static'; });
-        let docTops = [], heights = [], stackDocBottom = 0;
-        const measureStack = () => {
-          docTops = tourCards.map(card => {
-            let y = 0, el = card;
-            while (el && el !== smoothContent) { y += el.offsetTop; el = el.offsetParent; }
-            return y;
+        tourCards.forEach(card => { card.style.position = 'relative'; card.style.top = '0px'; });
+        tourCards.forEach((card, i) => {
+          ScrollTrigger.create({
+            trigger: card,
+            start: `top ${pinTops[i]}px`,
+            endTrigger: tourStack,
+            end: () => `bottom ${pinTops[i] + card.offsetHeight}px`,
+            pin: true,
+            pinSpacing: false
           });
-          heights = tourCards.map(card => card.offsetHeight);
-          let sy = 0, el = tourStack;
-          while (el && el !== smoothContent) { sy += el.offsetTop; el = el.offsetParent; }
-          stackDocBottom = sy + tourStack.offsetHeight;
-        };
-        const updateStack = () => {
-          const sy = window.smoother.scrollTop();
-          tourCards.forEach((card, i) => {
-            const target = pinTops[i] - docTops[i] + sy;
-            const max = stackDocBottom - heights[i] - docTops[i] + sy;
-            card.style.transform = `translate3d(0, ${Math.max(0, Math.min(target, max)).toFixed(1)}px, 0)`;
-          });
-        };
-        measureStack();
-        updateStack();
-        stackMeasure = () => { measureStack(); updateStack(); };
-        ScrollTrigger.create({
-          trigger: '#tours', start: 'top bottom', end: 'bottom top',
-          onUpdate: updateStack,
-          onRefresh: () => { measureStack(); updateStack(); }
         });
-        if (document.fonts && document.fonts.ready) {
-          document.fonts.ready.then(() => { if (!stackFontsDone) { stackFontsDone = true; measureStack(); updateStack(); } });
-        }
       }
     }
 
@@ -216,15 +195,13 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
       heroEl.addEventListener('mousemove', onHeroMove);
     }
 
-    const onResize = () => { if (stackMeasure) stackMeasure(); };
-    window.addEventListener('resize', onResize, { passive: true });
-
     const fontsP = document.fonts && document.fonts.ready
       ? document.fonts.ready.then(() => ScrollTrigger.refresh())
       : null;
 
     return () => {
-      window.removeEventListener('resize', onResize);
+      // position/top sind Inline-Overrides und werden vom gsap.context-Revert nicht zurückgesetzt
+      tourCards.forEach(card => { card.style.position = ''; card.style.top = ''; });
       if (onHeroMove && heroEl) heroEl.removeEventListener('mousemove', onHeroMove);
     };
   }, { scope: rootRef, dependencies: [lang, smootherReady] });

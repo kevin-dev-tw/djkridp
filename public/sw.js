@@ -1,4 +1,4 @@
-const CACHE_NAME = 'djkridp-v92'; // React/Vite-Build — alten Cache löschen
+const CACHE_NAME = 'djkridp-v93'; // React/Vite-Build — alten Cache löschen
 const urlsToCache = [
   '/',
   '/index.html',
