@@ -1,15 +1,7 @@
-const CACHE_NAME = 'djkridp-v91'; // Versionsnummer aktualisiert, um alten Cache zu löschen
+const CACHE_NAME = 'djkridp-v92'; // React/Vite-Build — alten Cache löschen
 const urlsToCache = [
   '/',
   '/index.html',
-  '/js/i18n.js',
-  '/js/main.js',
-  '/js/navigation.js',
-  '/js/ai-chat.js',
-  '/js/strands.js',
-  '/js/twitch-status.js',
-  '/js/twitch-schedule.js',
-  '/js/glow-cursor.js',
   '/fonts/archivo-black-latin.woff2',
   '/images/favicon.ico',
   '/images/favicon.svg',
@@ -81,24 +73,17 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Für CSS/JS-Dateien Netzwerk-Priorität verwenden, Cache als Offline-Fallback
-  if (event.request.url.includes('/css/') || event.request.url.includes('/js/')) {
+  // Vite-Build-Assets (/assets/ mit Content-Hash): Cache-First, da immutable
+  if (event.request.url.includes('/assets/')) {
     event.respondWith(
-      fetch(event.request)
-        .then(networkResponse => {
+      caches.match(event.request)
+        .then(cached => cached || fetch(event.request).then(networkResponse => {
           if (networkResponse.ok) {
             const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache));
           }
           return networkResponse;
-        })
-        .catch(() => {
-          // Netzwerk fehlgeschlagen, Cache verwenden
-          return caches.match(event.request);
-        })
+        }))
     );
     return;
   }

@@ -7,3 +7,4 @@ room/
 .impeccable/
 .code-check.db
 .code-check-reports/
+dist/
