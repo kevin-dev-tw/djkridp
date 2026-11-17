@@ -17,9 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof ScrollToPlugin !== 'undefined') {
         gsap.registerPlugin(ScrollToPlugin);
       }
-      if (typeof SplitText !== 'undefined') {
-        gsap.registerPlugin(SplitText);
-      }
       if (typeof ScrollSmoother !== 'undefined') {
         // fixed-Stil vorab setzen — verhindert das Native-Scroll-Fenster bis zur Smoother-Aktivierung
         const wrapper = document.getElementById('smooth-wrapper');
@@ -50,16 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    // GSAP wird vom bedingten Loader injiziert und kann nach DCL eintreffen — kurzes Polling (same-origin meist sofort)
-    // Fünf Dateien laufen der Reihe nach, SplitText zuletzt — erst dann ist alles bereit, kein Fallback-Race
+    // GSAP wird vom bedingten Loader injiziert und kann nach DCL eintreffen — kurzes Polling
     let attempts = 0;
     const whenGsapReady = () => {
-      if (typeof gsap !== 'undefined' && typeof SplitText !== 'undefined') {
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof ScrollSmoother !== 'undefined') {
         initGsap();
       } else if (++attempts < 80) {
         setTimeout(whenGsapReady, 50);
       } else if (typeof gsap !== 'undefined') {
-        // Teil-Plugins per Timeout nicht geladen — degradiert initialisieren (SplitText-Szenen nutzen Fallback)
         initGsap();
       } else {
         // GSAP-Ladefehler — Titel-Sichtbarkeit wiederherstellen (CSS opacity:0 ist Anti-Flash)
@@ -76,32 +71,18 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.section-title, .bio-row, .country-line, .work-row, .contact-group, .contact-link')
         .forEach(el => { el.style.animation = 'none'; });
 
-      // 0. Hero-Titel-Zeichen-Entrance — SplitText + Mask-Reveal (ersetzt CSS fadeInUp)
+      // 0. Hero-Titel-Entrance — Ganztitel-Sanftaufstieg (reiner Kompositor-Transform, kein DOM-Split)
       const heroTitle = document.querySelector('.hero-title');
-      if (heroTitle && typeof SplitText !== 'undefined') {
+      if (heroTitle) {
         heroTitle.style.animation = 'none';
-        gsap.set(heroTitle, { opacity: 1 });
-        const split = new SplitText(heroTitle, { type: 'chars', mask: 'chars' });
-        heroTitle._splitChars = split.chars;
-        gsap.set(split.chars, { yPercent: 120 });
-        gsap.to(split.chars, {
-          yPercent: 0,
-          duration: 0.6,
-          stagger: 0.05,
+        gsap.fromTo(heroTitle, { opacity: 0, y: 32 }, {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
           ease: 'power3.out',
-          delay: 0.25
+          delay: 0.15
         });
       }
-
-      // 1. Hero-Exit-Scrub — Titel driftet nach oben, blendet aus + skaliert
-      gsap.to('.hero-title', {
-        y: -80, opacity: 0.15, scale: 0.94, ease: 'none',
-        scrollTrigger: { trigger: '#home', start: 'top top', end: 'bottom top', scrub: true }
-      });
-      gsap.to('.hero-subtitle', {
-        y: -30, opacity: 0, ease: 'none',
-        scrollTrigger: { trigger: '#home', start: 'top top', end: '60% top', scrub: true }
-      });
 
       // 2. Hero-Halbtonpunkte — Scroll-Drift (per CSS-Variable gesteuerte ::before-Transform)
       const home = document.getElementById('home');
@@ -112,43 +93,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // 3. Abschnittstitel — SplitText-Scrub-Reveal zeichenweise (Buchstaben steigen beim Scrollen)
-      const sectionTitleTweens = new Map();
-      function initSectionTitleScenes() {
-        document.querySelectorAll('.section-title').forEach(title => {
-          const prev = sectionTitleTweens.get(title);
-          if (prev) {
-            if (prev.scrollTrigger) prev.scrollTrigger.kill();
-            prev.kill();
-            sectionTitleTweens.delete(title);
-          }
-          gsap.set(title, { opacity: 1 });
-          if (typeof SplitText !== 'undefined') {
-            const split = new SplitText(title, { type: 'chars', mask: 'chars' });
-            gsap.set(split.chars, { yPercent: 120 });
-            const tween = gsap.to(split.chars, {
-              yPercent: 0,
-              stagger: { amount: 0.4 },
-              ease: 'none',
-              scrollTrigger: { trigger: title, start: 'top 90%', end: 'top 50%', scrub: 1 }
-            });
-            sectionTitleTweens.set(title, tween);
-          } else {
-            // Fallback bei fehlendem SplitText: Ganztitel-Einschieben
-            gsap.set(title, { opacity: 0, xPercent: -8 });
-            const tween = gsap.to(title, {
-              opacity: 1, xPercent: 0, ease: 'none',
-              scrollTrigger: { trigger: title, start: 'top 92%', end: 'top 55%', scrub: 1 }
-            });
-            sectionTitleTweens.set(title, tween);
+      // 3. Abschnittstitel — Ganztitel-Reveal mit ScrollTrigger (kein DOM-Split, sofortige Mehrsprachigkeit)
+      document.querySelectorAll('.section-title').forEach(title => {
+        gsap.fromTo(title, { opacity: 0, y: 24 }, {
+          opacity: 1,
+          y: 0,
+          duration: 0.65,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: title,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
           }
         });
-      }
-      initSectionTitleScenes();
-      // Sprachwechsel überschreibt Titel per textContent und zerstört SplitText-Knoten — neu splitten + Fortschritt refreshen
-      document.addEventListener('langchange', () => {
-        initSectionTitleScenes();
-        ScrollTrigger.refresh();
       });
 
       // 4. Setlist-Listen — ScrollTrigger.batch-Stapel-Reveal
