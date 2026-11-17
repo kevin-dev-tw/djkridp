@@ -271,3 +271,17 @@ html {
   }
 }
 
+
+/* Mobile Reveal — nur pointer:coarse, JS setzt .reveal-init; ohne JS bleibt alles sichtbar */
+@media (pointer: coarse) {
+  .reveal-init {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-init.revealed {
+    opacity: 1;
+    transform: none;
+  }
+}

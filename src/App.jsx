@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useLang } from './i18n.jsx';
 import { useSmoother, useGsapScenes } from './hooks/useGsapScenes.js';
+import { useMobileReveals } from './hooks/useMobileReveals.js';
 import TwitchBanner from './components/TwitchBanner.jsx';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
@@ -17,6 +18,7 @@ export default function App() {
   const { lang } = useLang();
   const smootherReady = useSmoother(rootRef);
   useGsapScenes(rootRef, lang, smootherReady);
+  useMobileReveals(rootRef, lang);
 
   // Bilder: Rechtsklick & Drag deaktivieren
   useEffect(() => {
