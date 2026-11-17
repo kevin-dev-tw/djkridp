@@ -448,12 +448,12 @@
 
 
 .hero-title {
-  font-size: clamp(2.75rem, 11vw, 9rem);
+  font-size: clamp(3.5rem, 15vw, 12rem);
   margin-bottom: var(--spacing-lg);
   color: var(--on-surface-strong);
   font-family: var(--font-family-display);
   font-weight: 400;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   line-height: 0.95;
   opacity: 0;
@@ -610,7 +610,7 @@
 
 .section-title {
   font-family: var(--font-family-display);
-  font-size: clamp(2rem, 6.5vw, 5.25rem);
+  font-size: clamp(2.5rem, 8vw, 7rem);
   color: var(--on-surface-strong);
   text-align: left;
   text-transform: uppercase;
@@ -619,7 +619,7 @@
   padding-top: var(--spacing-lg);
   border-top: 1px solid var(--glass-border);
   font-weight: 400;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
 }
 
 /* Tours — Gestapelte Pass-Karten (Sticky Card Stacking) */
@@ -699,10 +699,10 @@ html[data-theme="dark"] .tour-card {
 
 .tour-card-country {
   font-family: var(--font-family-display);
-  font-size: clamp(1.9rem, 5.5vw, 4.25rem);
+  font-size: clamp(2.2rem, 7vw, 5.5rem);
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
   line-height: 1;
   margin: 0;
   color: var(--on-surface-strong);
