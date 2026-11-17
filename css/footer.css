@@ -1,81 +1,60 @@
-
-
-/* DMCA-Badge */
-.dmca-badge {
-  display: inline-block;
-  margin-top: var(--spacing-sm);
-}
-
-.dmca-badge img {
-  display: block;
-  max-width: 150px;
-  height: auto;
-}
-
 /* Footer-Content-Layout */
 .footer {
   background-color: var(--midnight-base);
   border-top: 1px solid var(--outline-variant);
-  padding: var(--spacing-lg) 0;
+  padding: var(--spacing-2xl) 0 calc(var(--spacing-2xl) + 2rem);
   position: relative;
+  overflow: hidden;
 }
 
-.back-to-top {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 36px;
-  height: 36px;
+/* Riesen-Wortmarke (Poster-Abschlussstempel) */
+.footer-wordmark-wrap {
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 0;
-  background: var(--midnight-base);
-  border: 1px solid var(--outline-variant);
-  border-radius: 50%;
-  color: var(--on-surface-variant);
-  cursor: pointer;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
-}
-
-.back-to-top:hover {
-  color: var(--color-acid);
-  border-color: var(--color-acid);
-}
-
-.back-to-top svg {
-  display: block;
-}
-
-.footer-content {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--spacing-lg);
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-xl);
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-xs);
+  padding: 0 var(--spacing-md);
+  margin: 0;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+}
+
+.footer-wordmark {
+  font-family: var(--font-family-display);
+  font-size: clamp(2.5rem, 15vw, 12rem);
+  font-weight: 400;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--outline-variant);
+  text-shadow: 2px 1px 0 var(--riso-offset, transparent);
+  transition: color var(--transition-base);
+  display: block;
+  max-width: 100%;
 }
 
 /* Responsiver Footer */
 @media (max-width: 768px) {
-  .footer-content {
-    flex-direction: column;
-    gap: var(--spacing-sm);
+  .footer {
+    padding: var(--spacing-xl) 0 calc(var(--spacing-xl) + 2.5rem);
   }
 
-  .footer-email-label,
-  .footer-email-link {
-    font-size: var(--font-size-xs);
+  .footer-wordmark {
+    font-size: clamp(2.25rem, 14vw, 6.5rem);
+    letter-spacing: -0.03em;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: var(--spacing-lg) 0 calc(var(--spacing-lg) + 3rem);
   }
 
-  .dmca-badge-container img {
-    max-width: 160px !important;
+  .footer-wordmark {
+    font-size: clamp(1.85rem, 13vw, 4rem);
+    letter-spacing: -0.02em;
   }
 }
