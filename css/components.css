@@ -643,22 +643,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 180px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-  transition: border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) .tour-card {
-    box-shadow: 0 8px 30px rgba(26, 26, 24, 0.08);
-  }
-}
-
-html[data-theme="light"] .tour-card {
-  box-shadow: 0 8px 30px rgba(26, 26, 24, 0.08);
-}
-
-html[data-theme="dark"] .tour-card {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .tour-card:hover {
