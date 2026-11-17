@@ -619,35 +619,91 @@
   letter-spacing: -0.01em;
 }
 
-.country-list {
-  display: block;
-  margin-top: var(--spacing-xl);
-  perspective: 1200px;
-  transform-style: preserve-3d;
-}
-
-.country-line {
+/* Tours — Gestapelte Pass-Karten (Sticky Card Stacking) */
+.country-stack {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  transform: translateY(var(--wheel-pull, 0px)) translateZ(var(--wheel-z, 0px)) rotateX(var(--wheel-rot, 0deg));
-  transform-origin: center center;
-  backface-visibility: hidden;
-  opacity: var(--focus, 1);
-  will-change: transform;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
+  position: relative;
+  padding-bottom: var(--spacing-3xl);
 }
 
-.country-line h3 {
+.tour-card {
+  position: sticky;
+  top: calc(var(--header-offset) + 20px + var(--card-index) * 14px);
+  background-color: var(--surface-container);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .tour-card {
+    box-shadow: 0 8px 30px rgba(26, 26, 24, 0.08);
+  }
+}
+
+html[data-theme="light"] .tour-card {
+  box-shadow: 0 8px 30px rgba(26, 26, 24, 0.08);
+}
+
+html[data-theme="dark"] .tour-card {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.tour-card:hover {
+  border-color: var(--color-acid);
+}
+
+.tour-card:hover .tour-card-country {
+  color: var(--color-acid);
+}
+
+.tour-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.tour-card-num {
+  color: var(--color-acid);
+  font-weight: 700;
+}
+
+.tour-card-tag {
+  color: var(--on-surface-variant);
+}
+
+.tour-card-body {
+  padding-top: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+}
+
+.tour-card-country {
+  font-family: var(--font-family-display);
+  font-size: clamp(2.2rem, 7vw, 5.5rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
   margin: 0;
   color: var(--on-surface-strong);
-  font-family: var(--font-family-display);
-  font-weight: 400;
-  font-size: clamp(2.5rem, 8vw, 7rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+  transition: color var(--transition-fast);
 }
 
 
@@ -1113,7 +1169,7 @@ html[data-theme="dark"] .twitch-live-orb.is-live {
 
 @media (prefers-reduced-motion: reduce) {
   .bio-list .bio-row,
-  .country-list .country-line,
+  .country-stack .tour-card,
   .works-list .work-row,
   .contact-links .contact-link {
     opacity: 1 !important;

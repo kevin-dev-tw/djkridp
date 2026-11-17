@@ -224,8 +224,22 @@
     padding-top: 15px;
   }
   
-  .country-line h3 {
-    font-size: clamp(1.75rem, 9vw, 3.5rem);
+  .tour-card {
+    padding: var(--spacing-md) var(--spacing-md);
+    min-height: 140px;
+    top: calc(var(--header-offset) + 10px + var(--card-index) * 10px);
+  }
+
+  .tour-card-country {
+    font-size: clamp(1.6rem, 9vw, 3.5rem);
+  }
+
+  .tour-card-header {
+    font-size: 10px;
+  }
+
+  .country-stack {
+    gap: var(--spacing-md);
   }
 
   .soundcloud-embed-container,
