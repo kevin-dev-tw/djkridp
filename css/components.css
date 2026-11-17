@@ -317,7 +317,7 @@
   color: var(--on-surface-variant);
   background: none;
   border: 1px solid var(--outline-variant);
-  border-radius: 2px;
+  border-radius: var(--border-radius-pill);
   padding: var(--spacing-xs) var(--spacing-sm);
   cursor: pointer;
   transition: color var(--transition-fast), border-color var(--transition-fast);
@@ -360,6 +360,8 @@
   padding: 0;
   background-color: var(--midnight-base);
   border: 1px solid var(--outline-variant);
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
   z-index: 1001;
   opacity: 0;
   visibility: hidden;
@@ -411,7 +413,7 @@
   color: var(--on-surface-variant);
   background: none;
   border: none;
-  border-radius: 0;
+  border-radius: var(--border-radius-sm);
   padding: var(--spacing-sm);
   text-align: left;
   cursor: pointer;
@@ -446,12 +448,12 @@
 
 
 .hero-title {
-  font-size: clamp(3.5rem, 15vw, 12rem);
+  font-size: clamp(2.75rem, 11vw, 9rem);
   margin-bottom: var(--spacing-lg);
   color: var(--on-surface-strong);
   font-family: var(--font-family-display);
   font-weight: 400;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   text-transform: uppercase;
   line-height: 0.95;
   opacity: 0;
@@ -540,6 +542,7 @@
   gap: var(--spacing-xl);
   padding: var(--spacing-xl) var(--spacing-md);
   border-bottom: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-sm);
   transition: background-color var(--transition-fast);
 }
 
@@ -607,7 +610,7 @@
 
 .section-title {
   font-family: var(--font-family-display);
-  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-size: clamp(2rem, 6.5vw, 5.25rem);
   color: var(--on-surface-strong);
   text-align: left;
   text-transform: uppercase;
@@ -616,7 +619,7 @@
   padding-top: var(--spacing-lg);
   border-top: 1px solid var(--glass-border);
   font-weight: 400;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 /* Tours — Gestapelte Pass-Karten (Sticky Card Stacking) */
@@ -634,7 +637,7 @@
   top: calc(var(--header-offset) + 20px + var(--card-index) * 14px);
   background-color: var(--surface-container);
   border: 1px solid var(--outline-variant);
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-lg);
   padding: var(--spacing-lg) var(--spacing-xl);
   display: flex;
   flex-direction: column;
@@ -696,10 +699,10 @@ html[data-theme="dark"] .tour-card {
 
 .tour-card-country {
   font-family: var(--font-family-display);
-  font-size: clamp(2.2rem, 7vw, 5.5rem);
+  font-size: clamp(1.9rem, 5.5vw, 4.25rem);
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 1;
   margin: 0;
   color: var(--on-surface-strong);
@@ -718,6 +721,7 @@ html[data-theme="dark"] .tour-card {
   gap: var(--spacing-xl);
   padding: var(--spacing-xl) var(--spacing-md);
   border-bottom: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-sm);
   transition: background-color var(--transition-fast);
 }
 
@@ -769,6 +773,7 @@ html[data-theme="dark"] .tour-card {
   padding: var(--spacing-xl);
   background: var(--surface-container);
   border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-lg);
 }
 
 
@@ -865,6 +870,7 @@ html[data-theme="dark"] .twitch-live-orb.is-live {
   padding: var(--spacing-sm) var(--spacing-md);
   margin: 0 calc(-1 * var(--spacing-md));
   border-bottom: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-sm);
   font-size: var(--font-size-sm);
   color: var(--on-surface);
   transition: background-color var(--transition-fast);
@@ -1124,6 +1130,7 @@ html[data-theme="dark"] .twitch-live-orb.is-live {
   padding: var(--spacing-lg) var(--spacing-sm);
   margin: 0 calc(-1 * var(--spacing-sm));
   border-top: 1px solid var(--outline-variant);
+  border-radius: var(--border-radius-sm);
   color: var(--on-surface-strong);
   font-size: var(--font-size-base);
   text-decoration: none;
@@ -1242,7 +1249,7 @@ html[data-theme="dark"] .twitch-live-orb.is-live {
   padding: 0 var(--spacing-md);
   background-color: transparent;
   border: 1px solid var(--outline-variant);
-  border-radius: 2px;
+  border-radius: var(--border-radius-pill);
   color: var(--on-surface);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
@@ -1463,7 +1470,7 @@ body > footer.footer {
   background: var(--surface);
   color: var(--color-acid);
   border: 1px solid var(--outline-variant);
-  border-radius: 0;
+  border-radius: var(--border-radius-pill);
   padding: 2px 8px;
   font-family: var(--font-family-mono);
   font-size: 11px;
@@ -1501,7 +1508,7 @@ body > footer.footer {
   height: 600px;
   max-height: calc(100% - 4rem);
   background: var(--midnight-base);
-  border-radius: 0;
+  border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-card);
   border: 1px solid var(--outline-variant);
   display: flex;
@@ -1528,7 +1535,7 @@ body > footer.footer {
   padding: var(--spacing-md) var(--spacing-lg);
   border-bottom: 1px solid var(--outline-variant);
   background-color: var(--midnight-base);
-  border-radius: 0;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
   position: relative;
 }
 
@@ -1596,7 +1603,7 @@ body > footer.footer {
 .ai-chat-close {
   width: 36px;
   height: 36px;
-  border-radius: 2px;
+  border-radius: 50%;
   background-color: transparent;
   color: var(--on-surface-variant);
   border: 1px solid var(--outline-variant);
@@ -1737,7 +1744,7 @@ body > footer.footer {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid var(--outline-variant);
-  border-radius: 0;
+  border-radius: var(--border-radius-sm);
   color: var(--on-surface);
   font-family: var(--font-family-primary);
   font-size: var(--font-size-sm);
@@ -1802,6 +1809,7 @@ body > footer.footer {
 .ai-chat-message.mine {
   background-color: var(--surface-container);
   border-right: 2px solid var(--color-acid);
+  border-radius: var(--border-radius-sm);
   padding: var(--spacing-sm) var(--spacing-md);
 }
 
@@ -1844,7 +1852,7 @@ body > footer.footer {
   padding: 12px;
   border-top: 1px solid var(--outline-variant);
   background-color: var(--midnight-base);
-  border-radius: 0;
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
 }
 
 .ai-chat-input-wrapper {
@@ -1853,7 +1861,7 @@ body > footer.footer {
   gap: 8px;
   flex: 1;
   background-color: var(--surface-container-low);
-  border-radius: 2px;
+  border-radius: var(--border-radius-md);
   padding: 4px;
   border: 1px solid var(--outline-variant);
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
@@ -2006,6 +2014,7 @@ body > footer.footer {
   position: relative;
   background-color: transparent;
   border-left: 2px solid var(--color-acid);
+  border-radius: var(--border-radius-sm);
   padding: var(--spacing-sm) var(--spacing-md);
 }
 
@@ -2123,7 +2132,7 @@ body > footer.footer {
   align-items: center;
   justify-content: center;
   z-index: 1001;
-  border-radius: 0;
+  border-radius: inherit;
 }
 
 .confirm-dialog-overlay.active {
@@ -2132,7 +2141,8 @@ body > footer.footer {
 
 .confirm-dialog {
   background-color: var(--midnight-base);
-  border-radius: 0;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
   box-shadow: none;
   border: 1px solid var(--outline-variant);
   max-width: 320px;
@@ -2153,7 +2163,7 @@ body > footer.footer {
   padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);
   border-bottom: none;
   background-color: transparent;
-  border-radius: 0;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
 }
 
 .confirm-dialog-icon {
@@ -2186,15 +2196,15 @@ body > footer.footer {
 .confirm-dialog-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
-  padding: 0;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
   border-top: 1px solid var(--outline-variant);
 }
 
 .confirm-dialog-btn {
   min-height: 48px;
   padding: 0 var(--spacing-md);
-  border-radius: 0;
+  border-radius: var(--border-radius-pill);
   border: none;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
@@ -2208,7 +2218,7 @@ body > footer.footer {
 .confirm-dialog-cancel {
   background-color: transparent;
   color: var(--on-surface);
-  border-right: 1px solid var(--outline-variant);
+  border: 1px solid var(--outline-variant);
 }
 
 .confirm-dialog-cancel:hover {
