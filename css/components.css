@@ -583,6 +583,28 @@
   }
 }
 
+/* Native Split-Char Masken für Hero & Abschnittstitel */
+.char-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: inherit;
+}
+
+.char-mask .char {
+  display: inline-block;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .char-mask {
+    overflow: visible;
+  }
+  .char-mask .char {
+    transform: none !important;
+  }
+}
+
 .section-title {
   font-family: var(--font-family-display);
   font-size: clamp(2.5rem, 8vw, 7rem);

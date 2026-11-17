@@ -67,21 +67,36 @@ document.addEventListener('DOMContentLoaded', () => {
     function initScenes() {
       if (prefersReducedMotion || typeof ScrollTrigger === 'undefined') return;
 
+      // Natives Leichtgewichts-SplitText ohne externe Plugins
+      function splitCharsNative(el) {
+        const raw = el.textContent.trim();
+        if (!raw) return [];
+        el.innerHTML = raw.split('').map(ch => {
+          if (ch === ' ') return ' ';
+          return `<span class="char-mask"><span class="char">${ch}</span></span>`;
+        }).join('');
+        return el.querySelectorAll('.char');
+      }
+
       // Von GSAP übernommene Elemente: CSS-Animationen aus, um transform/opacity-Konflikte zu vermeiden
       document.querySelectorAll('.section-title, .bio-row, .country-line, .work-row, .contact-group, .contact-link')
         .forEach(el => { el.style.animation = 'none'; });
 
-      // 0. Hero-Titel-Entrance — Ganztitel-Sanftaufstieg (reiner Kompositor-Transform, kein DOM-Split)
+      // 0. Hero-Titel-Entrance — Natives SplitText (Zeichen-Aufstieg mit Maske)
       const heroTitle = document.querySelector('.hero-title');
       if (heroTitle) {
         heroTitle.style.animation = 'none';
-        gsap.fromTo(heroTitle, { opacity: 0, y: 32 }, {
-          opacity: 1,
-          y: 0,
-          duration: 0.75,
-          ease: 'power3.out',
-          delay: 0.15
-        });
+        heroTitle.style.opacity = '1';
+        const chars = splitCharsNative(heroTitle);
+        if (chars.length) {
+          gsap.fromTo(chars, { yPercent: 120 }, {
+            yPercent: 0,
+            duration: 0.65,
+            stagger: 0.045,
+            ease: 'power3.out',
+            delay: 0.2
+          });
+        }
       }
 
       // 2. Hero-Halbtonpunkte — Scroll-Drift (per CSS-Variable gesteuerte ::before-Transform)
@@ -93,19 +108,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // 3. Abschnittstitel — Ganztitel-Reveal mit ScrollTrigger (kein DOM-Split, sofortige Mehrsprachigkeit)
-      document.querySelectorAll('.section-title').forEach(title => {
-        gsap.fromTo(title, { opacity: 0, y: 24 }, {
-          opacity: 1,
-          y: 0,
-          duration: 0.65,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: title,
-            start: 'top 88%',
-            toggleActions: 'play none none none'
+      // 3. Abschnittstitel — Natives SplitText (zeichenweise aus Maske nach oben gestaffelt)
+      const titleTriggers = new Map();
+      function initSectionTitleScenes() {
+        document.querySelectorAll('.section-title').forEach(title => {
+          const oldTrigger = titleTriggers.get(title);
+          if (oldTrigger) {
+            oldTrigger.kill();
+            titleTriggers.delete(title);
+          }
+          title.style.opacity = '1';
+          const chars = splitCharsNative(title);
+          if (!chars.length) return;
+          gsap.set(chars, { yPercent: 120 });
+          const tween = gsap.to(chars, {
+            yPercent: 0,
+            duration: 0.55,
+            stagger: 0.035,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: title,
+              start: 'top 88%',
+              toggleActions: 'play none none none'
+            }
+          });
+          if (tween.scrollTrigger) {
+            titleTriggers.set(title, tween.scrollTrigger);
           }
         });
+      }
+      initSectionTitleScenes();
+
+      // Sprachwechsel überschreibt Titel per textContent — neu zerlegen & Trigger refreshen
+      document.addEventListener('langchange', () => {
+        initSectionTitleScenes();
+        ScrollTrigger.refresh();
       });
 
       // 4. Setlist-Listen — ScrollTrigger.batch-Stapel-Reveal
