@@ -15,7 +15,7 @@ export default function Streams() {
     return () => { alive = false; };
   }, []);
 
-  const locale = lang === 'en' ? 'en-GB' : 'de-DE';
+  const locale = lang === 'en' ? 'en-US' : 'de-DE';
   const fmtDate = d => new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short' }).format(d);
   const fmtTime = d => new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(d);
 
