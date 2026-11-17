@@ -30,7 +30,6 @@
   text-align: center;
   white-space: nowrap;
   color: var(--outline-variant);
-  text-shadow: 2px 1px 0 var(--riso-offset, transparent);
   transition: color var(--transition-base);
   display: block;
   max-width: 100%;

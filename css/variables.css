@@ -51,7 +51,6 @@
   --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.6);
   --shadow-bubble: 0 2px 8px rgba(0, 0, 0, 0.4);
   --surface-hover: rgba(255, 255, 255, 0.04);
-  --riso-offset: transparent;
   --banner-bg: #0A0A0B;
   --banner-text: #FFB13D;
 
@@ -133,7 +132,6 @@
     --shadow-card: 0 12px 40px rgba(26, 26, 24, 0.12);
     --shadow-bubble: 0 2px 8px rgba(26, 26, 24, 0.12);
     --surface-hover: rgba(26, 26, 24, 0.04);
-    --riso-offset: rgba(255, 77, 0, 0.35);
     --banner-bg: #FF4D00;
     --banner-text: #1A1A18;
 
@@ -175,7 +173,6 @@ html[data-theme="light"] {
   --shadow-card: 0 12px 40px rgba(26, 26, 24, 0.12);
   --shadow-bubble: 0 2px 8px rgba(26, 26, 24, 0.12);
   --surface-hover: rgba(26, 26, 24, 0.04);
-  --riso-offset: rgba(255, 77, 0, 0.35);
   --banner-bg: #FF4D00;
   --banner-text: #1A1A18;
 
@@ -216,7 +213,6 @@ html[data-theme="dark"] {
   --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.6);
   --shadow-bubble: 0 2px 8px rgba(0, 0, 0, 0.4);
   --surface-hover: rgba(255, 255, 255, 0.04);
-  --riso-offset: transparent;
   --banner-bg: #0A0A0B;
   --banner-text: #FFB13D;
 
