@@ -34,14 +34,16 @@ export default function App() {
     });
   }, []);
 
-  // WebGL-Orbs & Glow-Cursor nur auf Desktop pointer:fine, verzögert per Idle
+  // WebGL-Orbs auf allen Geraeten (Sichtbarkeits-Gating in strands.js);
+  // Glow-Cursor bleibt Desktop pointer:fine (Mauseffekt)
   useEffect(() => {
-    if (!window.matchMedia('(pointer: fine)').matches) return;
+    const isFine = window.matchMedia('(pointer: fine)').matches;
     let cancelled = false;
 
     const start = async () => {
       const { initStrandsOrbs } = await import('./lib/strands-init.js');
       if (!cancelled) initStrandsOrbs();
+      if (!isFine) return;
       if ('requestIdleCallback' in window) {
         window.requestIdleCallback(() => { if (!cancelled) import('./lib/glow-cursor.js'); }, { timeout: 1500 });
       } else {
