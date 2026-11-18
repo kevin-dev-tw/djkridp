@@ -88,32 +88,6 @@
   transition-delay: 0.55s;
 }
 
-  .nav-lang {
-  @apply relative flex gap-[2px] p-[3px] border border-line rounded-full;
-}
-
-  .nav-lang-indicator {
-  @apply absolute top-[3px] bottom-[3px] left-[3px] rounded-full;
-  width: calc((100% - 8px) / 2);
-  background: var(--color-acid);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-  .nav-lang.lang-en .nav-lang-indicator {
-  transform: translateX(calc(100% + 2px));
-}
-
-  .nav-lang-btn {
-  @apply relative z-[1] min-h-[40px] py-0 px-4 rounded-full font-mono text-[0.8rem] tracking-[0.08em] text-muted cursor-pointer;
-  border: none;
-  background: transparent;
-  transition: color var(--transition-fast);
-}
-
-  .nav-lang-btn.active {
-  @apply text-midnight;
-}
-
   @media (prefers-reduced-motion: reduce) {
     .nav,
     .nav-list > li,

@@ -23,7 +23,6 @@ function getCurrentTheme(): Theme {
 export default function Header() {
   const { lang, t, setLang } = useLang();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
   const [navTop, setNavTop] = useState<number | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const headerBottom = useRef(0);
@@ -76,13 +75,9 @@ export default function Header() {
     const onDocClick = (e: Event) => {
       const target = e.target as Element | null;
       if (menuOpen && headerRef.current && target && !headerRef.current.contains(target)) closeMenu();
-      if (langOpen && !target?.closest('.lang-dropdown')) setLangOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        if (langOpen) { setLangOpen(false); e.stopPropagation(); }
-        else if (menuOpen) closeMenu(true);
-      }
+      if (e.key === 'Escape' && menuOpen) closeMenu(true);
       if (e.key === 'Tab' && menuOpen && headerRef.current) {
         const focusables = [headerRef.current.querySelector<HTMLElement>('.mobile-menu-toggle'),
           ...headerRef.current.querySelectorAll<HTMLElement>('.nav-link')].filter((el): el is HTMLElement => !!el);
@@ -97,7 +92,7 @@ export default function Header() {
       document.removeEventListener('click', onDocClick);
       document.removeEventListener('keydown', onKey, true);
     };
-  }, [menuOpen, langOpen]);
+  }, [menuOpen]);
 
   // Menü-Zustand am Root markieren (AI-Button unter dem Panel ausblenden)
   useEffect(() => {
@@ -205,17 +200,12 @@ export default function Header() {
         <div className="header-actions">
           {renderSkyToggle('header')}
           <div className="lang-switch lang-switch-header">
-            <div className={`lang-dropdown${langOpen ? ' open' : ''}`}>
-              <button className="lang-select" type="button" aria-haspopup="listbox"
-                      aria-expanded={langOpen} aria-label={t('nav.langLabel')}
-                      onClick={() => setLangOpen(o => !o)}>
-                <svg className="lang-globe" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                <span className="lang-current">{lang.toUpperCase()}</span>
-              </button>
-              <ul className="lang-options" role="listbox">
-                <li><button className="lang-option" type="button" role="option" aria-selected={lang === 'de'} onClick={() => { setLang('de'); setLangOpen(false); }}>DE</button></li>
-                <li><button className="lang-option" type="button" role="option" aria-selected={lang === 'en'} onClick={() => { setLang('en'); setLangOpen(false); }}>EN</button></li>
-              </ul>
+            <div className={`nav-lang lang-${lang}`} role="group" aria-label={t('nav.langLabel')}>
+              <span className="nav-lang-indicator" aria-hidden="true" />
+              <button className={`nav-lang-btn${lang === 'de' ? ' active' : ''}`} type="button"
+                      onClick={() => setLang('de')}>DE</button>
+              <button className={`nav-lang-btn${lang === 'en' ? ' active' : ''}`} type="button"
+                      onClick={() => setLang('en')}>EN</button>
             </div>
           </div>
         </div>

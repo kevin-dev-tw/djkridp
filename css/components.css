@@ -216,92 +216,39 @@
   @apply flex items-center;
 }
 
-.lang-dropdown {
-  @apply relative;
+/* 分段語系控制 — 行動版（.nav-controls）與桌面版（.header-actions）共用，
+   琥珀色指示器以 transform 在 DE/EN 之間滑動 */
+.nav-lang {
+  @apply relative flex gap-[2px] p-[3px] border border-line rounded-full;
 }
 
-.lang-select {
-  @apply flex items-center gap-2 font-mono text-xs font-medium tracking-[0.1em] uppercase text-muted border border-line rounded-full py-1 px-2 cursor-pointer;
-  background: none;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
+.nav-lang-indicator {
+  @apply absolute top-[3px] bottom-[3px] left-[3px] rounded-full;
+  width: calc((100% - 8px) / 2);
+  background: var(--color-acid);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.lang-select::after {
-  @apply text-xs text-muted;
-  content: '＋';
+.nav-lang.lang-en .nav-lang-indicator {
+  transform: translateX(calc(100% + 2px));
 }
 
-.lang-dropdown.open .lang-select::after {
-  content: '－';
-}
-
-.lang-globe {
-  @apply text-[1rem] leading-none text-muted;
+.nav-lang-btn {
+  @apply relative z-[1] min-h-[40px] py-0 px-4 rounded-full font-mono text-[0.8rem] tracking-[0.08em] text-muted cursor-pointer;
+  border: none;
+  background: transparent;
   transition: color var(--transition-fast);
 }
 
-.lang-select:hover .lang-globe,
-.lang-dropdown.open .lang-globe {
-  @apply text-onsurface;
+.nav-lang-btn.active {
+  @apply text-midnight;
 }
 
-.lang-select:hover {
-  @apply text-onsurface border-muted;
+/* 桌面版：收緊到 header 高度 */
+.lang-switch .nav-lang-btn {
+  @apply min-h-[32px] px-3 text-xs;
 }
 
-.lang-options {
-  @apply absolute right-0 min-w-full list-none m-0 p-0 bg-midnight border border-line rounded-sm overflow-hidden z-[1001] opacity-0 invisible;
-  top: calc(100% + 4px);
-  transform: translateY(-4px);
-  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
-}
-
-.lang-dropdown.open .lang-options {
-  @apply opacity-100 visible;
-  transform: translateY(0);
-}
-
-.lang-options li {
-  @apply opacity-0;
-  transform: translateY(-4px);
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
-}
-
-.lang-dropdown.open .lang-options li {
-  @apply opacity-100;
-  transform: translateY(0);
-}
-
-.lang-dropdown.open .lang-options li:nth-child(2) {
-  transition-delay: 0.05s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lang-options,
-  .lang-options li {
-  transition: none;
-  transform: none;
-}
-}
-
-.lang-options li + li {
-  @apply border-t border-line;
-}
-
-.lang-option {
-  @apply block w-full font-mono text-xs font-medium tracking-[0.1em] uppercase text-muted rounded-sm p-2 text-left cursor-pointer;
-  background: none;
-  border: none;
-  transition: color var(--transition-fast), background-color var(--transition-fast);
-}
-
-.lang-option:hover {
-  @apply text-onsurface bg-surface-2;
-}
-
-.lang-option[aria-selected="true"] {
-  @apply text-acid;
-}
 
 .hero {
   @apply text-left relative z-[1] min-h-screen min-h-dvh w-full flex items-center justify-center;
