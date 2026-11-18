@@ -65,6 +65,11 @@
   gap: var(--spacing-xl);
 }
 
+/* Steuerzeile (Theme/Sprache) im Mobil-Menü – Desktop ausgeblendet */
+.nav-controls {
+  display: none;
+}
+
 @media (min-width: 769px) {
   .nav {
     margin-left: 0;
@@ -599,13 +604,35 @@
   will-change: transform;
 }
 
-@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+@media (prefers-reduced-motion: reduce) {
   .char-mask {
     overflow: visible;
   }
   .char-mask .char {
     transform: none !important;
+    animation: none !important;
   }
+}
+
+/* Mobile Hero-Titel — CSS-Char-Reveal ohne GSAP (gestaffelte Maske) */
+@media (pointer: coarse) {
+  .hero-title .char-mask .char {
+    animation: hero-char-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  }
+  .hero-title .char-mask:nth-child(2) .char { animation-delay: 0.195s; }
+  .hero-title .char-mask:nth-child(3) .char { animation-delay: 0.24s; }
+  .hero-title .char-mask:nth-child(4) .char { animation-delay: 0.285s; }
+  .hero-title .char-mask:nth-child(5) .char { animation-delay: 0.33s; }
+  .hero-title .char-mask:nth-child(6) .char { animation-delay: 0.375s; }
+  .hero-title .char-mask:nth-child(7) .char { animation-delay: 0.42s; }
+  .hero-title .char-mask:nth-child(8) .char { animation-delay: 0.465s; }
+  .hero-title .char-mask:nth-child(9) .char { animation-delay: 0.51s; }
+  .hero-title .char-mask:nth-child(10) .char { animation-delay: 0.555s; }
+}
+
+@keyframes hero-char-rise {
+  from { transform: translateY(120%); }
+  to { transform: translateY(0); }
 }
 
 .section-title {
@@ -1426,6 +1453,13 @@ body > footer.footer {
   transition: transform 0.18s ease, opacity 0.18s ease, visibility 0.18s;
   padding: 0;
   overflow: visible;
+}
+
+html.menu-open .ai-chat-button {
+  opacity: 0;
+  transform: scale(0.5);
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .ai-chat-button.orb-hidden {

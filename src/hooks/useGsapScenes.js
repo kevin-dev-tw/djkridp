@@ -173,28 +173,6 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
       });
     }
 
-    // 8. Maus-Szene — Hero-Zeichen-Repulsion
-    const heroEl = rootRef.current.querySelector('#home');
-    let onHeroMove = null;
-    if (heroEl && heroChars.length) {
-      const chars = [...heroChars];
-      const xTo = chars.map(c => gsap.quickTo(c, 'x', { duration: 0.3, ease: 'power3.out' }));
-      const yTo = chars.map(c => gsap.quickTo(c, 'y', { duration: 0.3, ease: 'power3.out' }));
-      const RADIUS = 120;
-      onHeroMove = e => {
-        chars.forEach((c, i) => {
-          const r = c.getBoundingClientRect();
-          const dx = e.clientX - (r.left + r.width / 2);
-          const dy = e.clientY - (r.top + r.height / 2);
-          const dist = Math.hypot(dx, dy);
-          const f = dist < RADIUS ? (RADIUS - dist) / RADIUS : 0;
-          xTo[i](-dx * f * 0.4);
-          yTo[i](-dy * f * 0.4);
-        });
-      };
-      heroEl.addEventListener('mousemove', onHeroMove);
-    }
-
     const fontsP = document.fonts && document.fonts.ready
       ? document.fonts.ready.then(() => ScrollTrigger.refresh())
       : null;
@@ -202,7 +180,6 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
     return () => {
       // position/top sind Inline-Overrides und werden vom gsap.context-Revert nicht zurückgesetzt
       tourCards.forEach(card => { card.style.position = ''; card.style.top = ''; });
-      if (onHeroMove && heroEl) heroEl.removeEventListener('mousemove', onHeroMove);
     };
   }, { scope: rootRef, dependencies: [lang, smootherReady] });
 }

@@ -22,7 +22,8 @@ export function useMobileReveals(rootRef, lang) {
     if (!('IntersectionObserver' in window)) return;
 
     const els = [...rootRef.current.querySelectorAll(SELECTOR)]
-      .filter(el => !el.closest('.hero'));
+      .filter(el => !el.closest('.hero'))
+      .filter(el => !el.classList.contains('revealed'));
     els.forEach(el => el.classList.add('reveal-init'));
 
     const io = new IntersectionObserver(entries => {
@@ -35,9 +36,6 @@ export function useMobileReveals(rootRef, lang) {
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
 
     els.forEach(el => io.observe(el));
-    return () => {
-      io.disconnect();
-      els.forEach(el => el.classList.remove('reveal-init', 'revealed'));
-    };
+    return () => io.disconnect();
   }, [rootRef, lang]);
 }

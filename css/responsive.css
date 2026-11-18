@@ -11,7 +11,7 @@
   }
 
   .logo {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 
   .logo,
@@ -27,9 +27,8 @@
     left: 0;
     right: 0;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 1fr auto;
     padding: var(--spacing-sm) var(--spacing-lg) calc(var(--spacing-lg) + env(safe-area-inset-bottom));
     background-color: var(--midnight-base);
     border-bottom: 1px solid var(--outline-variant);
@@ -47,6 +46,7 @@
   .nav-list {
     flex-direction: column;
     align-items: stretch;
+    align-self: center;
     width: 100%;
     gap: 0;
     padding: 0;
@@ -107,29 +107,72 @@
   }
 
   .header-actions {
+    display: none;
+  }
+
+  .nav-controls {
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    order: 1;
-    margin-left: auto;
-    margin-right: var(--spacing-sm);
+    justify-content: space-between;
+    width: 100%;
+    padding-top: var(--spacing-lg);
+    opacity: 0;
+    transition: opacity 0.45s ease-out;
+  }
+
+  .nav.active .nav-controls {
+    opacity: 1;
+    transition-delay: 0.55s;
+  }
+
+  .nav-lang {
     position: relative;
-    z-index: 2;
-  }
-
-  .lang-switch-header {
     display: flex;
-    margin: 0;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--border-radius-pill);
   }
 
-  .sky-toggle,
-  .lang-switch-header .lang-select {
-    min-height: 44px;
+  .nav-lang-indicator {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc((100% - 8px) / 2);
+    border-radius: var(--border-radius-pill);
+    background: var(--color-acid);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-lang.lang-en .nav-lang-indicator {
+    transform: translateX(calc(100% + 2px));
+  }
+
+  .nav-lang-btn {
+    position: relative;
+    z-index: 1;
+    min-height: 40px;
+    padding: 0 var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius-pill);
+    background: transparent;
+    font-family: var(--font-family-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--on-surface-variant);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-lang-btn.active {
+    color: var(--midnight-base);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .nav,
-    .nav-list > li {
+    .nav-list > li,
+    .nav-controls {
       transition: none;
       transform: none;
     }
@@ -186,29 +229,13 @@
   }
 
   .logo {
-    font-size: 1.15rem;
+    font-size: 1.45rem;
     letter-spacing: -0.01em;
-  }
-
-  .header-actions {
-    gap: 4px;
-    margin-right: 4px;
   }
 
   .sky-toggle {
     --toggle-size: 8px;
     min-height: 40px;
-  }
-
-  .lang-switch-header .lang-select {
-    min-height: 40px;
-    padding: var(--spacing-xs) 6px;
-    font-size: 11px;
-    gap: 2px;
-  }
-
-  .lang-globe {
-    font-size: 14px;
   }
 
   .mobile-menu-toggle {
