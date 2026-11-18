@@ -1,59 +1,36 @@
 /* Footer-Content-Layout */
 .footer {
-  background-color: var(--midnight-base);
-  border-top: 1px solid var(--outline-variant);
+  @apply bg-midnight border-t border-line relative overflow-hidden;
   padding: var(--spacing-2xl) 0 calc(var(--spacing-2xl) + 2rem);
-  position: relative;
-  overflow: hidden;
 }
 
 /* Riesen-Wortmarke (Poster-Abschlussstempel) */
 .footer-wordmark-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 0 var(--spacing-md);
-  margin: 0;
-  overflow: hidden;
-  user-select: none;
-  pointer-events: none;
+  @apply flex justify-center items-center w-full py-0 px-4 m-0 overflow-hidden select-none pointer-events-none;
 }
 
 .footer-wordmark {
-  font-family: var(--font-family-display);
-  font-size: clamp(2.5rem, 15vw, 12rem);
-  font-weight: 400;
-  line-height: 0.85;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  text-align: center;
-  white-space: nowrap;
-  color: var(--outline-variant);
+  @apply font-display text-[clamp(2.5rem,_15vw,_12rem)] font-normal leading-[0.85] tracking-[-0.04em] uppercase text-center whitespace-nowrap text-line block max-w-full;
   transition: color var(--transition-base);
-  display: block;
-  max-width: 100%;
 }
 
 /* Responsiver Footer */
 @media (max-width: 768px) {
   .footer {
-    padding: var(--spacing-xl) 0 calc(var(--spacing-xl) + 2.5rem);
-  }
+  padding: var(--spacing-xl) 0 calc(var(--spacing-xl) + 2.5rem);
+}
 
   .footer-wordmark {
-    font-size: clamp(2.25rem, 14vw, 6.5rem);
-    letter-spacing: -0.03em;
-  }
+  @apply text-[clamp(2.25rem,_14vw,_6.5rem)] tracking-[-0.03em];
+}
 }
 
 @media (max-width: 480px) {
   .footer {
-    padding: var(--spacing-lg) 0 calc(var(--spacing-lg) + 3rem);
-  }
+  padding: var(--spacing-lg) 0 calc(var(--spacing-lg) + 3rem);
+}
 
   .footer-wordmark {
-    font-size: clamp(1.85rem, 13vw, 4rem);
-    letter-spacing: -0.02em;
-  }
+  @apply text-[clamp(1.85rem,_13vw,_4rem)] tracking-[-0.02em];
+}
 }

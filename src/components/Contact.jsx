@@ -33,7 +33,7 @@ export default function Contact() {
   const { t } = useLang();
   return (
     <section id="contact" className="section" aria-label={t('contact.title')}>
-      <div className="container">
+      <div className="wrap">
         <div className="contact-content">
           <SectionTitle i18nKey="contact.title" />
           <div className="contact-links">

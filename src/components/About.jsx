@@ -12,7 +12,7 @@ export default function About() {
   const { t } = useLang();
   return (
     <section id="about" className="section" aria-label={t('about.title')}>
-      <div className="container">
+      <div className="wrap">
         <SectionTitle i18nKey="about.title" />
         <div className="about-layout">
           <div className="bio-list">

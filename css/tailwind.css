@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+/* Token-Brücke: Tailwind-Utilities zeigen auf die Theme-Variablen aus variables.css.
+   Dadurch funktionieren data-theme-Wechsel und prefers-color-scheme unverändert. */
+@theme inline {
+  --color-acid: var(--color-acid);
+  --color-acid-light: var(--color-acid-light);
+  --color-acid-ink: var(--color-acid-ink);
+  --color-midnight: var(--midnight-base);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-container);
+  --color-surface-low: var(--surface-container-low);
+  --color-onsurface: var(--on-surface);
+  --color-strong: var(--on-surface-strong);
+  --color-muted: var(--on-surface-variant);
+  --color-onprimary: var(--on-primary);
+  --color-edge: var(--outline);
+  --color-line: var(--outline-variant);
+  --color-glass: var(--glass-border);
+  --color-error: var(--error);
+  --color-error-2: var(--error-container);
+  --color-onerror: var(--on-error);
+  --color-onerror-2: var(--on-error-container);
+  --color-dot: var(--halftone-dot);
+  --color-dot-empty: var(--empty-dot);
+  --color-overlay: var(--overlay-bg);
+  --color-hover: var(--surface-hover);
+  --color-banner: var(--banner-bg);
+  --color-bannertext: var(--banner-text);
+
+  --font-display: var(--font-family-display);
+  --font-sans: var(--font-family-primary);
+  --font-mono: var(--font-family-mono);
+
+  --text-xs: var(--font-size-xs);
+  --text-sm: var(--font-size-sm);
+  --text-base: var(--font-size-base);
+  --text-lg: var(--font-size-lg);
+  --text-xl: var(--font-size-xl);
+  --text-2xl: var(--font-size-2xl);
+  --text-3xl: var(--font-size-3xl);
+  --text-4xl: var(--font-size-4xl);
+
+  --radius-sm: var(--border-radius-sm);
+  --radius-md: var(--border-radius-md);
+  --radius-lg: var(--border-radius-lg);
+  --radius-full: var(--border-radius-pill);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-bubble: var(--shadow-bubble);
+}

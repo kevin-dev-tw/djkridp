@@ -76,7 +76,7 @@ export default function Works() {
 
   return (
     <section id="works" className="section" aria-label={t('works.title')}>
-      <div className="container">
+      <div className="wrap">
         <SectionTitle i18nKey="works.title" />
 
         <div className="works-list">

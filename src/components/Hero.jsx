@@ -5,7 +5,7 @@ export default function Hero() {
   const { t } = useLang();
   return (
     <section id="home" className="hero">
-      <div className="container">
+      <div className="wrap">
         <h1 className="hero-title"><CharSplit text="DJKridP" /></h1>
         <p className="hero-subtitle">{t('hero.subtitle')}</p>
       </div>

@@ -51,7 +51,7 @@ export default function Streams() {
 
   return (
     <section id="streams" className="section" aria-label={t('streams.title')} hidden={empty}>
-      <div className="container" id="twitch-schedule">
+      <div className="wrap" id="twitch-schedule">
         <SectionTitle i18nKey="streams.title" />
         <ul className="twitch-schedule-list" id="twitch-schedule-list">
           {vacationText && <li className="twitch-schedule-vacation">{vacationText}</li>}

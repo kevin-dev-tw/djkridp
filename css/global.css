@@ -1,6 +1,5 @@
 * {
-  margin: 0;
-  padding: 0;
+  @apply m-0 p-0;
   box-sizing: border-box;
 }
 
@@ -15,234 +14,164 @@
 }
 
 html {
-  font-size: 16px;
+  @apply text-[16px] overflow-x-clip;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
   overflow-anchor: none;
-  overflow-x: clip;
 }
 
 body {
-  font-family: var(--font-family-primary);
-  font-size: var(--font-size-base);
-  line-height: 1.6;
-  color: var(--on-surface);
-  background-color: var(--midnight-base);
+  @apply font-sans text-base leading-[1.6] text-onsurface bg-midnight pt-0 overflow-x-clip;
   transition: background-color var(--transition-base), color var(--transition-base);
-  padding-top: 0;
-  overflow-x: clip;
 }
 
 /* Eigene Textauswahl */
 ::selection {
-  background-color: var(--color-acid);
-  color: var(--on-primary);
+  @apply bg-acid text-onprimary;
 }
 
 ::-moz-selection {
-  background-color: var(--color-acid);
-  color: var(--on-primary);
+  @apply bg-acid text-onprimary;
 }
 
 #home {
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  align-items: center;
+  @apply min-h-screen min-h-dvh flex items-center relative pt-[var(--header-offset)] overflow-hidden;
   background: var(--midnight-base);
-  position: relative;
-  padding-top: var(--header-offset);
-  overflow: hidden;
 }
 
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: var(--spacing-md);
-  color: var(--color-text-primary);
+  @apply font-bold leading-[1.2] mb-4 text-onsurface;
 }
 
 h1 {
-  font-size: var(--font-size-4xl);
+  @apply text-4xl;
 }
 
 h2 {
-  font-size: var(--font-size-3xl);
+  @apply text-3xl;
 }
 
 h3 {
-  font-size: var(--font-size-2xl);
+  @apply text-2xl;
 }
 
 h4 {
-  font-size: var(--font-size-xl);
+  @apply text-xl;
 }
 
 p {
-  margin-bottom: var(--spacing-md);
-  color: var(--color-text-secondary);
+  @apply mb-4 text-muted;
 }
 
 a {
-  color: var(--color-acid);
-  text-decoration: none;
+  @apply text-acid no-underline;
   transition: color var(--transition-base);
 }
 
 img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+  @apply max-w-full h-auto block;
 }
 
 ul, ol {
-  list-style: none;
+  @apply list-none;
 }
 
 button {
+  @apply cursor-pointer;
   font-family: inherit;
-  cursor: pointer;
   border: none;
   background: none;
   transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base), opacity var(--transition-base), transform var(--transition-base);
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+.wrap {
+  @apply max-w-[1200px] my-0 mx-auto py-0 px-6;
 }
 
 .section {
-  padding: var(--spacing-3xl) 0;
+  @apply py-16 px-0 w-full relative overflow-clip min-h-screen min-h-dvh flex items-center;
   scroll-margin-top: var(--header-offset);
-  width: 100%;
-  position: relative;
-  overflow: clip;
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  align-items: center;
 }
 
 #contact.section {
-  padding-bottom: var(--spacing-3xl);
+  @apply pb-16;
 }
 
 /* Vollbreiten-Hintergrundbereich */
 #about {
-  background-color: var(--surface-container-low);
+  @apply bg-surface-low;
 }
 
-#about .container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+#about .wrap {
+  @apply w-full max-w-[1200px] my-0 mx-auto py-0 px-6;
 }
 
 #tours {
-  background-color: var(--midnight-base);
+  @apply bg-midnight;
 }
 
-#tours .container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+#tours .wrap {
+  @apply w-full max-w-[1200px] my-0 mx-auto py-0 px-6;
 }
 
 #streams.section {
-  min-height: auto;
-  display: block;
-  background-color: var(--surface-container-low);
+  @apply min-h-auto block bg-surface-low;
 }
 
-#streams .container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+#streams .wrap {
+  @apply w-full max-w-[1200px] my-0 mx-auto py-0 px-6;
 }
 
 #works {
-  background-color: var(--surface-container-low);
+  @apply bg-surface-low;
 }
 
-#works .container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+#works .wrap {
+  @apply w-full max-w-[1200px] my-0 mx-auto py-0 px-6;
 }
 
 #contact {
-  background-color: var(--midnight-base);
-  min-height: auto;
-  display: block;
-  position: relative;
-  overflow: hidden;
+  @apply bg-midnight min-h-auto block relative overflow-hidden;
 }
 
 #contact.section {
-  padding: 120px 0;
-  padding-bottom: 120px;
-  min-height: auto;
-  display: block;
+  @apply py-[120px] px-0 pb-[120px] min-h-auto block;
 }
 
-#contact .container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+#contact .wrap {
+  @apply w-full max-w-[1200px] my-0 mx-auto py-0 px-6;
 }
 
 #smooth-wrapper {
-  position: relative;
-  width: 100%;
-  z-index: 1;
+  @apply relative w-full z-[1];
 }
 
 #smooth-wrapper.smooth-active {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  overflow: hidden;
+  @apply fixed top-0 left-0 h-full overflow-hidden;
 }
 
 #smooth-content {
-  overflow: visible;
-  width: 100%;
+  @apply overflow-visible w-full;
 }
 
 /* GlowCursor — Amber-Lichtspur für Desktop */
 .glow-cursor {
-  position: fixed;
+  @apply fixed z-[500] overflow-hidden pointer-events-none;
   inset: 0;
-  z-index: 500;
-  overflow: hidden;
-  pointer-events: none;
 }
 
 .glow-cursor__canvas {
-  position: absolute;
+  @apply absolute block w-full h-full pointer-events-none select-none;
   inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  user-select: none;
   mix-blend-mode: screen;
 }
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) .glow-cursor__canvas {
-    mix-blend-mode: multiply;
-  }
+  mix-blend-mode: multiply;
+}
 }
 
 html[data-theme="light"] .glow-cursor__canvas {
@@ -255,9 +184,7 @@ html[data-theme="dark"] .glow-cursor__canvas {
 
 /* Eigene Scrollbar */
 ::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
+  @apply hidden w-0 h-0;
 }
 
 html {
@@ -267,21 +194,21 @@ html {
 
 @supports not selector(::-webkit-scrollbar) {
   html {
-    scrollbar-width: none;
-  }
+  scrollbar-width: none;
+}
 }
 
 
 /* Mobile Reveal — nur pointer:coarse, JS setzt .reveal-init; ohne JS bleibt alles sichtbar */
 @media (pointer: coarse) {
   .reveal-init {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+  @apply opacity-0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
   .reveal-init.revealed {
-    opacity: 1;
-    transform: none;
-  }
+  @apply opacity-100;
+  transform: none;
+}
 }

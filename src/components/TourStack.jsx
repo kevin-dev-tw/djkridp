@@ -7,7 +7,7 @@ export default function TourStack() {
   const { t } = useLang();
   return (
     <section id="tours" className="section" aria-label={t('tours.title')}>
-      <div className="container">
+      <div className="wrap">
         <SectionTitle i18nKey="tours.title" />
         <div className="country-stack" id="country-stack">
           {COUNTRIES.map((code, i) => (
