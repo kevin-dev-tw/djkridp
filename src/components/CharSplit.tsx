@@ -1,6 +1,6 @@
 // Rendert Text als Zeichen-Spans mit Maske — React-Ersatz für DOM-SplitText.
 // Leerzeichen bleiben echte Spaces (Zeilenumbruch-fähig), Buchstaben bekommen .char-mask>.char.
-export default function CharSplit({ text }) {
+export default function CharSplit({ text }: { text: string }) {
   return (
     <>
       {(text || '').split('').map((ch, i) =>

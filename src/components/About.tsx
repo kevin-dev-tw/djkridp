@@ -1,12 +1,12 @@
-import SectionTitle from './SectionTitle.jsx';
-import { useLang } from '../i18n.jsx';
+import SectionTitle from './SectionTitle';
+import { useLang } from '../i18n';
 
 const BIO_ROWS = [
   { era: '01', h: 'bio1.h', p: 'bio1.p' },
   { era: '02', h: 'bio2.h', p: 'bio2.p' },
   { era: '03', h: 'bio3.h', p: 'bio3.p' },
   { era: '04', h: 'bio4.h', p: 'bio4.p' },
-];
+] as const;
 
 export default function About() {
   const { t } = useLang();

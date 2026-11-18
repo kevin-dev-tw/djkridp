@@ -1,23 +1,37 @@
 import { useState, useEffect, useMemo } from 'react';
-import SectionTitle from './SectionTitle.jsx';
-import { useLang } from '../i18n.jsx';
+import SectionTitle from './SectionTitle';
+import { useLang } from '../i18n';
+
+interface ScheduleSegment {
+  id: string;
+  start: string;
+  end: string;
+  title?: string;
+  category?: string;
+  canceled?: boolean;
+}
+
+interface Schedule {
+  segments?: ScheduleSegment[];
+  vacation?: { end: string } | null;
+}
 
 export default function Streams() {
   const { lang, t } = useLang();
-  const [schedule, setSchedule] = useState(null);
+  const [schedule, setSchedule] = useState<Schedule | null>(null);
 
   useEffect(() => {
     let alive = true;
     fetch('/api/twitch-schedule')
       .then(res => (res.ok ? res.json() : null))
-      .then(data => { if (alive && data) setSchedule(data); })
+      .then(data => { if (alive && data) setSchedule(data as Schedule); })
       .catch(() => {});
     return () => { alive = false; };
   }, []);
 
   const locale = lang === 'en' ? 'en-US' : 'de-DE';
-  const fmtDate = d => new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short' }).format(d);
-  const fmtTime = d => new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(d);
+  const fmtDate = (d: Date) => new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short' }).format(d);
+  const fmtTime = (d: Date) => new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(d);
 
   const { items, vacationText } = useMemo(() => {
     if (!schedule) return { items: [], vacationText: null };

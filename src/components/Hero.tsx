@@ -1,5 +1,5 @@
-import CharSplit from './CharSplit.jsx';
-import { useLang } from '../i18n.jsx';
+import CharSplit from './CharSplit';
+import { useLang } from '../i18n';
 
 export default function Hero() {
   const { t } = useLang();

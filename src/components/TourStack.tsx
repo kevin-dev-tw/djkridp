@@ -1,7 +1,8 @@
-import SectionTitle from './SectionTitle.jsx';
-import { useLang } from '../i18n.jsx';
+import type { CSSProperties } from 'react';
+import SectionTitle from './SectionTitle';
+import { useLang } from '../i18n';
 
-const COUNTRIES = ['de', 'ca', 'za', 'jp', 'ru', 'pl', 'es', 'it'];
+const COUNTRIES = ['de', 'ca', 'za', 'jp', 'ru', 'pl', 'es', 'it'] as const;
 
 export default function TourStack() {
   const { t } = useLang();
@@ -11,7 +12,7 @@ export default function TourStack() {
         <SectionTitle i18nKey="tours.title" />
         <div className="country-stack" id="country-stack">
           {COUNTRIES.map((code, i) => (
-            <article className="tour-card" style={{ '--card-index': i }} key={code}>
+            <article className="tour-card" style={{ '--card-index': i } as CSSProperties} key={code}>
               <div className="tour-card-header">
                 <span className="tour-card-num">{String(i + 1).padStart(2, '0')} / {String(COUNTRIES.length).padStart(2, '0')}</span>
                 <span className="tour-card-tag">TOUR ARCHIVE</span>

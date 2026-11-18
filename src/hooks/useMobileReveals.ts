@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, type RefObject } from 'react';
 
 const SELECTOR = [
   '.section-title',
@@ -15,13 +15,14 @@ const SELECTOR = [
 ].join(', ');
 
 // Mobile Reveal — IntersectionObserver statt GSAP (pointer:coarse laedt kein GSAP)
-export function useMobileReveals(rootRef, lang) {
+export function useMobileReveals(rootRef: RefObject<HTMLElement | null>, lang: string) {
   useEffect(() => {
     if (!window.matchMedia('(pointer: coarse)').matches) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!('IntersectionObserver' in window)) return;
+    if (!rootRef.current) return;
 
-    const els = [...rootRef.current.querySelectorAll(SELECTOR)]
+    const els = [...rootRef.current.querySelectorAll<HTMLElement>(SELECTOR)]
       .filter(el => !el.closest('.hero'))
       .filter(el => !el.classList.contains('revealed'));
     els.forEach(el => el.classList.add('reveal-init'));

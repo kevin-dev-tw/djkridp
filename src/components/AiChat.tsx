@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { useLang } from '../i18n.jsx';
-import { formatReply, linkify } from '../lib/formatReply.js';
+import { useState, useEffect, useRef, useCallback, useMemo, type ReactNode, type UIEvent, type ChangeEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
+import { useLang, type TranslationKey } from '../i18n';
+import { formatReply } from '../lib/formatReply';
 
 const API_URL = '/api/chat';
 const STORAGE_KEY = 'ai_chat_history';
@@ -8,14 +8,23 @@ const VIRTUAL_SCROLL_THRESHOLD = 50;
 const ESTIMATED_ITEM_HEIGHT = 80;
 const BUFFER = 5;
 
-const QUICK_QUESTIONS = [
+interface Message {
+  content: string;
+  role: 'user' | 'assistant';
+  timestamp: number;
+  completed?: boolean;
+  typing?: boolean;
+  _justAdded?: boolean;
+}
+
+const QUICK_QUESTIONS: { num: string; label: TranslationKey; question: TranslationKey }[] = [
   { num: '01', label: 'chat.q1', question: 'chat.q1q' },
   { num: '02', label: 'chat.q2', question: 'chat.q2q' },
   { num: '03', label: 'chat.q3', question: 'chat.q3q' },
   { num: '04', label: 'chat.q4', question: 'chat.q4q' },
 ];
 
-const MUSIC_LINKS = [
+const MUSIC_LINKS: { label: string; href: string; icon: ReactNode }[] = [
   { label: 'Spotify', href: 'https://open.spotify.com/artist/22Mjn2JlrMAPgUEqozf4Re',
     icon: <svg viewBox="0 0 226.733 226.733" height="16" width="16" fill="currentColor" aria-hidden="true"><path d="M1345.62 945.281c-269.94 160.309-715.202 175.049-972.893 96.839-41.383-12.56-85.145 10.81-97.68 52.18-12.543 41.41 10.793 85.14 52.207 97.72 295.812 89.79 787.556 72.45 1098.316-112.02 37.22-22.1 49.43-70.17 27.37-107.328-22.08-37.219-70.19-49.488-107.32-27.391m-8.84-237.441c-18.94-30.731-59.12-40.371-89.81-21.5-225.05 138.336-568.216 178.41-834.466 97.59-34.527-10.434-70.996 9.035-81.484 43.496-10.403 34.527 9.074 70.929 43.539 81.429 304.152 92.295 682.261 47.59 940.741-111.253 30.69-18.903 40.35-59.102 21.48-89.762m-102.47-228.031c-15.05-24.68-47.18-32.411-71.77-17.368-196.653 120.188-444.173 147.329-735.673 80.75-28.09-6.441-56.086 11.161-62.492 39.25-6.434 28.079 11.102 56.079 39.254 62.489 318.996 72.925 592.633 41.539 813.361-93.34 24.61-15.031 32.36-47.18 17.32-71.781M850.254 1687.68c-462.496 0-837.434-374.93-837.434-837.418 0-462.543 374.938-837.442 837.434-837.442 462.506 0 837.426 374.899 837.426 837.442 0 462.488-374.92 837.418-837.426 837.418" transform="matrix(.13333 0 0 -.13333 0 226.733)"/></svg> },
   { label: 'Apple Music', href: 'https://music.apple.com/tw/artist/krid-p/66265843',
@@ -37,15 +46,15 @@ export default function AiChat() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [input, setInput] = useState('');
   const [scrollTop, setScrollTop] = useState(0);
-  const messagesRef = useRef(null);
-  const inputRef = useRef(null);
-  const scrollTimer = useRef(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const scrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [messages, setMessages] = useState(() => {
+  const [messages, setMessages] = useState<Message[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? JSON.parse(saved) : [];
-    } catch (e) {
+      return saved ? JSON.parse(saved) as Message[] : [];
+    } catch {
       return [];
     }
   });
@@ -54,11 +63,11 @@ export default function AiChat() {
   const validMessages = useMemo(() => messages.filter(m => m.content && m.content.trim()), [messages]);
   const virtualScrollEnabled = validMessages.length > VIRTUAL_SCROLL_THRESHOLD;
 
-  const saveHistory = useCallback((msgs) => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs)); } catch (e) {}
+  const saveHistory = useCallback((msgs: Message[]) => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs)); } catch {}
   }, []);
 
-  const autoResize = useCallback((el) => {
+  const autoResize = useCallback((el: HTMLTextAreaElement | null) => {
     if (supportsFieldSizing || !el) return;
     el.style.height = 'auto';
     el.style.height = el.scrollHeight + 'px';
@@ -120,7 +129,7 @@ export default function AiChat() {
     try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
   };
 
-  const sendMessage = async (text) => {
+  const sendMessage = async (text?: string) => {
     const message = (text ?? input).trim();
     if (!message || isSending) return;
 
@@ -128,8 +137,8 @@ export default function AiChat() {
     autoResize(inputRef.current);
     setIsSending(true);
 
-    const userMsg = { content: message, role: 'user', timestamp: Date.now(), _justAdded: true };
-    const assistantMsg = { content: '', role: 'assistant', timestamp: Date.now(), completed: false, typing: true, _justAdded: true };
+    const userMsg: Message = { content: message, role: 'user', timestamp: Date.now(), _justAdded: true };
+    const assistantMsg: Message = { content: '', role: 'assistant', timestamp: Date.now(), completed: false, typing: true, _justAdded: true };
     const base = [...messages, userMsg, assistantMsg];
     setMessages(base);
     saveHistory(base);
@@ -143,7 +152,7 @@ export default function AiChat() {
 
     let fullResponse = '';
     let lastSave = Date.now();
-    const patchAssistant = (patch) => {
+    const patchAssistant = (patch: Partial<Message>) => {
       setMessages(prev => {
         const copy = [...prev];
         copy[copy.length - 1] = { ...copy[copy.length - 1], ...patch };
@@ -163,11 +172,12 @@ export default function AiChat() {
         let errorMessage = t('chat.apiError');
         try {
           errorMessage = JSON.parse(errorText).error || errorMessage;
-        } catch (e) {
+        } catch {
           errorMessage = errorText || errorMessage;
         }
         throw new Error(errorMessage);
       }
+      if (!response.body) throw new Error(t('chat.noResponse'));
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -208,7 +218,7 @@ export default function AiChat() {
               patchAssistant({ typing: false });
               break;
             }
-          } catch (e) {}
+          } catch {}
         }
       }
 
@@ -219,7 +229,7 @@ export default function AiChat() {
             fullResponse += data.content;
             patchAssistant({ content: fullResponse });
           }
-        } catch (e) {}
+        } catch {}
       }
 
       if (fullResponse === '') {
@@ -235,7 +245,7 @@ export default function AiChat() {
         setMessages(prev => { saveHistory(prev); return prev; });
       }
     } catch (error) {
-      patchAssistant({ content: error.message || t('chat.sendError'), typing: false });
+      patchAssistant({ content: error instanceof Error ? error.message : t('chat.sendError'), typing: false });
     } finally {
       setIsSending(false);
       window.strandsHeaderInstance?.setEnergy?.(0.55, 0.9);
@@ -251,10 +261,11 @@ export default function AiChat() {
     return { start, end: Math.min(validMessages.length, start + visibleCount) };
   }, [validMessages, virtualScrollEnabled, scrollTop]);
 
-  const onMessagesScroll = (e) => {
+  const onMessagesScroll = (e: UIEvent<HTMLDivElement>) => {
     if (!virtualScrollEnabled) return;
     if (scrollTimer.current) clearTimeout(scrollTimer.current);
-    scrollTimer.current = setTimeout(() => setScrollTop(e.target.scrollTop), 100);
+    const top = e.currentTarget.scrollTop;
+    scrollTimer.current = setTimeout(() => setScrollTop(top), 100);
   };
 
   const confirmDialog = confirmOpen && (
@@ -343,7 +354,7 @@ export default function AiChat() {
           <div className="ai-chat-input-wrapper">
             <textarea className="ai-chat-input" id="ai-chat-input" ref={inputRef}
                       placeholder={t('chat.placeholder')} aria-label={t('chat.inputAria')}
-                      rows="1" value={input}
+                      rows={1} value={input}
                       onChange={e => { setInput(e.target.value); autoResize(e.target); }}
                       onKeyDown={e => {
                         if (e.key === 'Enter' && !e.shiftKey) {

@@ -1,7 +1,21 @@
-import SectionTitle from './SectionTitle.jsx';
-import { useLang } from '../i18n.jsx';
+import SectionTitle from './SectionTitle';
+import { useLang, type TranslationKey } from '../i18n';
 
-const GROUPS = [
+interface ContactLink {
+  name: string;
+  handle?: string;
+  handleKey?: TranslationKey;
+  href: string;
+  platform: string;
+  disabled?: boolean;
+}
+
+interface ContactGroup {
+  label: TranslationKey;
+  links: ContactLink[];
+}
+
+const GROUPS: ContactGroup[] = [
   {
     label: 'contact.follow',
     links: [

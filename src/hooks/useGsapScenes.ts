@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type RefObject } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
@@ -11,7 +11,7 @@ const isCoarse = () => window.matchMedia('(pointer: coarse)').matches;
 const isReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ScrollSmoother — persistent, sprachunabhängig (Neuaufbau würde Scrollposition zurücksetzen)
-export function useSmoother(rootRef) {
+export function useSmoother(rootRef: RefObject<HTMLElement | null>) {
   const [ready, setReady] = useState(false);
 
   useGSAP(() => {
@@ -27,7 +27,7 @@ export function useSmoother(rootRef) {
           smooth: isReduced() ? 0 : 1.1,
           effects: false
         });
-      } catch (err) {
+      } catch {
         if (wrapper) wrapper.classList.remove('smooth-active');
       }
       setReady(true);
@@ -43,17 +43,19 @@ export function useSmoother(rootRef) {
 
 // Alle Scroll-Szenen — werden bei Sprachwechsel revertiert & frisch aufgebaut,
 // weil React die Titel-Texte neu rendert und die .char-Spans neu entstehen.
-export function useGsapScenes(rootRef, lang, smootherReady) {
+export function useGsapScenes(rootRef: RefObject<HTMLElement | null>, lang: string, smootherReady: boolean) {
   useGSAP(() => {
     if (!smootherReady || isCoarse() || isReduced()) return;
+    const root = rootRef.current;
+    if (!root) return;
 
     // Von GSAP übernommene Elemente: CSS-Animationen aus, um transform/opacity-Konflikte zu vermeiden
-    gsap.utils.toArray('.section-title, .bio-row, .tour-card, .work-row, .contact-group, .contact-link')
+    gsap.utils.toArray<HTMLElement>('.section-title, .bio-row, .tour-card, .work-row, .contact-group, .contact-link')
       .forEach(el => { el.style.animation = 'none'; });
 
     // 0. Hero-Titel-Entrance — Zeichen-Aufstieg mit Maske (Chars kommen aus <CharSplit/>)
-    const heroTitle = rootRef.current.querySelector('.hero-title');
-    let heroChars = [];
+    const heroTitle = root.querySelector<HTMLElement>('.hero-title');
+    let heroChars: NodeListOf<Element> | never[] = [];
     if (heroTitle) {
       heroTitle.style.animation = 'none';
       heroTitle.style.opacity = '1';
@@ -70,7 +72,7 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
     }
 
     // 2. Hero-Halbtonpunkte — Scroll-Drift (per CSS-Variable gesteuerte ::before-Transform)
-    const home = rootRef.current.querySelector('#home');
+    const home = root.querySelector<HTMLElement>('#home');
     if (home) {
       ScrollTrigger.create({
         trigger: '#home', start: 'top top', end: 'bottom top', scrub: true,
@@ -79,7 +81,7 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
     }
 
     // 3. Abschnittstitel — zeichenweise aus Maske nach oben gestaffelt
-    rootRef.current.querySelectorAll('.section-title').forEach(title => {
+    root.querySelectorAll<HTMLElement>('.section-title').forEach(title => {
       title.style.opacity = '1';
       const chars = title.querySelectorAll('.char');
       if (!chars.length) return;
@@ -103,7 +105,7 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
       '.works-list .work-row',
       '.contact-links .contact-group-label, .contact-links .contact-link:not(.disabled)'
     ].forEach(sel => {
-      const items = gsap.utils.toArray(sel);
+      const items = gsap.utils.toArray<HTMLElement>(sel);
       if (!items.length) return;
       gsap.set(items, { opacity: 0, y: 14 });
       ScrollTrigger.batch(items, {
@@ -119,7 +121,7 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
     // (natives sticky greift im transformierten Smooth-Wrapper nicht;
     //  ScrollTrigger pinnt unter ScrollSmoother automatisch via pinType 'transform'. Mobil: CSS-sticky)
     const tourStack = document.getElementById('country-stack');
-    const tourCards = gsap.utils.toArray('#tours .tour-card');
+    const tourCards = gsap.utils.toArray<HTMLElement>('#tours .tour-card');
     if (tourCards.length) {
       gsap.set(tourCards, { clipPath: 'inset(100% 0% 0% 0%)' });
       ScrollTrigger.batch(tourCards, {
@@ -152,11 +154,11 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
     }
 
     // 4.5 About-Bild — Clip-Reveal durch Abschnitts-Stapel ersetzt (Konflikt mit Pinning)
-    const aboutImg = rootRef.current.querySelector('.about-image');
+    const aboutImg = root.querySelector<HTMLElement>('.about-image');
     if (aboutImg) gsap.set(aboutImg, { clipPath: 'inset(0% 0% 0% 0%)' });
 
     // 5. Media-Embeds — Parallax-Drift (Scrub)
-    rootRef.current.querySelectorAll('.spotify-embed-container, .soundcloud-embed-container, .twitch-embed-container')
+    root.querySelectorAll<HTMLElement>('.spotify-embed-container, .soundcloud-embed-container, .twitch-embed-container')
       .forEach(el => {
         gsap.fromTo(el, { y: 50 }, {
           y: -50, ease: 'none',
@@ -165,11 +167,11 @@ export function useGsapScenes(rootRef, lang, smootherReady) {
       });
 
     // 6. Header-Fortschrittslinie — reagiert live auf den Scroll-Fortschritt
-    const header = document.querySelector('.header');
+    const header = document.querySelector<HTMLElement>('.header');
     if (header) {
       ScrollTrigger.create({
         start: 0, end: 'max',
-        onUpdate: self => header.style.setProperty('--scroll-progress', self.progress)
+        onUpdate: self => header.style.setProperty('--scroll-progress', String(self.progress))
       });
     }
 

@@ -1,7 +1,9 @@
-import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react';
+
+export type Lang = 'de' | 'en';
 
 const LANG_KEY = 'djkridp_lang';
-const SUPPORTED = ['de', 'en'];
+const SUPPORTED: readonly Lang[] = ['de', 'en'];
 
 export const I18N = {
   de: {
@@ -191,35 +193,43 @@ export const I18N = {
   }
 };
 
-function getInitialLang() {
+export type TranslationKey = keyof (typeof I18N)['de'];
+
+interface LangContextValue {
+  lang: Lang;
+  t: (key: TranslationKey) => string;
+  setLang: (next: Lang) => void;
+}
+
+function getInitialLang(): Lang {
   try {
     const stored = localStorage.getItem(LANG_KEY);
-    return SUPPORTED.includes(stored) ? stored : 'de';
-  } catch (e) {
+    return (SUPPORTED as readonly string[]).includes(stored ?? '') ? (stored as Lang) : 'de';
+  } catch {
     return 'de';
   }
 }
 
-const LangContext = createContext(null);
+const LangContext = createContext<LangContextValue | null>(null);
 
-export function LangProvider({ children }) {
-  const [lang, setLangState] = useState(getInitialLang);
+export function LangProvider({ children }: { children: ReactNode }) {
+  const [lang, setLangState] = useState<Lang>(getInitialLang);
 
-  const t = useCallback((key) => {
-    const val = I18N[lang] && I18N[lang][key];
+  const t = useCallback((key: TranslationKey): string => {
+    const val = I18N[lang]?.[key as keyof (typeof I18N)['en']];
     if (val !== undefined) return val;
     return I18N.de[key] !== undefined ? I18N.de[key] : key;
   }, [lang]);
 
-  const setLang = useCallback((next) => {
-    if (!SUPPORTED.includes(next)) next = 'de';
+  const setLang = useCallback((next: Lang) => {
+    if (!(SUPPORTED as readonly string[]).includes(next)) next = 'de';
     setLangState(next);
-    try { localStorage.setItem(LANG_KEY, next); } catch (e) {}
+    try { localStorage.setItem(LANG_KEY, next); } catch {}
     window.I18N_LANG = next;
     document.documentElement.lang = next;
     document.title = I18N[next]['meta.title'] || I18N.de['meta.title'];
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', I18N[next]['meta.description']);
+    if (metaDesc) metaDesc.setAttribute('content', I18N[next]['meta.description'] as string);
     // Vanilla-Module (strands.js etc.) hören weiterhin auf das Event
     document.dispatchEvent(new CustomEvent('langchange', { detail: { lang: next } }));
     if (window.smoother && typeof ScrollTrigger !== 'undefined' && typeof ScrollTrigger.refresh === 'function') {
@@ -228,9 +238,9 @@ export function LangProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    window.I18N = I18N;
+    window.I18N = I18N as unknown as Record<string, Record<string, string>>;
     window.I18N_LANG = lang;
-    window.t = (key) => I18N[lang]?.[key] ?? I18N.de[key] ?? key;
+    window.t = (key: string) => (I18N[lang] as Record<string, string>)[key] ?? (I18N.de as Record<string, string>)[key] ?? key;
     document.documentElement.lang = lang;
   }, [lang]);
 
@@ -241,6 +251,8 @@ export function LangProvider({ children }) {
   );
 }
 
-export function useLang() {
-  return useContext(LangContext);
+export function useLang(): LangContextValue {
+  const ctx = useContext(LangContext);
+  if (!ctx) throw new Error('useLang must be used within LangProvider');
+  return ctx;
 }

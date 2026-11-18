@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import SectionTitle from './SectionTitle.jsx';
-import { useLang } from '../i18n.jsx';
+import SectionTitle from './SectionTitle';
+import { useLang } from '../i18n';
 
 const WORK_ROWS = [
   { num: '01', h: 'work1.h', p: 'work1.p' },
   { num: '02', h: 'work2.h', p: 'work2.p' },
   { num: '03', h: 'work3.h', p: 'work3.p' },
-];
+] as const;
 
 const TWITCH_CHANNEL = 'djkridp';
 
@@ -14,22 +14,23 @@ export default function Works() {
   const { lang, t } = useLang();
   const [isLive, setIsLive] = useState(false);
   const [playerLoaded, setPlayerLoaded] = useState(false);
-  const spotifyRef = useRef(null);
-  const soundcloudRef = useRef(null);
-  const liveIframeRef = useRef(null);
+  const spotifyRef = useRef<HTMLIFrameElement>(null);
+  const soundcloudRef = useRef<HTMLIFrameElement>(null);
+  const liveIframeRef = useRef<HTMLIFrameElement>(null);
 
   // Lazy-Embeds: erst bei Annäherung an den Viewport laden
   useEffect(() => {
-    const iframes = [spotifyRef.current, soundcloudRef.current].filter(Boolean);
+    const iframes = [spotifyRef.current, soundcloudRef.current].filter((f): f is HTMLIFrameElement => !!f);
     if (!('IntersectionObserver' in window)) {
       iframes.forEach(f => { if (f.dataset.src) f.src = f.dataset.src; });
       return;
     }
     const obs = new IntersectionObserver((entries, o) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.src = entry.target.dataset.src;
-          o.unobserve(entry.target);
+        const target = entry.target as HTMLIFrameElement;
+        if (entry.isIntersecting && target.dataset.src) {
+          target.src = target.dataset.src;
+          o.unobserve(target);
         }
       });
     }, { rootMargin: '300px' });
@@ -46,7 +47,7 @@ export default function Works() {
         const text = await res.text();
         if (!alive) return;
         setIsLive(!(text.includes('offline') || text.includes('not found')));
-      } catch (e) {
+      } catch {
         if (alive) setIsLive(false);
       }
     };
@@ -62,14 +63,14 @@ export default function Works() {
     if (orbEl) orbEl.classList.toggle('is-live', isLive);
     const orb = window.strandsLiveInstance;
     if (orb) {
-      if (isLive) { orb.setEnergy(0.95, 1.6); orb.pulse(); }
-      else orb.setEnergy(0.3, 0.6);
+      if (isLive) { orb.setEnergy?.(0.95, 1.6); orb.pulse?.(); }
+      else orb.setEnergy?.(0.3, 0.6);
     }
     if (isLive) setPlayerLoaded(true);
   }, [isLive]);
 
   useEffect(() => {
-    if (playerLoaded && liveIframeRef.current && !liveIframeRef.current.src) {
+    if (playerLoaded && liveIframeRef.current && !liveIframeRef.current.src && liveIframeRef.current.dataset.src) {
       liveIframeRef.current.src = liveIframeRef.current.dataset.src;
     }
   }, [playerLoaded]);

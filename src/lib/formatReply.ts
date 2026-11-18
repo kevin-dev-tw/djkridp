@@ -1,13 +1,13 @@
 // Markdown-ähnliche Formatierung für AI-Chat-Antworten (1:1 aus ai-chat.js portiert)
 
-function formatHeadings(text) {
+function formatHeadings(text: string): string {
   return text.replace(/^(#{1,6})\s+(.+)$/gm, (match, hashes, content) => {
     const level = hashes.length;
     return `<h${level}>${content}</h${level}>`;
   });
 }
 
-function formatBoldItalic(text) {
+function formatBoldItalic(text: string): string {
   let formatted = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
   formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   formatted = formatted.replace(/__(.+?)__/g, '<strong>$1</strong>');
@@ -21,20 +21,20 @@ function formatBoldItalic(text) {
   return formatted;
 }
 
-function formatTables(text) {
+function formatTables(text: string): string {
   const lines = text.split('\n');
-  const result = [];
+  const result: string[] = [];
   let i = 0;
 
-  const isRow = (line) => /^\s*\|.+\|\s*$/.test(line);
-  const isSeparator = (line) => /^\s*\|?[\s:|-]+\|?\s*$/.test(line) && line.includes('-');
-  const splitRow = (line) => line.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((cell) => cell.trim());
+  const isRow = (line: string) => /^\s*\|.+\|\s*$/.test(line);
+  const isSeparator = (line: string) => /^\s*\|?[\s:|-]+\|?\s*$/.test(line) && line.includes('-');
+  const splitRow = (line: string) => line.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((cell) => cell.trim());
 
   while (i < lines.length) {
     if (isRow(lines[i]) && i + 1 < lines.length && isSeparator(lines[i + 1])) {
       const header = splitRow(lines[i]);
       i += 2;
-      const rows = [];
+      const rows: string[][] = [];
       while (i < lines.length && isRow(lines[i])) {
         rows.push(splitRow(lines[i]));
         i += 1;
@@ -51,10 +51,10 @@ function formatTables(text) {
   return result.join('\n');
 }
 
-function formatBlockquotes(text) {
+function formatBlockquotes(text: string): string {
   const lines = text.split('\n');
   let inBlockquote = false;
-  const result = [];
+  const result: string[] = [];
 
   for (const line of lines) {
     // '>' wurde beim HTML-Escapen zu '&gt;'
@@ -80,11 +80,11 @@ function formatBlockquotes(text) {
   return result.join('\n');
 }
 
-function formatLists(text) {
+function formatLists(text: string): string {
   const lines = text.split('\n');
   let inUl = false;
   let inOl = false;
-  const result = [];
+  const result: string[] = [];
 
   for (const line of lines) {
     const trimmed = line.trim();
@@ -140,8 +140,8 @@ function formatLists(text) {
   return result.join('\n');
 }
 
-export function linkify(text) {
-  const platforms = {
+export function linkify(text: string): string {
+  const platforms: Record<string, { name: string }> = {
     'twitch.tv': { name: 'Twitch' },
     'instagram.com': { name: 'Instagram' },
     'tiktok.com': { name: 'TikTok' },
@@ -202,11 +202,11 @@ export function linkify(text) {
   });
 }
 
-export function formatText(text) {
+export function formatText(text: string): { html: string; codes: string[] } {
   if (!text) return { html: '', codes: [] };
 
   let formatted = text;
-  const codes = [];
+  const codes: string[] = [];
 
   formatted = formatted.replace(/&/g, '&amp;');
   formatted = formatted.replace(/</g, '&lt;');
@@ -249,7 +249,7 @@ export function formatText(text) {
   return { html: formatted, codes };
 }
 
-export function formatReply(text) {
+export function formatReply(text: string): string {
   const { html, codes } = formatText(text);
   return linkify(html).replace(/@@CODE(\d+)@@/g, (match, i) => codes[Number(i)]);
 }

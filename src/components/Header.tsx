@@ -1,7 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { useLang } from '../i18n.jsx';
+import { useState, useEffect, useRef, useCallback, type MouseEvent as ReactMouseEvent } from 'react';
+import { useLang, type TranslationKey } from '../i18n';
 
-const NAV_ITEMS = [
+type Theme = 'dark' | 'light';
+
+const NAV_ITEMS: { id: string; key: TranslationKey }[] = [
   { id: 'home', key: 'nav.home' },
   { id: 'about', key: 'nav.about' },
   { id: 'tours', key: 'nav.tours' },
@@ -12,7 +14,7 @@ const NAV_ITEMS = [
 
 const THEME_KEY = 'djkridp_theme';
 
-function getCurrentTheme() {
+function getCurrentTheme(): Theme {
   const attr = document.documentElement.getAttribute('data-theme');
   if (attr === 'light' || attr === 'dark') return attr;
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
@@ -22,15 +24,15 @@ export default function Header() {
   const { lang, t, setLang } = useLang();
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const [navTop, setNavTop] = useState(null);
-  const headerRef = useRef(null);
+  const [navTop, setNavTop] = useState<number | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const headerBottom = useRef(0);
 
   // sibling-index() Fallback: stagger-Index per JS setzen
   useEffect(() => {
     if (!CSS.supports('transition-delay: calc(sibling-index() * 0.05s)')) {
-      document.querySelectorAll('.nav-list > li').forEach((el, i) =>
-        el.style.setProperty('--sibling-index', i + 1));
+      document.querySelectorAll<HTMLElement>('.nav-list > li').forEach((el, i) =>
+        el.style.setProperty('--sibling-index', String(i + 1)));
     }
   }, []);
 
@@ -46,7 +48,7 @@ export default function Header() {
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  const smoothScrollTo = useCallback((targetId) => {
+  const smoothScrollTo = useCallback((targetId: string) => {
     const el = document.querySelector(targetId);
     if (!el) return;
     if (window.smoother) {
@@ -61,28 +63,29 @@ export default function Header() {
 
   const openMenu = () => {
     setMenuOpen(true);
-    const first = headerRef.current?.querySelector('.nav-link');
+    const first = headerRef.current?.querySelector<HTMLElement>('.nav-link');
     if (first) setTimeout(() => first.focus({ preventScroll: true }), 0);
   };
   const closeMenu = (restoreFocus = false) => {
     setMenuOpen(false);
-    if (restoreFocus) headerRef.current?.querySelector('.mobile-menu-toggle')?.focus();
+    if (restoreFocus) headerRef.current?.querySelector<HTMLElement>('.mobile-menu-toggle')?.focus();
   };
 
   // Klick ausserhalb schliesst Menü und Sprach-Dropdown
   useEffect(() => {
-    const onDocClick = (e) => {
-      if (menuOpen && headerRef.current && !headerRef.current.contains(e.target)) closeMenu();
-      if (langOpen && !e.target.closest('.lang-dropdown')) setLangOpen(false);
+    const onDocClick = (e: Event) => {
+      const target = e.target as Element | null;
+      if (menuOpen && headerRef.current && target && !headerRef.current.contains(target)) closeMenu();
+      if (langOpen && !target?.closest('.lang-dropdown')) setLangOpen(false);
     };
-    const onKey = (e) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (langOpen) { setLangOpen(false); e.stopPropagation(); }
         else if (menuOpen) closeMenu(true);
       }
       if (e.key === 'Tab' && menuOpen && headerRef.current) {
-        const focusables = [headerRef.current.querySelector('.mobile-menu-toggle'),
-          ...headerRef.current.querySelectorAll('.nav-link')].filter(Boolean);
+        const focusables = [headerRef.current.querySelector<HTMLElement>('.mobile-menu-toggle'),
+          ...headerRef.current.querySelectorAll<HTMLElement>('.nav-link')].filter((el): el is HTMLElement => !!el);
         const first = focusables[0], last = focusables[focusables.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
@@ -113,29 +116,29 @@ export default function Header() {
   const [theme, setThemeState] = useState(getCurrentTheme);
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: light)');
-    const onScheme = (e) => {
+    const onScheme = (e: MediaQueryListEvent) => {
       let saved = null;
-      try { saved = localStorage.getItem(THEME_KEY); } catch (err) {}
+      try { saved = localStorage.getItem(THEME_KEY); } catch {}
       if (!saved) setThemeState(e.matches ? 'light' : 'dark');
     };
     mq.addEventListener('change', onScheme);
     return () => mq.removeEventListener('change', onScheme);
   }, []);
 
-  const applyTheme = (next) => {
+  const applyTheme = (next: Theme) => {
     setThemeState(next);
     document.documentElement.setAttribute('data-theme', next);
-    try { localStorage.setItem(THEME_KEY, next); } catch (err) {}
+    try { localStorage.setItem(THEME_KEY, next); } catch {}
     document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
   };
 
-  const onNavClick = (e, id) => {
+  const onNavClick = (e: ReactMouseEvent, id: string) => {
     e.preventDefault();
     if (menuOpen) closeMenu();
     smoothScrollTo('#' + id);
   };
 
-  const renderSkyToggle = (suffix) => (
+  const renderSkyToggle = (suffix: string) => (
     <label className="sky-toggle" id={`theme-toggle-label-${suffix}`} htmlFor={`theme-toggle-checkbox-${suffix}`}
            aria-label={t('theme.toggle')}
            title={theme === 'light' ? t('theme.modeLight') : t('theme.modeDark')}>

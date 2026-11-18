@@ -1,20 +1,20 @@
 import { useRef, useState, useEffect } from 'react';
-import { useLang } from './i18n.jsx';
-import { useSmoother, useGsapScenes } from './hooks/useGsapScenes.js';
-import { useMobileReveals } from './hooks/useMobileReveals.js';
-import TwitchBanner from './components/TwitchBanner.jsx';
-import Header from './components/Header.jsx';
-import Hero from './components/Hero.jsx';
-import About from './components/About.jsx';
-import TourStack from './components/TourStack.jsx';
-import Streams from './components/Streams.jsx';
-import Works from './components/Works.jsx';
-import Contact from './components/Contact.jsx';
-import Footer from './components/Footer.jsx';
-import AiChat from './components/AiChat.jsx';
+import { useLang } from './i18n';
+import { useSmoother, useGsapScenes } from './hooks/useGsapScenes';
+import { useMobileReveals } from './hooks/useMobileReveals';
+import TwitchBanner from './components/TwitchBanner';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import About from './components/About';
+import TourStack from './components/TourStack';
+import Streams from './components/Streams';
+import Works from './components/Works';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import AiChat from './components/AiChat';
 
 export default function App() {
-  const rootRef = useRef(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   const { lang } = useLang();
   const smootherReady = useSmoother(rootRef);
   useGsapScenes(rootRef, lang, smootherReady);
@@ -22,7 +22,7 @@ export default function App() {
 
   // Bilder: Rechtsklick & Drag deaktivieren
   useEffect(() => {
-    const prevent = e => e.preventDefault();
+    const prevent = (e: Event) => e.preventDefault();
     const imgs = document.querySelectorAll('img');
     imgs.forEach(img => {
       img.addEventListener('contextmenu', prevent);
