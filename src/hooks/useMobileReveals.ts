@@ -27,6 +27,12 @@ export function useMobileReveals(rootRef: RefObject<HTMLElement | null>, lang: s
       .filter(el => !el.classList.contains('revealed'));
     els.forEach(el => el.classList.add('reveal-init'));
 
+    // Zeichen-Stagger-Index per JS setzen (sibling-index() in Custom
+    // Properties erbt nur das Token und loest beim Kind falsch auf)
+    els.filter(el => el.classList.contains('section-title'))
+      .forEach(el => el.querySelectorAll<HTMLElement>('.char')
+        .forEach((ch, i) => ch.style.setProperty('--i', String(i + 1))));
+
     const io = new IntersectionObserver(entries => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
@@ -34,7 +40,7 @@ export function useMobileReveals(rootRef: RefObject<HTMLElement | null>, lang: s
           io.unobserve(entry.target);
         }
       }
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
 
     els.forEach(el => io.observe(el));
     return () => io.disconnect();

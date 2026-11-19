@@ -403,6 +403,23 @@
   to { transform: translateY(0); }
 }
 
+/* Mobile Abschnittstitel — zeichenweiser Masken-Reveal per IntersectionObserver
+   (.reveal-init/.revealed und --i-Stagger-Index setzt useMobileReveals). */
+@media (pointer: coarse) {
+  .section-title.reveal-init {
+  @apply opacity-100;
+  transform: none;
+}
+  .section-title.reveal-init .char-mask .char {
+  transform: translateY(120%);
+}
+  /* 與桌面 GSAP 版一致：0.55s / power3.out / stagger 0.035s（首字無延遲）*/
+  .section-title.revealed .char-mask .char {
+  animation: hero-char-rise 0.55s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+  animation-delay: calc((var(--i, 1) - 1) * 0.035s);
+}
+}
+
 .section-title {
   @apply font-display text-[clamp(2.5rem,_8vw,_7rem)] text-strong text-left uppercase leading-none mb-16 pt-6 border-t border-glass font-normal tracking-[-0.01em];
 }
