@@ -1,8 +1,10 @@
-const CACHE_NAME = 'djkridp-v93'; // React/Vite-Build — alten Cache löschen
+const CACHE_NAME = 'djkridp-v94'; // Lokale Schriften — alten Cache löschen
 const urlsToCache = [
   '/',
   '/index.html',
   '/fonts/archivo-black-latin.woff2',
+  '/fonts/hanken-grotesk-latin.woff2',
+  '/fonts/jetbrains-mono-latin.woff2',
   '/images/favicon.ico',
   '/images/favicon.svg',
   '/images/favicon-96x96.png',

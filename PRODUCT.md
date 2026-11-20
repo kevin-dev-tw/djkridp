@@ -14,7 +14,7 @@ Whoever arrives: listeners and fans of DJKridP, and people checking where he has
 
 DJKridP's official site. It states who he is, where he has played, what he has released, where he streams, and how to follow or reach him. Success is a visitor finding those facts and the real links without a second, conflicting account.
 
-The site is one poster page — a single scroll, no annexes, no second entrances. Everything lives on `index.html`.
+The site is one poster page — a single scroll, no annexes, no second entrances. The React app mounts into `index.html` and renders all sections from `src/App.tsx`.
 
 ## Positioning
 
@@ -30,11 +30,12 @@ Visitors use a browser, in German or English (German is the default). The page i
 - Streams: the upcoming Twitch broadcast schedule (segment title, date, time, category, cancellations, vacation) fetched live from Twitch Helix. The section renders only when real data arrives — it is absent, never a placeholder.
 - Works: multi-genre sets, Future Breeze, live performances. Embeds: one Spotify track, the SoundCloud album Mind & Soul (We Love Trance Records), Twitch player with an offline still and live-status text.
 - Follow and music links already on the page: Twitch, Instagram, WhatsApp channel, Discord, Spotify, Apple Music, YouTube Music, StreamElements tips. TikTok and Facebook links are present and disabled.
-- Languages: German and English; all visible strings go through `data-i18n` keys.
-- AI assistant on the page, backed by a serverless function that needs `GROQ_API_KEY`.
+- Languages: German and English; all visible strings go through the translation keys in `src/i18n.tsx`. A light/dark theme toggle follows the OS preference and persists in localStorage.
+- AI assistant on the page, backed by a serverless function that needs `GROQ_API_KEY`. The handler keeps real conversation context (user and assistant turns) and streams answers via SSE.
 - The schedule function needs `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` (optional `TWITCH_CHANNEL`, default `djkridp`).
-- Stack: static HTML/CSS/JS + Vercel serverless functions (`api/chat.js`, `api/twitch-schedule.js`). Local development mirrors both endpoints in `server.js` (Express). A service worker (`sw.js`) caches the static shell, never API responses.
-- CSS has one source of truth: `css/*.css` is compiled into `index.html`'s inline block by `node build-inline-css.js` (`npm run build`).
+- Stack: React 18 + TypeScript + Vite + Tailwind CSS 4, plus Vercel serverless functions (`api/chat.js`, `api/twitch-schedule.js`). Local development mounts the same handlers in `server.js` (Express, single implementation). A service worker (`public/sw.js`) caches the static shell, never API responses.
+- CSS has one source of truth: `css/*.css` is imported via `css/index.css` and bundled by Vite — never edit generated `dist` output. Design tokens live in `css/variables.css`, Tailwind utilities bridge to them in `css/tailwind.css`.
+- All three typefaces are self-hosted as woff2 in `public/fonts/`; no Google Fonts CDN requests.
 - The page does not invent a second biography, a second date list, or a second catalog.
 
 ## Brand Commitments
@@ -43,7 +44,7 @@ The name is DJKridP. Public copy stays factual and specific to the biography alr
 
 ## Evidence on Hand
 
-- Poster page: `index.html`, with German and English strings in `js/i18n.js`.
+- Poster page: `index.html` mounting `src/App.tsx`, with German and English strings in `src/i18n.tsx`.
 - Portrait: `images/Foto_539.jpg`. Twitch offline still: `images/offline.jpg`.
 - Spotify track embed id `2xzEE0duyUNaVJeEy7O32l`. Artist: https://open.spotify.com/artist/22Mjn2JlrMAPgUEqozf4Re
 - SoundCloud album Mind & Soul, playlist `2079462015`, label We Love Trance Records. Hypeddit: https://hypeddit.com/u1shci

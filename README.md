@@ -6,24 +6,27 @@ DJKridP 的官方網站 — 單頁海報式設計（Acid Poster），展示其�
 
 ## 技術棧
 
-- HTML5 / CSS3（原生 CSS，設計 token 集中於 `css/variables.css`）
-- 原生 JavaScript + GSAP（ScrollSmoother / ScrollTrigger）
+- React 18 + TypeScript + Vite（`src/`）
+- Tailwind CSS 4（`css/tailwind.css` 透過 `@theme inline` 橋接自訂 token）
+- 原生 CSS token 集中於 `css/variables.css`，由 `css/index.css` 統一匯入
+- GSAP（ScrollSmoother / ScrollTrigger）+ 自製 WebGL orb 特效
 - Vercel serverless functions（`api/`）
 - 本地開發：Express（`server.js`）
 
 ## 功能
 
-- 德文 / 英文雙語（`js/i18n.js`，`data-i18n` 切換）
+- 德文 / 英文雙語（`src/i18n.tsx`）
+- 淺色 / 深色主題切換（Sky Toggle，跟隨系統 + localStorage 記憶）
 - Twitch 直播行程表：由 Twitch Helix API 即時取得（`/api/twitch-schedule`），無資料時整個區塊隱藏
 - Twitch 直播狀態指示（DecAPI 輪詢）
-- AI 聊天助理（`/api/chat`，由 Groq 驅動）
+- AI 聊天助理（`/api/chat`，由 Groq 驅動，SSE 串流、保留對話上下文）
 - Spotify / SoundCloud / Twitch 播放器嵌入（lazy-load）
 - Service Worker 離線快取（只快取靜態資源，不快取 API）
-- `sitemap.xml` + `robots.txt`
+- `sitemap.xml` + `robots.txt` + `llms.txt`
 
 ## 頁面結構
 
-單頁，所有內容都在 `index.html`：
+單頁，所有內容都在 `src/App.tsx`：
 - Home（首頁 hero）
 - Über mich（關於）
 - Tours（演出國家清單）
@@ -36,10 +39,11 @@ DJKridP 的官方網站 — 單頁海報式設計（Acid Poster），展示其�
 設計系統定義於 `DESIGN.md`（Acid Poster — 已鎖定）：
 - 唯一強調色：Hazard Amber `#FFB13D`
 - 字體：Archivo Black（標題）/ Hanken Grotesk（內文）/ JetBrains Mono（中繼資料）
-- 禁止：漸層、圓角膠囊、玻璃擬態、陰影光暈、純黑白、3D/WebGL
+- 三套字體皆以 woff2 本地託管於 `public/fonts/`（不呼叫 Google Fonts CDN）
+- 禁止：漸層、圓角膠囊、玻璃擬態、陰影光暈、純黑白、3D/WebGL（orb 特效除外）
 - 動畫僅限 `transform` 與 `opacity`，並提供 `prefers-reduced-motion` 降級
 
-**CSS 工作流程**：樣式唯一來源是 `css/` 目錄（`variables`、`global`、`components`、`responsive`、`footer`）。修改後執行 `npm run build` 將其注入 `index.html` 的 inline 區塊 — 不要直接編輯 inline CSS。
+**CSS 工作流程**：樣式唯一來源是 `css/` 目錄（`variables`、`global`、`components`、`responsive`、`footer`、`tailwind`），由 `src/main.tsx` 透過 `css/index.css` 匯入並經 Vite 打包。直接修改 `css/` 內的檔案即可。
 
 ## 環境變數
 
@@ -58,10 +62,11 @@ DJKridP 的官方網站 — 單頁海報式設計（Acid Poster），展示其�
 
 ```bash
 npm install
-node server.js   # http://localhost:3000
+node server.js   # API 伺服器 http://localhost:3000
+npm run dev      # Vite 開發伺服器 http://localhost:5173（/api 代理到 3000）
 ```
 
-`server.js` 提供靜態檔案並鏡像兩個 API 路由（`/api/chat`、`/api/twitch-schedule`），行為與 Vercel serverless functions 一致。
+`server.js` 直接掛載 `api/` 下的 handler（`/api/chat`、`/api/twitch-schedule`），行為與 Vercel serverless functions 一致，無重複實作。
 
 ## 部署
 

@@ -1,12 +1,15 @@
 const { Groq } = require('groq-sdk');
 
+const MAX_HISTORY_TURNS = 10;
+const MAX_CONTENT_LENGTH = 2000;
+
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
 if (!GROQ_API_KEY) {
   console.error('Fehler: GROQ_API_KEY Umgebungsvariable nicht gesetzt');
 }
 
-const WEBSITE_INFO = `DJKridP ist ein Multi-Genre DJ aus Osnabrück, Deutschland. Er ist ehemaliges Mitglied von Future Breeze. Seit Ende der 90er Jahre spielt er DJ-Sets in Deutschland, Kanada, Südafrika, Japan, Russland, Polen, Spanien, Italien und vielen weiteren Ländern. Er hat über 20 Jahre Erfahrung als DJ. Seine Werke umfassen Multi-Genre Sets, Future Breeze Projekte und Live Performances auf internationalen Bühnen. Kontakt: Twitch (https://www.twitch.tv/djkridp), Instagram (https://www.instagram.com/dj_krid_p), TikTok (https://www.tiktok.com/@krid_p), Facebook (https://www.facebook.com/djkridp/), WhatsApp (https://www.whatsapp.com/channel/0029Vb6FeSm9hXF7H6qEIk3k), Discord (https://discord.gg/3xmER2Gc3B), Spotify (https://open.spotify.com/user/eluw6nthyi6sd3wjcydx6rojx), StreamElements (https://streamelements.com/djkridp/tip). TikTok und Facebook sind vorübergehend deaktiviert — diese Links nicht anbieten oder teilen; nur erwähnen dass sie derzeit inaktiv sind, wenn der Nutzer explizit danach fragt. Auf Spotify (Künstler „Krid P“) dokumentierte Diskografie: 5 Alben — „Bagpipes / Connected, Pt. 1“ (2004), „The Great Bouzouki / Get Up“ (2004), „Banghra (All Mixes)“ (2007), „Boom!“ (2014), „Mind & Soul“ (2025) — sowie 8 Singles/EPs, darunter „Blue Sky“ (2026), „Evil Scream“ (2015) und „The Great Bouzouki (Short Mixes)“ (2004). Bekannte Tracks/Titel: „Bagpipes“, „The Great Bouzouki“, „Mind & Soul“, „Banghra“, „Boom!“, „Evil Scream“, „Blue Sky“. Bei Fragen nach Veröffentlichungen diese konkrete Diskografie samt Titeln nennen; für den vollständigen Katalog auf Spotify/Apple Music verweisen.`;
+const WEBSITE_INFO = `DJKridP ist ein Multi-Genre DJ aus Osnabrück, Deutschland. Er ist ehemaliges Mitglied von Future Breeze. Seit Ende der 90er Jahre spielt er DJ-Sets in Deutschland, Kanada, Südafrika, Japan, Russland, Polen, Spanien, Italien und vielen weiteren Ländern. Er hat über 20 Jahre Erfahrung als DJ. Seine Werke umfassen Multi-Genre Sets, Future Breeze Projekte und Live Performances auf internationalen Bühnen. Kontakt: Twitch (https://www.twitch.tv/djkridp), Instagram (https://www.instagram.com/dj_krid_p), TikTok (https://www.tiktok.com/@krid_p), Facebook (https://www.facebook.com/djkridp/), WhatsApp (https://www.whatsapp.com/channel/0029Vb6FeSm9hXF7H6qEIk3k), Discord (https://discord.gg/3xmER2Gc3B), Spotify (https://open.spotify.com/artist/22Mjn2JlrMAPgUEqozf4Re), Apple Music (https://music.apple.com/tw/artist/krid-p/66265843), YouTube Music (https://music.youtube.com/channel/UCnEAOng3XE_Mb1ObbbxGAqg), StreamElements (https://streamelements.com/djkridp/tip). TikTok und Facebook sind vorübergehend deaktiviert — diese Links nicht anbieten oder teilen; nur erwähnen dass sie derzeit inaktiv sind, wenn der Nutzer explizit danach fragt. Auf Spotify (Künstler „Krid P“) dokumentierte Diskografie: 5 Alben — „Bagpipes / Connected, Pt. 1“ (2004), „The Great Bouzouki / Get Up“ (2004), „Banghra (All Mixes)“ (2007), „Boom!“ (2014), „Mind & Soul“ (2025) — sowie 8 Singles/EPs, darunter „Blue Sky“ (2026), „Evil Scream“ (2015) und „The Great Bouzouki (Short Mixes)“ (2004). Bekannte Tracks/Titel: „Bagpipes“, „The Great Bouzouki“, „Mind & Soul“, „Banghra“, „Boom!“, „Evil Scream“, „Blue Sky“. Bei Fragen nach Veröffentlichungen diese konkrete Diskografie samt Titeln nennen; für den vollständigen Katalog auf Spotify/Apple Music verweisen.`;
 
 const LANG_CONFIG = {
   de: {
@@ -20,12 +23,6 @@ const LANG_CONFIG = {
     respond: 'Answer in English',
     offTopic: 'Sorry, I can only answer questions about the information on this website. Please ask something about DJKridP, his career, works, or contact information.',
     emptyMsg: 'Message must not be empty'
-  },
-  ja: {
-    style: '常に自然で流暢な日本語で、明確で完全な文で回答してください。',
-    respond: '日本語で回答してください',
-    offTopic: '申し訳ありませんが、このウェブサイトの情報に関する質問のみお答えできます。DJKridP、彼のキャリア、作品、または連絡先についてお尋ねください。',
-    emptyMsg: 'メッセージは空にできません'
   }
 };
 
@@ -61,7 +58,8 @@ module.exports = async (req, res) => {
     if (typeof body === 'string') {
       body = JSON.parse(body);
     }
-    const { message, history = [], lang = 'de' } = body || {};
+    const { history = [], lang = 'de' } = body || {};
+    const message = typeof body?.message === 'string' ? body.message.trim().slice(0, MAX_CONTENT_LENGTH) : '';
     const L = LANG_CONFIG[lang] || LANG_CONFIG.de;
 
     if (!message) {
@@ -87,37 +85,27 @@ WICHTIG:
 - Verwende KEINE Markdown-Formatierungen wie **, *, \`, >, # usw.
 - Schreibe in normalem Fließtext mit Absätzen
 - Verwende nur Listen wenn mehrere Punkte aufgezählt werden
-- Halte die Sprache natürlich und gesprächig`;
+- Halte die Sprache natürlich und gesprächig
+
+Du kennst folgende Informationen über DJKridP: ${WEBSITE_INFO}
+
+${L.respond} und verwende nur die obigen Informationen über DJKridP. Beziehe dich bei Folgefragen auf den bisherigen Gesprächsverlauf. Wenn die Frage nicht über DJKridP ist, antworte: "${L.offTopic}"`;
+
+    // Verlauf: Nutzer- und Assistenten-Nachrichten in Reihenfolge; die aktuelle Frage
+    // (vom Client bereits ans Ende gehängt) wird separat angefügt
+    const turns = (Array.isArray(history) ? history : [])
+      .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string' && m.content.trim())
+      .map(m => ({ role: m.role, content: m.content.trim().slice(0, MAX_CONTENT_LENGTH) }));
+    const last = turns[turns.length - 1];
+    if (last && last.role === 'user' && last.content === message) turns.pop();
+    const recentTurns = turns.slice(-MAX_HISTORY_TURNS);
+    while (recentTurns.length && recentTurns[0].role !== 'user') recentTurns.shift();
 
     const messages = [
-      {
-        role: 'system',
-        content: systemPrompt
-      }
+      { role: 'system', content: systemPrompt },
+      ...recentTurns,
+      { role: 'user', content: message }
     ];
-
-    if (history && history.length > 0) {
-      const recentHistory = history.slice(-5);
-      recentHistory.forEach(msg => {
-        if (msg.content && msg.content.trim() && msg.role === 'assistant') {
-          messages.push({
-            role: 'assistant',
-            content: msg.content
-          });
-        }
-      });
-    }
-
-    const userQuestion = `Du kennst folgende Informationen über DJKridP: ${WEBSITE_INFO}
-
-Benutzerfrage: ${message}
-
-${L.respond} und verwende die obigen Informationen über DJKridP, um die Frage zu beantworten. Wenn die Frage nicht über DJKridP ist, antworte: "${L.offTopic}"`;
-
-    messages.push({
-      role: 'user',
-      content: userQuestion
-    });
 
     const chatCompletion = await groq.chat.completions.create({
       messages: messages,
@@ -150,9 +138,8 @@ ${L.respond} und verwende die obigen Informationen über DJKridP, um die Frage z
     res.end();
   } catch (error) {
     console.error('Groq API Fehler:', error);
-    const errorMessage = error.message || 'Ein Fehler ist im AI-Service aufgetreten';
-    console.error('Fehlerdetails:', errorMessage);
-    res.write(`data: ${JSON.stringify({ error: errorMessage })}\n\n`);
+    console.error('Fehlerdetails:', error.message || error);
+    res.write(`data: ${JSON.stringify({ error: 'Ein Fehler ist im AI-Service aufgetreten' })}\n\n`);
     res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
     res.end();
   }
