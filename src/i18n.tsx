@@ -66,9 +66,7 @@ export const I18N = {
 
     'contact.title': 'Kontakt',
     'contact.follow': 'Folgen',
-    'footer.backToTop': 'Zurück nach oben',
     'contact.music': 'Musik',
-    'contact.support': 'Support',
     'contact.channel': 'Kanal',
     'contact.server': 'Server',
 
@@ -76,7 +74,7 @@ export const I18N = {
     'chat.title': 'AI-Assistent',
     'chat.clear': 'Verlauf löschen',
     'chat.close': 'Schließen',
-    'chat.ask': 'Wie kann ich helfen?',
+    'chat.greeting': 'Hi! Ich bin der AI-Assistent von DJKridP. Frag mich etwas oder wähle eines der Themen.',
     'chat.q1': 'Über DJKridP & Future Breeze',
     'chat.q1q': 'Erzähl mir über DJKridP und seine Zeit bei Future Breeze',
     'chat.q2': 'Tour-Dates & Auftritte',
@@ -84,7 +82,6 @@ export const I18N = {
     'chat.q3': 'Releases & Musikstile',
     'chat.q3q': 'Welche Releases und Musikstile hat DJKridP?',
     'chat.q4': 'Booking & Kontakt',
-    'chat.music': 'Links',
     'chat.q4q': 'Wie kann ich DJKridP für ein Booking kontaktieren?',
     'chat.placeholder': 'Geben Sie Ihre Frage ein...',
     'chat.inputAria': 'Nachricht eingeben',
@@ -159,9 +156,7 @@ export const I18N = {
 
     'contact.title': 'Contact',
     'contact.follow': 'Follow',
-    'footer.backToTop': 'Back to top',
     'contact.music': 'Music',
-    'contact.support': 'Support',
     'contact.channel': 'Channel',
     'contact.server': 'Server',
 
@@ -169,7 +164,7 @@ export const I18N = {
     'chat.title': 'AI Assistant',
     'chat.clear': 'Clear history',
     'chat.close': 'Close',
-    'chat.ask': 'How can I help?',
+    'chat.greeting': "Hi! I'm DJKridP's AI assistant. Ask me anything or pick a topic below.",
     'chat.q1': 'About DJKridP & Future Breeze',
     'chat.q1q': 'Tell me about DJKridP and his time with Future Breeze',
     'chat.q2': 'Tour dates & shows',
@@ -177,7 +172,6 @@ export const I18N = {
     'chat.q3': 'Releases & music styles',
     'chat.q3q': 'What releases and music styles does DJKridP have?',
     'chat.q4': 'Booking & contact',
-    'chat.music': 'Links',
     'chat.q4q': 'How can I contact DJKridP for a booking?',
     'chat.placeholder': 'Type your question...',
     'chat.inputAria': 'Enter message',

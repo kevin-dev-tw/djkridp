@@ -148,8 +148,7 @@ export function linkify(text: string): string {
     'facebook.com': { name: 'Facebook' },
     'spotify.com': { name: 'Spotify' },
     'discord.gg': { name: 'Discord' },
-    'whatsapp.com': { name: 'WhatsApp' },
-    'streamelements.com': { name: 'StreamElements' }
+    'whatsapp.com': { name: 'WhatsApp' }
   };
 
   const urlRegex = /\b(https?:\/\/[^\s<>"']+\b)/g;
@@ -180,7 +179,7 @@ export function linkify(text: string): string {
         return match;
       }
 
-      const handlePlatforms = new Set(['twitch.tv', 'instagram.com', 'tiktok.com', 'facebook.com', 'streamelements.com']);
+      const handlePlatforms = new Set(['twitch.tv', 'instagram.com', 'tiktok.com', 'facebook.com']);
 
       for (const [domain, info] of Object.entries(platforms)) {
         if (url.includes(domain)) {

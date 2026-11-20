@@ -90,6 +90,22 @@
   --banner-bg: #0A0A0B;
   --banner-text: #FFB13D;
 
+  /* Sky-Toggle (Theme-Schalter — bewusst ausserhalb der Acid-Palette) */
+  --sky-day: #3D7EAE;
+  --sky-night: #1D1F2C;
+  --sky-sun: #ECCA2F;
+  --sky-sun-edge: #a1872a;
+  --sky-moon: #C4C9D1;
+  --sky-moon-edge: #969696;
+  --sky-spot: #959DB1;
+  --sky-stars: #FFFFFF;
+  --sky-clouds: #F3FDFF;
+  --sky-clouds-back: #AACADF;
+  --sky-shadow: rgba(0, 0, 0, 0.25);
+  --sky-shadow-light: rgba(255, 255, 255, 0.94);
+  --sky-ring: rgba(255, 255, 255, 0.1);
+  --sky-inset-light: rgba(254, 255, 239, 0.61);
+
   /* Legacy-Farben (auf Acid Poster abgebildet) */
   --color-text-primary: #F4F4F0;
   --color-text-secondary: #94949C;
@@ -107,7 +123,7 @@
   --spacing-section-sm: 64px;
 
   /* Layout */
-  --announcement-height: 34px;
+  --announcement-height: 0px;
   --header-offset: calc(90px + var(--announcement-height));
 
   /* Typografie */

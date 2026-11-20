@@ -34,12 +34,6 @@ const GROUPS: ContactGroup[] = [
       { name: 'Apple Music', handle: 'Krid P', href: 'https://music.apple.com/tw/artist/krid-p/66265843', platform: 'apple-music' },
       { name: 'YouTube Music', handle: 'Krid P', href: 'https://music.youtube.com/channel/UCnEAOng3XE_Mb1ObbbxGAqg', platform: 'youtube-music' },
     ]
-  },
-  {
-    label: 'contact.support',
-    links: [
-      { name: 'Donate', handle: 'djkridp', href: 'https://streamelements.com/djkridp/tip', platform: 'streamelements' },
-    ]
   }
 ];
 

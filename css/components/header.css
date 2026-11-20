@@ -1,0 +1,302 @@
+.header {
+  @apply bg-midnight fixed top-[var(--announcement-height)] left-0 right-0 z-[1000] py-4 px-0 border-b border-glass;
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.header::after {
+  @apply absolute left-0 w-full h-[1px];
+  content: "";
+  bottom: -1px;
+  background: var(--color-acid);
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left;
+}
+
+.header-content {
+  @apply flex justify-between items-center w-full py-0 px-6 relative;
+}
+
+@media (min-width: 769px) {
+  .header-content {
+  @apply justify-between;
+}
+}
+
+.logo {
+  @apply text-2xl font-normal p-0 text-onsurface tracking-[-0.02em] inline-block cursor-pointer font-display uppercase;
+  transition: color var(--transition-base);
+  background: none;
+  border: none;
+}
+
+@media (min-width: 769px) {
+  .logo {
+  margin-right: auto;
+}
+}
+
+
+.nav {
+  @apply flex items-center gap-8;
+}
+
+/* Steuerzeile (Theme/Sprache) im Mobil-Menü – Desktop ausgeblendet */
+.nav-controls {
+  @apply hidden;
+}
+
+@media (min-width: 769px) {
+  .nav {
+  @apply ml-0 mr-0;
+}
+}
+
+.nav-list {
+  @apply flex gap-6 items-center list-none m-0 p-0;
+}
+
+.nav-link {
+  @apply font-mono text-muted font-medium py-2 px-0 block relative no-underline uppercase tracking-[0.1em] text-xs border-b-[2px] border-transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.nav-link:hover {
+  @apply text-onsurface;
+  border-bottom-color: var(--color-acid);
+}
+
+.header-actions {
+  @apply flex items-center gap-2;
+}
+
+/* Sky-Toggle Farbschema-Umschalter (Tag/Sonne <-> Nacht/Mond) */
+.sky-toggle {
+  @apply inline-flex items-center justify-center cursor-pointer select-none leading-none;
+  --toggle-size: 10px;
+  --container-width: 5.625em;
+  --container-height: 2.5em;
+  --container-radius: 6.25em;
+  --circle-container-diameter: 3.375em;
+  --sun-moon-diameter: 2.125em;
+  --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1);
+  --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25);
+  --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17);
+}
+
+.sky-toggle, .sky-toggle *, .sky-toggle *::before, .sky-toggle *::after {
+  @apply m-0 p-0;
+  font-size: var(--toggle-size);
+  box-sizing: border-box;
+}
+
+.sky-toggle__container {
+  @apply w-[var(--container-width)] h-[var(--container-height)] overflow-hidden cursor-pointer relative;
+  background-color: var(--sky-day);
+  border-radius: var(--container-radius);
+  box-shadow: 0em -0.062em 0.062em var(--sky-shadow), 0em 0.062em 0.125em var(--sky-shadow-light);
+  transition: var(--transition);
+}
+
+.sky-toggle__container::before {
+  @apply absolute z-[1];
+  content: "";
+  inset: 0;
+  box-shadow: 0em 0.05em 0.187em var(--sky-shadow) inset;
+  border-radius: var(--container-radius);
+}
+
+.sky-toggle__checkbox {
+  @apply absolute w-[1px] h-[1px] p-0 overflow-hidden whitespace-nowrap;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.sky-toggle:has(.sky-toggle__checkbox:focus-visible) .sky-toggle__container {
+  outline: 2px solid var(--color-acid);
+  outline-offset: 2px;
+}
+
+.sky-toggle__circle-container {
+  @apply w-[var(--circle-container-diameter)] h-[var(--circle-container-diameter)] bg-[var(--sky-ring)] absolute left-[var(--circle-container-offset)] top-[var(--circle-container-offset)] flex pointer-events-none;
+  border-radius: var(--container-radius);
+  box-shadow: inset 0 0 0 3.375em var(--sky-ring), 0 0 0 0.625em var(--sky-ring);
+  transition: var(--circle-transition);
+}
+
+.sky-toggle__sun-moon-container {
+  @apply pointer-events-auto relative z-[2] w-[var(--sun-moon-diameter)] h-[var(--sun-moon-diameter)] overflow-hidden;
+  margin: auto;
+  border-radius: var(--container-radius);
+  background-color: var(--sky-sun);
+  box-shadow: 0.062em 0.062em 0.062em 0em var(--sky-inset-light) inset, 0em -0.062em 0.062em 0em var(--sky-sun-edge) inset;
+  filter: drop-shadow(0.062em 0.125em 0.125em var(--sky-shadow));
+  transition: var(--transition);
+}
+
+.sky-toggle__moon {
+  @apply w-full h-full relative;
+  transform: translateX(100%);
+  background-color: var(--sky-moon);
+  border-radius: inherit;
+  box-shadow: 0.062em 0.062em 0.062em 0em var(--sky-inset-light) inset, 0em -0.062em 0.062em 0em var(--sky-moon-edge) inset;
+  transition: var(--transition);
+}
+
+.sky-toggle__spot {
+  @apply absolute top-[0.75em] left-[0.312em] w-[0.75em] h-[0.75em];
+  border-radius: var(--container-radius);
+  background-color: var(--sky-spot);
+  box-shadow: 0em 0.0312em 0.062em var(--sky-shadow) inset;
+}
+
+.sky-toggle__spot:nth-of-type(2) {
+  @apply w-[0.375em] h-[0.375em] top-[0.937em] left-[1.375em];
+}
+
+.sky-toggle__spot:nth-last-of-type(3) {
+  @apply w-[0.25em] h-[0.25em] top-[0.312em] left-[0.812em];
+}
+
+.sky-toggle__clouds {
+  @apply w-[1.25em] h-[1.25em] absolute left-[0.312em];
+  background-color: var(--sky-clouds);
+  border-radius: var(--container-radius);
+  bottom: -0.625em;
+  box-shadow: 0.937em 0.312em var(--sky-clouds), -0.312em -0.312em var(--sky-clouds-back), 1.437em 0.375em var(--sky-clouds), 0.5em -0.125em var(--sky-clouds-back), 2.187em 0 var(--sky-clouds), 1.25em -0.062em var(--sky-clouds-back), 2.937em 0.312em var(--sky-clouds), 2em -0.312em var(--sky-clouds-back), 3.625em -0.062em var(--sky-clouds), 2.625em 0em var(--sky-clouds-back), 4.5em -0.312em var(--sky-clouds), 3.375em -0.437em var(--sky-clouds-back), 4.625em -1.75em 0 0.437em var(--sky-clouds), 4em -0.625em var(--sky-clouds-back), 4.125em -2.125em 0 0.437em var(--sky-clouds);
+  transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
+}
+
+.sky-toggle__stars-container {
+  @apply absolute left-[0.312em] w-[2.75em] h-auto;
+  color: var(--sky-stars);
+  top: -100%;
+  transition: var(--transition);
+}
+
+/* Aktionen bei Nacht (checked) */
+.sky-toggle__checkbox:checked + .sky-toggle__container {
+  background-color: var(--sky-night);
+}
+
+.sky-toggle__checkbox:checked + .sky-toggle__container .sky-toggle__circle-container {
+  left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter));
+}
+
+.sky-toggle__checkbox:checked + .sky-toggle__container .sky-toggle__circle-container:hover {
+  left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter) - 0.187em);
+}
+
+.sky-toggle__circle-container:hover {
+  left: calc(var(--circle-container-offset) + 0.187em);
+}
+
+.sky-toggle__checkbox:checked + .sky-toggle__container .sky-toggle__moon {
+  transform: translate(0);
+}
+
+.sky-toggle__checkbox:checked + .sky-toggle__container .sky-toggle__clouds {
+  bottom: -4.062em;
+}
+
+.sky-toggle__checkbox:checked + .sky-toggle__container .sky-toggle__stars-container {
+  @apply top-1/2;
+  transform: translateY(-50%);
+}
+
+.lang-switch {
+  @apply flex items-center;
+}
+
+/* 分段語系控制 — 行動版（.nav-controls）與桌面版（.header-actions）共用，
+   琥珀色指示器以 transform 在 DE/EN 之間滑動 */
+.nav-lang {
+  @apply relative flex gap-[2px] p-[3px] border border-line rounded-full;
+}
+
+.nav-lang-indicator {
+  @apply absolute top-[3px] bottom-[3px] left-[3px] rounded-full;
+  width: calc((100% - 8px) / 2);
+  background: var(--color-acid);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-lang.lang-en .nav-lang-indicator {
+  transform: translateX(calc(100% + 2px));
+}
+
+.nav-lang-btn {
+  @apply relative z-[1] min-h-[40px] py-0 px-4 rounded-full font-mono text-[0.8rem] tracking-[0.08em] text-muted cursor-pointer;
+  border: none;
+  background: transparent;
+  transition: color var(--transition-fast);
+}
+
+.nav-lang-btn.active {
+  @apply text-midnight;
+}
+
+/* 桌面版：收緊到 header 高度 */
+.lang-switch .nav-lang-btn {
+  @apply min-h-[32px] px-3 text-xs;
+}
+
+.mobile-menu-toggle {
+  @apply hidden items-center justify-center w-[44px] min-w-[44px] h-[44px] min-h-[44px] p-0 bg-transparent border border-line rounded-full text-onsurface font-mono text-xs font-medium tracking-[0.1em] uppercase cursor-pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+
+.mobile-menu-toggle:focus-visible {
+  outline: 2px solid var(--color-acid);
+  outline-offset: 2px;
+}
+
+.mobile-menu-toggle.active {
+  @apply bg-acid border-acid text-onprimary;
+}
+
+.menu-icon {
+  @apply relative block w-[20px] h-[14px];
+}
+
+.menu-line {
+  @apply absolute left-0 w-full h-[2px] rounded-[1px] bg-current;
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.3s ease;
+}
+
+.menu-line:nth-child(1) {
+  @apply top-0;
+}
+.menu-line:nth-child(2) {
+  @apply top-[6px];
+}
+.menu-line:nth-child(3) {
+  @apply top-[12px];
+}
+
+.mobile-menu-toggle.active .menu-line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active .menu-line:nth-child(2) {
+  @apply opacity-0;
+}
+
+.mobile-menu-toggle.active .menu-line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-line {
+  transition: none;
+}
+}
+
+
+
+
+main {
+  @apply bg-transparent;
+}

@@ -1,0 +1,37 @@
+.works-list {
+  @apply mt-8 border-t border-glass;
+}
+
+.work-row {
+  @apply grid gap-8 py-8 px-4 border-b border-glass rounded-sm;
+  grid-template-columns: 100px 1fr;
+  transition: background-color var(--transition-fast);
+}
+
+.work-row:hover {
+  @apply bg-surface-2;
+}
+
+.work-row:hover .work-text h3 {
+  @apply text-strong;
+}
+
+.work-num {
+  @apply font-mono text-sm font-medium tracking-[0.1em] text-acid pt-[4px];
+}
+
+.work-text h3 {
+  @apply mb-2 text-acid text-xl font-bold leading-[1.3];
+}
+
+.work-text p {
+  @apply text-onsurface leading-[1.7] max-w-[65ch] mb-0;
+}
+
+@media (max-width: 768px) {
+  .work-row {
+  @apply gap-2;
+  grid-template-columns: 1fr;
+}
+}
+

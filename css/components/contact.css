@@ -1,0 +1,59 @@
+.contact-content {
+  @apply max-w-[64rem] my-0 mx-auto text-center relative z-[10];
+}
+
+.contact-links {
+  @apply w-full mb-16;
+}
+
+.contact-group + .contact-group {
+  @apply mt-12;
+}
+
+.contact-group-label {
+  @apply mt-0 mx-0 mb-1 font-mono text-xs font-medium tracking-[0.1em] uppercase text-muted;
+}
+
+.contact-link {
+  @apply flex items-baseline gap-6 py-6 px-2 border-t border-line rounded-sm text-strong text-base no-underline;
+  margin: 0 calc(-1 * var(--spacing-sm));
+  transition: color var(--transition-fast);
+}
+
+.contact-group .contact-link:last-of-type {
+  @apply border-b border-line;
+}
+
+.contact-name {
+  flex: 0 0 10rem;
+}
+
+.contact-handle {
+  @apply flex-1 font-mono text-xs tracking-[0.05em] text-muted;
+  transition: color var(--transition-fast);
+}
+
+.contact-arrow {
+  @apply font-mono text-muted;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.contact-link:hover {
+  @apply bg-surface-2;
+}
+
+.contact-link:hover .contact-handle,
+.contact-link:hover .contact-arrow {
+  @apply text-onsurface;
+}
+
+.contact-link.disabled {
+  @apply opacity-35 pointer-events-none;
+}
+
+.contact-link span {
+  color: inherit;
+  transition: color var(--transition-base);
+}
+
+

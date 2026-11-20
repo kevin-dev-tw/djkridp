@@ -117,17 +117,17 @@ export function useGsapScenes(rootRef: RefObject<HTMLElement | null>, lang: stri
       });
     });
 
-    // 4.4 Tours-Karten — Clip-Reveal + GSAP-Pin-Stapelung
+    // 4.4 Tours-Karten — Fade-Reveal + GSAP-Pin-Stapelung
     // (natives sticky greift im transformierten Smooth-Wrapper nicht;
     //  ScrollTrigger pinnt unter ScrollSmoother automatisch via pinType 'transform'. Mobil: CSS-sticky)
     const tourStack = document.getElementById('country-stack');
     const tourCards = gsap.utils.toArray<HTMLElement>('#tours .tour-card');
     if (tourCards.length) {
-      gsap.set(tourCards, { clipPath: 'inset(100% 0% 0% 0%)' });
+      gsap.set(tourCards, { opacity: 0 });
       ScrollTrigger.batch(tourCards, {
         start: 'top 92%',
         onEnter: batch => gsap.to(batch, {
-          clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, stagger: 0.08,
+          opacity: 1, duration: 0.6, stagger: 0.08,
           ease: 'power3.out'
         })
       });

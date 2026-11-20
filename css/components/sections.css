@@ -1,0 +1,29 @@
+#home {
+  @apply min-h-screen min-h-dvh flex items-center bg-midnight relative pt-[var(--header-offset)];
+}
+
+#home::before {
+  @apply absolute pointer-events-none z-[0] will-change-transform;
+  content: "";
+  inset: 0;
+  background-image: radial-gradient(var(--halftone-dot) 1px, transparent 1px);
+  background-size: 18px 18px;
+  transform: translateY(var(--dots-y, 0px));
+}
+
+#about {
+  @apply bg-surface-low;
+}
+
+#tours {
+  @apply bg-midnight;
+}
+
+#works {
+  @apply bg-surface-low;
+}
+
+#contact {
+  @apply bg-midnight pb-16 mb-0;
+}
+

@@ -1,0 +1,42 @@
+/* Tours — Gestapelte Pass-Karten (Sticky Card Stacking) */
+.country-stack {
+  @apply flex flex-col gap-8 mt-8 relative pb-16;
+}
+
+.tour-card {
+  @apply sticky bg-surface-2 border border-line rounded-lg py-6 px-8 flex flex-col justify-between min-h-[180px];
+  top: calc(var(--header-offset) + 20px + var(--card-index) * 14px);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.tour-card:hover {
+  @apply border-acid;
+}
+
+.tour-card:hover .tour-card-country {
+  @apply text-acid;
+}
+
+.tour-card-header {
+  @apply flex items-center justify-between w-full font-mono text-xs tracking-[0.1em] uppercase text-muted pb-4 border-b border-glass;
+}
+
+.tour-card-num {
+  @apply text-acid font-bold;
+}
+
+.tour-card-tag {
+  @apply text-muted;
+}
+
+.tour-card-body {
+  @apply pt-6 pb-2;
+}
+
+.tour-card-country {
+  @apply font-display text-[clamp(2.2rem,_7vw,_5.5rem)] font-normal uppercase tracking-[-0.02em] leading-none m-0 text-strong;
+  text-wrap: balance;
+  transition: color var(--transition-fast);
+}
+
+

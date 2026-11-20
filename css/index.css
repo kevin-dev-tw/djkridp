@@ -1,6 +1,16 @@
 @import "./tailwind.css";
 @import "./variables.css";
 @import "./global.css";
-@import "./components.css";
+@import "./components/header.css";
+@import "./components/hero.css";
+@import "./components/about.css";
+@import "./components/titles.css";
+@import "./components/tours.css";
+@import "./components/works.css";
+@import "./components/embeds.css";
+@import "./components/contact.css";
+@import "./components/motion.css";
+@import "./components/sections.css";
+@import "./components/ai-chat.css";
 @import "./responsive.css";
 @import "./footer.css";

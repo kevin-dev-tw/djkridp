@@ -1,0 +1,27 @@
+.hero {
+  @apply text-left relative z-[1] min-h-screen min-h-dvh w-full flex items-center justify-center;
+}
+
+.hero .wrap {
+  @apply relative z-[1];
+}
+
+
+.hero-title {
+  @apply text-[clamp(3.5rem,_15vw,_12rem)] mb-6 text-strong font-display font-normal tracking-[-0.02em] uppercase leading-[0.95] opacity-0;
+}
+
+@media (pointer: coarse) {
+  .hero-title {
+  @apply opacity-100;
+}
+}
+
+.hero-subtitle {
+  @apply font-mono text-sm text-onsurface max-w-[60ch] mt-0 mx-0 mb-4 leading-[1.7] font-normal uppercase tracking-[0.08em];
+}
+
+.hero-subtitle:last-of-type {
+  @apply mb-0;
+}
+

@@ -29,7 +29,7 @@ Visitors use a browser, in German or English (German is the default). The page i
 - Identity the site already states: DJKridP, multi-genre DJ, based in Osnabrück, Germany, active since the late 1990s, former member of Future Breeze. Sets played in Germany, Canada, South Africa, Japan, Russia, Poland, Spain, Italy, and other countries. Tours are a country list, not a calendar of upcoming dates.
 - Streams: the upcoming Twitch broadcast schedule (segment title, date, time, category, cancellations, vacation) fetched live from Twitch Helix. The section renders only when real data arrives — it is absent, never a placeholder.
 - Works: multi-genre sets, Future Breeze, live performances. Embeds: one Spotify track, the SoundCloud album Mind & Soul (We Love Trance Records), Twitch player with an offline still and live-status text.
-- Follow and music links already on the page: Twitch, Instagram, WhatsApp channel, Discord, Spotify, Apple Music, YouTube Music, StreamElements tips. TikTok and Facebook links are present and disabled.
+- Follow and music links already on the page: Twitch, Instagram, WhatsApp channel, Discord, Spotify, Apple Music, YouTube Music. TikTok and Facebook links are present and disabled.
 - Languages: German and English; all visible strings go through the translation keys in `src/i18n.tsx`. A light/dark theme toggle follows the OS preference and persists in localStorage.
 - AI assistant on the page, backed by a serverless function that needs `GROQ_API_KEY`. The handler keeps real conversation context (user and assistant turns) and streams answers via SSE.
 - The schedule function needs `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` (optional `TWITCH_CHANNEL`, default `djkridp`).

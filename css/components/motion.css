@@ -1,0 +1,12 @@
+@media (prefers-reduced-motion: reduce) {
+  .bio-list .bio-row,
+  .country-stack .tour-card,
+  .works-list .work-row,
+  .contact-links .contact-link {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+}
+
+

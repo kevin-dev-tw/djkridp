@@ -1,0 +1,185 @@
+/* Media-Embeds (SoundCloud & Twitch — Acid-Frames in voller Breite) */
+.soundcloud-embed-container,
+.twitch-embed-container,
+.spotify-embed-container {
+  @apply w-full mt-16 mx-auto mb-0 p-8 border border-glass rounded-lg;
+  background: var(--surface-container);
+}
+
+
+
+.soundcloud-title,
+.twitch-embed-container h2,
+.spotify-embed-container h2 {
+  @apply mt-0 mr-0 mb-6 ml-0 pb-4 border-b border-glass font-mono text-xs font-medium tracking-[0.1em] uppercase text-muted text-left;
+  text-wrap: balance;
+}
+
+.twitch-embed-container h2.twitch-embed-head {
+  @apply flex items-center gap-2;
+}
+
+.twitch-live-orb {
+  @apply w-[34px] h-[34px] shrink-0 opacity-45;
+  margin: -8px 0;
+  transition: opacity var(--transition-base);
+}
+
+.twitch-live-orb.is-live {
+  @apply opacity-100;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .twitch-live-orb {
+  @apply opacity-85;
+}
+}
+
+html[data-theme="light"] .twitch-live-orb {
+  @apply opacity-85;
+}
+
+html[data-theme="dark"] .twitch-live-orb {
+  @apply opacity-45;
+}
+
+html[data-theme="dark"] .twitch-live-orb.is-live {
+  @apply opacity-100;
+}
+
+.twitch-embed-title {
+  @apply flex-1 min-w-0;
+}
+
+.twitch-live-status {
+  @apply shrink-0 font-mono text-xs tracking-[0.1em] uppercase text-muted;
+  transition: color var(--transition-fast);
+}
+
+.twitch-live-status.is-live {
+  @apply text-acid;
+}
+
+/* Twitch-Streamplan — eigenständige Sektion */
+#streams[hidden] {
+  @apply hidden;
+}
+
+.twitch-schedule-list {
+  @apply list-none m-0 p-0 flex flex-col gap-1;
+}
+
+.twitch-schedule-item {
+  @apply flex items-baseline gap-4 py-2 px-4 border-b border-glass rounded-sm text-sm text-onsurface;
+  margin: 0 calc(-1 * var(--spacing-md));
+  transition: background-color var(--transition-fast);
+}
+
+.twitch-schedule-item:hover {
+  background: var(--surface-hover);
+}
+
+.twitch-schedule-item:last-child {
+  border-bottom: none;
+}
+
+.twitch-schedule-item.is-next .twitch-schedule-date,
+.twitch-schedule-item.is-next .twitch-schedule-title {
+  @apply text-acid;
+}
+
+.twitch-schedule-item.is-next .twitch-schedule-title::before {
+  @apply inline-block w-[6px] h-[6px] rounded-full mr-2 align-middle;
+  content: '';
+  background: var(--color-acid);
+}
+
+.twitch-schedule-date {
+  @apply shrink-0 min-w-[6.5em] font-mono text-xs tracking-[0.05em] uppercase text-acid;
+}
+
+.twitch-schedule-time {
+  @apply shrink-0 font-mono text-xs text-muted;
+}
+
+.twitch-schedule-title {
+  @apply min-w-0 overflow-hidden whitespace-nowrap;
+  text-overflow: ellipsis;
+}
+
+.twitch-schedule-cat {
+  @apply text-muted text-xs;
+}
+
+.twitch-schedule-item.is-canceled .twitch-schedule-title {
+  @apply opacity-50 line-through;
+}
+
+.twitch-schedule-badge {
+  @apply shrink-0 font-mono text-xs tracking-[0.1em] uppercase text-muted;
+}
+
+.twitch-schedule-vacation {
+  @apply text-sm text-muted py-1 px-0;
+}
+
+@media (max-width: 640px) {
+  .twitch-schedule-item {
+  @apply flex-wrap;
+  gap: var(--spacing-xs) var(--spacing-sm);
+}
+  .twitch-schedule-date {
+  @apply min-w-0;
+}
+}
+
+.soundcloud-album-link {
+  @apply text-acid underline;
+  transition: color var(--transition-base);
+}
+
+.soundcloud-album-link:hover {
+  @apply text-onsurface underline;
+}
+
+.soundcloud-credits {
+  @apply mt-2 text-left text-[11px] text-muted overflow-hidden whitespace-nowrap font-mono tracking-[0.05em];
+  line-break: anywhere;
+  word-break: normal;
+  text-overflow: ellipsis;
+}
+
+.soundcloud-credits a {
+  @apply text-muted no-underline;
+  transition: color var(--transition-base);
+}
+
+.soundcloud-credits a:hover {
+  @apply text-strong;
+}
+
+@media (max-width: 768px) {
+  .soundcloud-title {
+  @apply text-lg;
+}
+
+  .soundcloud-embed-container,
+  .twitch-embed-container,
+  .spotify-embed-container {
+  @apply p-4;
+}
+}
+
+.twitch-link {
+  @apply text-acid underline;
+  transition: color var(--transition-fast);
+}
+
+.twitch-link:hover {
+  @apply text-onsurface underline;
+}
+
+.twitch-link::-moz-focus-inner {
+  border: 0;
+}
+

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'djkridp-v94'; // Lokale Schriften — alten Cache löschen
+const CACHE_NAME = 'djkridp-v95'; // Lokale Schriften — alten Cache löschen
 const urlsToCache = [
   '/',
   '/index.html',

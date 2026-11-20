@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from 'react';
 import { useLang } from './i18n';
 import { useSmoother, useGsapScenes } from './hooks/useGsapScenes';
 import { useMobileReveals } from './hooks/useMobileReveals';
-import TwitchBanner from './components/TwitchBanner';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -12,6 +11,7 @@ import Works from './components/Works';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AiChat from './components/AiChat';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -61,7 +61,6 @@ export default function App() {
 
   return (
     <div ref={rootRef}>
-      <TwitchBanner />
       <Header />
       <div id="smooth-wrapper">
         <div id="smooth-content">
@@ -77,6 +76,7 @@ export default function App() {
         </div>
       </div>
       <AiChat />
+      <Analytics />
     </div>
   );
 }
