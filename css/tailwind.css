@@ -25,8 +25,6 @@
   --color-dot-empty: var(--empty-dot);
   --color-overlay: var(--overlay-bg);
   --color-hover: var(--surface-hover);
-  --color-banner: var(--banner-bg);
-  --color-bannertext: var(--banner-text);
 
   --font-display: var(--font-family-display);
   --font-sans: var(--font-family-primary);

@@ -87,7 +87,6 @@
   --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.6);
   --shadow-bubble: 0 2px 8px rgba(0, 0, 0, 0.4);
   --surface-hover: rgba(255, 255, 255, 0.04);
-  --banner-bg: #0A0A0B;
   --banner-text: #FFB13D;
 
   /* Sky-Toggle (Theme-Schalter — bewusst ausserhalb der Acid-Palette) */
@@ -106,11 +105,6 @@
   --sky-ring: rgba(255, 255, 255, 0.1);
   --sky-inset-light: rgba(254, 255, 239, 0.61);
 
-  /* Legacy-Farben (auf Acid Poster abgebildet) */
-  --color-text-primary: #F4F4F0;
-  --color-text-secondary: #94949C;
-  --color-text-white: #F4F4F0;
-  --color-bg-primary: #0A0A0B;
 
   /* Abstände */
   --spacing-xs: 0.25rem;
@@ -120,7 +114,6 @@
   --spacing-xl: 2rem;
   --spacing-2xl: 3rem;
   --spacing-3xl: 4rem;
-  --spacing-section-sm: 64px;
 
   /* Layout */
   --announcement-height: 0px;
@@ -187,13 +180,8 @@
     --shadow-card: 0 12px 40px rgba(26, 26, 24, 0.12);
     --shadow-bubble: 0 2px 8px rgba(26, 26, 24, 0.12);
     --surface-hover: rgba(26, 26, 24, 0.04);
-    --banner-bg: #FF4D00;
     --banner-text: #1A1A18;
 
-    --color-text-primary: #1A1A18;
-    --color-text-secondary: #6B675E;
-    --color-text-white: #1A1A18;
-    --color-bg-primary: #F7F3EA;
   }
 }
 
@@ -228,13 +216,8 @@ html[data-theme="light"] {
   --shadow-card: 0 12px 40px rgba(26, 26, 24, 0.12);
   --shadow-bubble: 0 2px 8px rgba(26, 26, 24, 0.12);
   --surface-hover: rgba(26, 26, 24, 0.04);
-  --banner-bg: #FF4D00;
   --banner-text: #1A1A18;
 
-  --color-text-primary: #1A1A18;
-  --color-text-secondary: #6B675E;
-  --color-text-white: #1A1A18;
-  --color-bg-primary: #F7F3EA;
 }
 
 html[data-theme="dark"] {
@@ -268,11 +251,6 @@ html[data-theme="dark"] {
   --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.6);
   --shadow-bubble: 0 2px 8px rgba(0, 0, 0, 0.4);
   --surface-hover: rgba(255, 255, 255, 0.04);
-  --banner-bg: #0A0A0B;
   --banner-text: #FFB13D;
 
-  --color-text-primary: #F4F4F0;
-  --color-text-secondary: #94949C;
-  --color-text-white: #F4F4F0;
-  --color-bg-primary: #0A0A0B;
 }
