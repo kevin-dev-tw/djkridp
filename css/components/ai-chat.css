@@ -431,13 +431,13 @@ html.menu-open .ai-chat-button {
 }
 
 .confirm-dialog-overlay {
-  @apply absolute top-0 left-0 right-0 bottom-0 bg-overlay hidden items-center justify-center z-[1001];
-  backdrop-filter: none;
+  @apply absolute top-0 left-0 right-0 bottom-0 bg-overlay flex items-center justify-center z-[1001] opacity-0 invisible;
   border-radius: inherit;
+  transition: opacity 0.22s ease, visibility 0.22s;
 }
 
 .confirm-dialog-overlay.active {
-  @apply flex;
+  @apply opacity-100 visible;
 }
 
 .confirm-dialog {
@@ -445,7 +445,7 @@ html.menu-open .ai-chat-button {
   box-shadow: none;
   width: calc(100% - 2rem);
   transform: translateY(8px);
-  transition: transform var(--transition-base);
+  transition: transform 0.22s ease;
 }
 
 .confirm-dialog-overlay.active .confirm-dialog {
@@ -475,18 +475,25 @@ html.menu-open .ai-chat-button {
 }
 
 .confirm-dialog-actions {
-  @apply grid gap-2 p-4 border-t border-line;
-  grid-template-columns: 1fr 1fr;
+  @apply p-4 border-t border-line;
+}
+
+.confirm-dialog-segment {
+  @apply flex border border-line rounded-full overflow-hidden;
 }
 
 .confirm-dialog-btn {
-  @apply min-h-[48px] py-0 px-4 rounded-full font-mono text-xs font-medium tracking-[0.1em] uppercase cursor-pointer;
+  @apply flex-1 min-h-[48px] py-0 px-4 font-mono text-xs font-medium tracking-[0.1em] uppercase cursor-pointer;
   border: none;
   transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
+.confirm-dialog-btn + .confirm-dialog-btn {
+  border-left: 1px solid var(--outline-variant);
+}
+
 .confirm-dialog-cancel {
-  @apply bg-transparent text-onsurface border border-line;
+  @apply bg-transparent text-onsurface;
 }
 
 .confirm-dialog-cancel:hover {

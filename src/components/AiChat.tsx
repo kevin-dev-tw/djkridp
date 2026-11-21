@@ -269,8 +269,10 @@ export default function AiChat() {
           <p>{t('chat.dialogBody')}</p>
         </div>
         <div className="confirm-dialog-actions">
-          <button className="confirm-dialog-btn confirm-dialog-cancel" onClick={() => setConfirmOpen(false)}>{t('chat.cancel')}</button>
-          <button className="confirm-dialog-btn confirm-dialog-confirm" onClick={() => { clearHistory(); setConfirmOpen(false); }}>{t('chat.confirm')}</button>
+          <div className="confirm-dialog-segment" role="group">
+            <button className="confirm-dialog-btn confirm-dialog-cancel" onClick={() => setConfirmOpen(false)}>{t('chat.cancel')}</button>
+            <button className="confirm-dialog-btn confirm-dialog-confirm" onClick={() => { clearHistory(); setConfirmOpen(false); }}>{t('chat.confirm')}</button>
+          </div>
         </div>
       </div>
     </div>
