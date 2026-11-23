@@ -8,6 +8,7 @@ interface StrandsOrb {
 interface SmootherLike {
   scrollTo(target: Element | string, smooth: boolean, position?: string): void;
   paused?(value: boolean): void;
+  kill?(): void;
 }
 
 interface Window {

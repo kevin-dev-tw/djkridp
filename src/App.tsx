@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
 import { useLang } from './i18n';
-import { useSmoother, useGsapScenes } from './hooks/useGsapScenes';
 import { useMobileReveals } from './hooks/useMobileReveals';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -16,9 +15,31 @@ import { Analytics } from '@vercel/analytics/react';
 export default function App() {
   const rootRef = useRef<HTMLDivElement>(null);
   const { lang } = useLang();
-  const smootherReady = useSmoother(rootRef);
-  useGsapScenes(rootRef, lang, smootherReady);
+  const [smootherReady, setSmootherReady] = useState(false);
   useMobileReveals(rootRef, lang);
+
+  // GSAP erst bei pointer:fine nachladen — haelt den Start-Thread frei
+  useEffect(() => {
+    if (window.matchMedia('(pointer: coarse)').matches) { setSmootherReady(true); return; }
+    let cleanup: (() => void) | undefined;
+    let cancelled = false;
+    import('./lib/gsap-scenes').then(m => {
+      if (!cancelled) cleanup = m.initSmoother(() => setSmootherReady(true));
+    });
+    return () => { cancelled = true; cleanup?.(); };
+  }, []);
+
+  // Scroll-Szenen — bei Sprachwechsel revertieren & frisch aufbauen
+  useEffect(() => {
+    if (!smootherReady || window.matchMedia('(pointer: coarse)').matches
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let ctx: { revert(): void } | undefined;
+    let cancelled = false;
+    import('./lib/gsap-scenes').then(m => {
+      if (!cancelled && rootRef.current) ctx = m.initScenes(rootRef.current);
+    });
+    return () => { cancelled = true; ctx?.revert(); };
+  }, [lang, smootherReady]);
 
   // Bilder: Rechtsklick & Drag deaktivieren
   useEffect(() => {

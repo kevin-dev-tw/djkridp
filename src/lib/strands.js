@@ -329,7 +329,6 @@ void main() {
     gl.attachShader(program, compile(gl, gl.FRAGMENT_SHADER, FRAG));
     gl.bindAttribLocation(program, 0, 'position');
     gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return null;
     return program;
   };
 
@@ -382,6 +381,8 @@ void main() {
     let program = null;
     let buffer = null;
     let loc = {};
+    let pendingProgram = null;
+    const parallelCompile = gl.getExtension('KHR_parallel_shader_compile');
     const names = [
       'uResolution', 'uMotion', 'uLevel', 'uColors', 'uCount', 'uAmplitude',
       'uWaviness', 'uThickness', 'uGlow', 'uTaper', 'uSpread', 'uHueShift',
@@ -389,9 +390,7 @@ void main() {
       'uDispersion', 'uRim', 'uLean', 'uIntro', 'uPulse', 'uLight', 'uOpacity'
     ];
 
-    const setup = () => {
-      const next = createProgram(gl);
-      if (!next) return false;
+    const finishProgram = next => {
       program = next;
       buffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -402,12 +401,19 @@ void main() {
       loc = Object.fromEntries(names.map(name => [name, gl.getUniformLocation(next, name)]));
       gl.disable(gl.BLEND);
       gl.clearColor(0, 0, 0, 0);
-      return true;
     };
 
-    if (!setup()) {
-      canvas.remove();
-      return null;
+    // KHR_parallel_shader_compile: linkProgram nicht blockierend —
+    // Abschluss wird im Frame-Loop abgefragt, sonst synchron pruefen.
+    if (parallelCompile) {
+      pendingProgram = createProgram(gl);
+    } else {
+      const next = createProgram(gl);
+      if (!next || !gl.getProgramParameter(next, gl.LINK_STATUS)) {
+        canvas.remove();
+        return null;
+      }
+      finishProgram(next);
     }
 
     const query = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
@@ -510,10 +516,19 @@ void main() {
 
     const frame = now => {
       st.raf = 0;
+      if (pendingProgram) {
+        if (!gl.getProgramParameter(pendingProgram, parallelCompile.COMPLETION_STATUS_KHR)) {
+          st.raf = requestAnimationFrame(frame);
+          return;
+        }
+        const prog = gl.getProgramParameter(pendingProgram, gl.LINK_STATUS) ? pendingProgram : null;
+        pendingProgram = null;
+        if (prog) finishProgram(prog);
+      }
       const dt = st.last ? clamp((now - st.last) / 1000, 0, 0.05) : 0;
       st.last = now;
       const reduced = !!query?.matches;
-      if (st.introStart < 0 && st.visible) st.introStart = now;
+      if (st.introStart < 0 && st.visible && !pendingProgram) st.introStart = now;
       if (opts.intro && !reduced && st.introStart >= 0) {
         const t = clamp((now - st.introStart) / 1400, 0, 1);
         st.intro = 1 - Math.pow(1 - t, 3);
@@ -599,7 +614,17 @@ void main() {
 
     const onRestored = () => {
       st.lost = false;
-      if (setup()) wake();
+      program = null;
+      if (parallelCompile) {
+        pendingProgram = createProgram(gl);
+        wake();
+      } else {
+        const next = createProgram(gl);
+        if (next && gl.getProgramParameter(next, gl.LINK_STATUS)) {
+          finishProgram(next);
+          wake();
+        }
+      }
     };
 
     canvas.addEventListener('webglcontextlost', onLost);

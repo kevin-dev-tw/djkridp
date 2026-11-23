@@ -1,65 +1,55 @@
-import { useState, type RefObject } from 'react';
+// GSAP-Laufzeit — wird per dynamic import nur bei pointer:fine geladen,
+// damit das Hauptbundle schlank bleibt und Mobile nichts davon mitbekommt.
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { useGSAP } from '@gsap/react';
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin, useGSAP);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
 
-const isCoarse = () => window.matchMedia('(pointer: coarse)').matches;
-const isReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+export const isCoarse = () => window.matchMedia('(pointer: coarse)').matches;
+export const isReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ScrollSmoother — persistent, sprachunabhängig (Neuaufbau würde Scrollposition zurücksetzen)
-export function useSmoother(rootRef: RefObject<HTMLElement | null>) {
-  const [ready, setReady] = useState(false);
-
-  useGSAP(() => {
-    if (isCoarse()) { setReady(true); return; }
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    const wrapper = document.getElementById('smooth-wrapper');
-    if (wrapper) wrapper.classList.add('smooth-active');
-    let cancelled = false;
-    const raf1 = requestAnimationFrame(() => requestAnimationFrame(() => {
-      if (cancelled) return;
-      try {
-        window.smoother = ScrollSmoother.create({
-          smooth: isReduced() ? 0 : 1.1,
-          effects: false
-        });
-      } catch {
-        if (wrapper) wrapper.classList.remove('smooth-active');
-      }
-      setReady(true);
-    }));
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf1);
-    };
-  }, { scope: rootRef });
-
-  return ready;
+export function initSmoother(onReady: () => void): () => void {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const wrapper = document.getElementById('smooth-wrapper');
+  if (wrapper) wrapper.classList.add('smooth-active');
+  let cancelled = false;
+  const raf1 = requestAnimationFrame(() => requestAnimationFrame(() => {
+    if (cancelled) return;
+    try {
+      window.smoother = ScrollSmoother.create({
+        smooth: isReduced() ? 0 : 1.1,
+        effects: false
+      });
+    } catch {
+      if (wrapper) wrapper.classList.remove('smooth-active');
+    }
+    onReady();
+  }));
+  return () => {
+    cancelled = true;
+    cancelAnimationFrame(raf1);
+    window.smoother?.kill?.();
+    window.smoother = undefined;
+  };
 }
 
 // Alle Scroll-Szenen — werden bei Sprachwechsel revertiert & frisch aufgebaut,
 // weil React die Titel-Texte neu rendert und die .char-Spans neu entstehen.
-export function useGsapScenes(rootRef: RefObject<HTMLElement | null>, lang: string, smootherReady: boolean) {
-  useGSAP(() => {
-    if (!smootherReady || isCoarse() || isReduced()) return;
-    const root = rootRef.current;
-    if (!root) return;
-
+export function initScenes(root: HTMLElement) {
+  return gsap.context(() => {
     // Von GSAP übernommene Elemente: CSS-Animationen aus, um transform/opacity-Konflikte zu vermeiden
     gsap.utils.toArray<HTMLElement>('.section-title, .bio-row, .tour-card, .work-row, .contact-group, .contact-link')
       .forEach(el => { el.style.animation = 'none'; });
 
     // 0. Hero-Titel-Entrance — Zeichen-Aufstieg mit Maske (Chars kommen aus <CharSplit/>)
     const heroTitle = root.querySelector<HTMLElement>('.hero-title');
-    let heroChars: NodeListOf<Element> | never[] = [];
     if (heroTitle) {
       heroTitle.style.animation = 'none';
       heroTitle.style.opacity = '1';
-      heroChars = heroTitle.querySelectorAll('.char');
+      const heroChars = heroTitle.querySelectorAll('.char');
       if (heroChars.length) {
         gsap.fromTo(heroChars, { yPercent: 120 }, {
           yPercent: 0,
@@ -175,13 +165,13 @@ export function useGsapScenes(rootRef: RefObject<HTMLElement | null>, lang: stri
       });
     }
 
-    const fontsP = document.fonts && document.fonts.ready
-      ? document.fonts.ready.then(() => ScrollTrigger.refresh())
-      : null;
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => ScrollTrigger.refresh());
+    }
 
     return () => {
       // position/top sind Inline-Overrides und werden vom gsap.context-Revert nicht zurückgesetzt
       tourCards.forEach(card => { card.style.position = ''; card.style.top = ''; });
     };
-  }, { scope: rootRef, dependencies: [lang, smootherReady] });
+  }, root);
 }
