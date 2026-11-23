@@ -241,6 +241,97 @@
   @apply min-h-[32px] px-3 text-xs;
 }
 
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* 桌面版語系下拉 — base-select 可自訂觸發器與選單；
+   不支援的瀏覽器退回原生 select（顯示 DE/EN 文字選項） */
+.lang-select {
+  @apply flex items-center min-h-[32px] px-3 rounded-full border border-line bg-transparent font-mono text-xs tracking-[0.08em] text-onsurface cursor-pointer;
+}
+
+.lang-select,
+.lang-select::picker(select) {
+  appearance: base-select;
+}
+
+.lang-select-button {
+  @apply flex items-center gap-2.5 bg-transparent border-0 text-inherit cursor-pointer;
+  font: inherit;
+}
+
+.lang-select-button svg {
+  @apply w-[18px] h-[18px] shrink-0;
+}
+
+.lang-select::picker-icon {
+  @apply text-muted;
+  transition: transform var(--transition-fast);
+}
+
+.lang-select:open::picker-icon {
+  transform: rotate(180deg);
+}
+
+.lang-select::picker(select) {
+  @apply rounded-full border border-line font-mono;
+  background: var(--color-surface);
+  color: var(--color-onsurface);
+  padding: 4px;
+  margin-block-start: 4px;
+  position-area: bottom span-left;
+  width: fit-content;
+  min-width: 0;
+  transition: display, overlay, opacity cubic-bezier(0.16, 1, 0.3, 1), translate cubic-bezier(0.16, 1, 0.3, 1);
+  transition-duration: 0.22s;
+  transition-behavior: allow-discrete;
+  opacity: 0;
+  translate: 0 -4px;
+}
+
+.lang-select:open::picker(select) {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@starting-style {
+  .lang-select:open::picker(select) {
+    opacity: 0;
+    translate: 0 -4px;
+  }
+}
+
+.lang-select option {
+  @apply px-3 py-2 rounded-full cursor-pointer font-mono text-xs tracking-[0.08em];
+}
+
+.lang-select option + option {
+  margin-block-start: 2px;
+}
+
+.lang-select option:checked {
+  @apply font-bold bg-acid text-midnight;
+}
+
+.lang-select option::checkmark {
+  @apply hidden;
+}
+
+@supports not (appearance: base-select) {
+  .lang-select-button {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang-select::picker(select),
+  .lang-select::picker-icon {
+    transition: none;
+  }
+}
+
 .mobile-menu-toggle {
   @apply hidden items-center justify-center w-[44px] min-w-[44px] h-[44px] min-h-[44px] p-0 bg-transparent border border-line rounded-full text-onsurface font-mono text-xs font-medium tracking-[0.1em] uppercase cursor-pointer;
   -webkit-tap-highlight-color: transparent;

@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useCallback, type MouseEvent as ReactMouseEvent } from 'react';
-import { useLang, type TranslationKey } from '../i18n';
+import { useState, useEffect, useRef, useCallback, createElement, type MouseEvent as ReactMouseEvent } from 'react';
+import { useLang, type Lang, type TranslationKey } from '../i18n';
 
 type Theme = 'dark' | 'light';
 
@@ -200,13 +200,18 @@ export default function Header() {
         <div className="header-actions">
           {renderSkyToggle('header')}
           <div className="lang-switch lang-switch-header">
-            <div className={`nav-lang lang-${lang}`} role="group" aria-label={t('nav.langLabel')}>
-              <span className="nav-lang-indicator" aria-hidden="true" />
-              <button className={`nav-lang-btn${lang === 'de' ? ' active' : ''}`} type="button"
-                      onClick={() => setLang('de')}>DE</button>
-              <button className={`nav-lang-btn${lang === 'en' ? ' active' : ''}`} type="button"
-                      onClick={() => setLang('en')}>EN</button>
-            </div>
+            <label className="sr-only" htmlFor="lang-select">{t('nav.langLabel')}</label>
+            <select id="lang-select" name="lang" className="lang-select" value={lang}
+                    onChange={e => setLang(e.target.value as Lang)}>
+              <button className="lang-select-button">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.9,22l4.55-12h2.1L23.1,22H21l-1.07-3.05H15.08L14,22H11.9ZM4,19L2.6,17.6l5.05-5.05q-0.88-0.88-1.59-2T4.75,8h2.1q0.5,0.97 1,1.7t1.2,1.45q0.82-0.82 1.71-2.31T12.1,6H1V4H8V2h2V4h7V6H14.1q-0.53,1.8-1.58,3.7t-2.07,2.9l2.4,2.45L12.1,17.1L9.05,13.98L4,19Zm11.7-1.8h3.6l-1.8-5.1l-1.8,5.1Z" />
+                </svg>
+                {createElement('selectedcontent')}
+              </button>
+              <option value="de">DE</option>
+              <option value="en">EN</option>
+            </select>
           </div>
         </div>
       </div>
