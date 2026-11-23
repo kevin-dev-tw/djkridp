@@ -252,7 +252,10 @@
   @apply flex items-center min-h-[32px] px-3 rounded-full border border-line bg-transparent font-mono text-xs tracking-[0.08em] text-onsurface cursor-pointer;
 }
 
-.lang-select,
+.lang-select {
+  appearance: base-select;
+}
+
 .lang-select::picker(select) {
   appearance: base-select;
 }
