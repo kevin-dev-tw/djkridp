@@ -8,3 +8,5 @@ room/
 .code-check.db
 .code-check-reports/
 dist/
+.agents/
+skills-lock.json
