@@ -25,3 +25,21 @@
   @apply mb-0;
 }
 
+/* Credit-Zeile direkt unter dem Untertitel */
+.hero-credit {
+  @apply m-0 mt-4 font-mono text-xs font-medium tracking-[0.1em] uppercase text-muted;
+}
+
+.hero-credit a {
+  @apply inline-flex items-center gap-1 text-onsurface no-underline border-b border-transparent;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+
+.hero-credit-icon {
+  @apply w-[1em] h-[1em] shrink-0;
+}
+
+.hero-credit a:hover {
+  @apply text-acid border-acid;
+}
+
